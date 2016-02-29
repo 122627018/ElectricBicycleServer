@@ -27,4 +27,21 @@ public class UserEngine {
 		}
 		
 	}
+
+	/**
+	 * 注册一个用户
+	 * @param username
+	 * @param password
+	 * @param name
+	 * @return
+	 */
+	public static Map<String,Object> Register(
+			String username, String password, String name) {
+		User1 user = UserManager.registerUser(username, password, name);
+		if(user!=null){
+			return getResponseMap(200, "", new Format_Login(user));
+		}else{
+			return getResponseMap(404, "注册失败",  null);
+		}
+	}
 }

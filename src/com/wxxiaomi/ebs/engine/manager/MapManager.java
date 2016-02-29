@@ -26,7 +26,7 @@ public class MapManager {
 			geo = geo.substring(0, 5);
 			Connection conn = ConnectionUtil.getConnection();
 			PreparedStatement ps = conn
-					.prepareStatement("select * from locat where userid!=? and geo LIKE ?");
+					.prepareStatement("select * from bicycle_locat where userid!=? and geo LIKE ?");
 			ps.setInt(1, userid);
 			ps.setString(2, "%"+geo+"%");
 			ResultSet rs = ps.executeQuery();
@@ -48,13 +48,13 @@ public class MapManager {
 		try {
 			Connection conn = ConnectionUtil.getConnection();
 			PreparedStatement ps = conn
-					.prepareStatement("select userid from locat where userid=?");
+					.prepareStatement("select userid from bicycle_locat where userid=?");
 //			PreparedStatement ps = conn
 //					.prepareStatement("insert into locat values(null,?,?,?)");
 			ps.setInt(1, userid);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){
-				ps = conn.prepareStatement("update locat set geo=?,time=? where userid=?");
+				ps = conn.prepareStatement("update bicycle_locat set geo=?,time=? where userid=?");
 				ps.setString(1, geo);
 				ps.setString(2, "2016.1.1");
 				ps.setInt(3, userid);
@@ -63,7 +63,7 @@ public class MapManager {
 				}
 				
 			}else{
-				ps = conn.prepareStatement("insert into locat values(null,?,?,?)");
+				ps = conn.prepareStatement("insert into bicycle_locat values(null,?,?,?)");
 				ps.setInt(1, userid);
 				ps.setString(2, geo);
 				ps.setString(3, "2015.1.1");

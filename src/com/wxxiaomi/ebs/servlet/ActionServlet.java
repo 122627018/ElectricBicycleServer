@@ -34,6 +34,12 @@ public class ActionServlet extends HttpServlet {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			outMap.putAll(UserEngine.Login(username, password));
+		}else if("register".equals(action)){
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			String name = request.getParameter("name");
+			System.out.println("username="+username+"--password="+password+"--name="+name);
+			outMap.putAll(UserEngine.Register(username, password,name));
 		}else if("getnearby".equals(action)){//请求附近的人
 			System.out.println("getnearby");
 			double latitude = Double.valueOf(request.getParameter("latitude"));
@@ -41,8 +47,6 @@ public class ActionServlet extends HttpServlet {
 			int userid = Integer.valueOf(request.getParameter("userid"));
 			//取得经纬度之后,需要通过把经纬度GeoHash编码，存到数据库中
 			outMap.putAll(MapEngine.getNearByPerson(userid,latitude,longitude));
-			
-			
 		}
 		JsonUtil.renderJson(response, outMap);
 	}

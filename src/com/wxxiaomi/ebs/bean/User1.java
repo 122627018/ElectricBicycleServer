@@ -51,6 +51,17 @@ public class User1 {
 		this.head = head;
 		this.name = name;
 	}
+	public User1(int id, String username, String password, String head,
+			String name) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.head = head;
+		this.name = name;
+	}
+	
+	
 	
 	
 }
