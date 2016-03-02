@@ -34,6 +34,10 @@ public class ActionServlet extends HttpServlet {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			outMap.putAll(UserEngine.Login(username, password));
+			
+		}else if("checkphone".equals(action)){
+			String phone  = request.getParameter("phone");
+			outMap.putAll(UserEngine.checkPhone(phone));
 		}else if("register".equals(action)){
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
