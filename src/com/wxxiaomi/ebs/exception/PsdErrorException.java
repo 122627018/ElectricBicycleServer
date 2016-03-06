@@ -1,17 +1,21 @@
 package com.wxxiaomi.ebs.exception;
 
 /**
- * 未知错误/自定义错误
+ * 密码错误异常
  * @author Administrator
  *
  */
-public class UnKnownErrorException extends Exception {
+public class PsdErrorException extends Exception {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
-	public UnKnownErrorException(String message) {
+	public PsdErrorException(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
+	
 
 }

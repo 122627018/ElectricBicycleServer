@@ -3,10 +3,12 @@ package com.wxxiaomi.ebs.engine.manager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.wxxiaomi.ebs.bean.format.NearByPerson.UserLocat;
+import com.wxxiaomi.ebs.exception.UnKnownErrorException;
 import com.wxxiaomi.ebs.util.ConnectionUtil;
 import com.wxxiaomi.ebs.util.GeoHashUtil;
 
@@ -33,11 +35,16 @@ public class MapManager {
 			while(rs.next()){
 				UserLocat userLocat = new UserLocat();
 				userLocat.setLocat(GeoHashUtil.decode(rs.getString(3)));
-				userLocat.setUser(UserManager.selectUserById(rs.getInt(2)));
+				try {
+					userLocat.setUserCommonInfo(UserDao.getUserCommonInfoById(rs.getInt(2)));
+				} catch (UnKnownErrorException e) {
+					e.printStackTrace();
+					continue;
+				}
 				result.add(userLocat);
 			}
 			conn.close();
-		}catch (Exception e) {
+		}catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return result;

@@ -2,7 +2,7 @@ package com.wxxiaomi.ebs.bean.format;
 
 import java.util.List;
 
-import com.wxxiaomi.ebs.bean.User1;
+import com.wxxiaomi.ebs.bean.User.UserCommonInfo;
 
 
 public class NearByPerson {
@@ -10,13 +10,14 @@ public class NearByPerson {
 
 	
 	public static class UserLocat{
-		private User1 user;
+		private UserCommonInfo userCommonInfo;
 		private double[] locat;
-		public User1 getUser() {
-			return user;
+		
+		public UserCommonInfo getUserCommonInfo() {
+			return userCommonInfo;
 		}
-		public void setUser(User1 user) {
-			this.user = user;
+		public void setUserCommonInfo(UserCommonInfo userCommonInfo) {
+			this.userCommonInfo = userCommonInfo;
 		}
 		public double[] getLocat() {
 			return locat;

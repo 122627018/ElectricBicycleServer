@@ -5,5 +5,16 @@
 	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.j2eedt.core.MYECLIPSE_JAVAEE_5_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/jackson-databind-2.3.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/httpclient-4.3.3.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/httpcore-4.3.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/httpmime-4.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/slf4j-api-1.7.5.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/jackson-core-2.3.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/javax.ws.rs-api-2.0.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/jackson-annotations-2.3.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/jackson-jaxrs-base-2.3.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/jackson-jaxrs-json-provider-2.3.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/jackson-module-jaxb-annotations-2.3.2.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>
