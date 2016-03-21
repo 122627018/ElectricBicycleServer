@@ -21,6 +21,7 @@ import com.wxxiaomi.ebs.util.ConnectionUtil;
  * 
  */
 public class UserDao {
+	
 
 	/**
 	 * 根据em的用户名---list--获取或有公共信息列表
@@ -89,7 +90,6 @@ public class UserDao {
 
 	/**
 	 * 注册一个用户
-	 * 
 	 * @param username
 	 * @param password
 	 * @param name
@@ -97,8 +97,8 @@ public class UserDao {
 	 * @throws SQLException
 	 * @throws UnKnownErrorException
 	 */
-	public static User registerUser(String username, String password,
-			String name) throws SQLException, UnKnownErrorException {
+	public static User registerUser(String username, String password)
+			throws SQLException, UnKnownErrorException {
 		Connection conn = null;
 		try {
 			conn = ConnectionUtil.getConnection();
@@ -112,16 +112,17 @@ public class UserDao {
 				ResultSet rs = ps.executeQuery();
 				if (rs.next()) {
 					User user = new User(rs.getInt(1), username, password, null);
-					ps = conn
-							.prepareStatement("insert into bicycle_user_common values(?,?,'demo',?)");
-					ps.setInt(1, user.getId());
-					ps.setString(2, name);
-					ps.setString(3, username);
-					if (ps.executeUpdate() > 0) {
-						user.setUserCommonInfo(getUserCommonInfoById(user
-								.getId()));
-						return user;
-					}
+//					ps = conn
+//							.prepareStatement("insert into bicycle_user_common values(?,?,'demo',?)");
+//					ps.setInt(1, user.getId());
+//					ps.setString(2, name);
+//					ps.setString(3, username);
+//					if (ps.executeUpdate() > 0) {
+//						user.setUserCommonInfo(getUserCommonInfoById(user
+//								.getId()));
+//						return user;
+//					}
+					return user;
 				}
 			}
 			throw new UnKnownErrorException("操作数据库失败");
@@ -210,6 +211,30 @@ public class UserDao {
 			conn.close();
 		}
 
+	}
+
+	public static UserCommonInfo improveUserInfo(int userid, String emname, String name,
+			String description) throws SQLException {
+		Connection conn = null;
+		UserCommonInfo info = null;
+		try {
+			conn = ConnectionUtil.getConnection();
+
+			PreparedStatement ps = conn
+					.prepareStatement("insert into bicycle_user_common values(?,?,'demo',?)");
+			ps.setInt(1, userid);
+			ps.setString(2, name);
+			ps.setString(3, emname);
+			if (ps.executeUpdate() > 0) {
+				info = new UserCommonInfo(userid, name, "", emname);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			conn.close();
+		}
+		return info;
 	}
 
 	// public static User selectUserById(int userid) {

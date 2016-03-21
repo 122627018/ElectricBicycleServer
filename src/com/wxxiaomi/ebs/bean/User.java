@@ -57,6 +57,13 @@ public class User {
 
 
 
+	public User(UserCommonInfo userCommonInfo) {
+		super();
+		this.userCommonInfo = userCommonInfo;
+	}
+
+
+
 	public User(int id, String username, String password,
 			UserCommonInfo userCommonInfo) {
 		super();

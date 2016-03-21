@@ -47,6 +47,17 @@ public class UserEngine {
 		}
 		return result;
 	}
+	
+	public static Map<String, Object> improveUserInfo(int userid,String emname,String name,String description){
+		 try {
+			UserCommonInfo improveUserInfo = UserDao.improveUserInfo(userid,emname,name,description);
+			return  getResponseMap(200, "", new Format_Login(new User(improveUserInfo)));
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			return getResponseMap(400, "", null);
+		}
+	}
 
 	/**
 	 * 初始化用户信息
@@ -77,7 +88,6 @@ public class UserEngine {
 			e.printStackTrace();
 			return getResponseMap(321, "连接服务器异常", null);
 		}
-
 	}
 
 	/**
@@ -92,30 +102,7 @@ public class UserEngine {
 		User user1;
 		try {
 			user1 = UserDao.Login(username, password);
-			return getResponseMap(200, "", user1);
-			// if ("y".equals(isFirst)) {
-			// System.out.println("进入em获取好友中");
-			// ObjectNode friends = EasemobIMUsers.getFriends(user1
-			// .getUsername());
-			// // System.out.println("friends.toString()=" +
-			// friends.toString());
-			// int stateCode = Integer.valueOf(friends.get("statusCode")
-			// .toString());
-			// if (stateCode == 200) {
-			// JsonNode jsonNode = friends.get("data");
-			// List<String> list = jsonToArray(jsonNode);
-			// // List<UserCommonInfo> userListByEMUsername = UserDao
-			// // .getUserListByEMUsername(list);
-			// return getResponseMap(200, "", new Format_Login(user1));
-			// }else{
-			// //获取好友失败
-			// System.out.println("登陆过程获取好友列表失败");
-			// return doEMException(friends);
-			// }
-			// } else {
-			// return getResponseMap(200, "", new Format_Login(user1, null));
-			// }
-
+			return getResponseMap(200, "", new Format_Login(user1));
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return getResponseMap(321, "链接服务器数据库出错", null);
@@ -137,8 +124,9 @@ public class UserEngine {
 	 * @return
 	 */
 	public static Map<String, Object> Register(String username,
-			String password, String name) {
+			String password) {
 		try {
+			UserDao.checkPhoneExists(username);
 			ObjectNode createNewIMUserSingle = EasemobIMUsers
 					.createNewIMUserSingle(username, password);
 			// System.out.println("createNewIMUserSingle.get(statusCode)="+createNewIMUserSingle.get("statusCode"));
@@ -147,7 +135,7 @@ public class UserEngine {
 			System.out.println("注册过程中环信返回的状态码是：" + statusCode);
 			if (statusCode == 200) {
 				// 环信用户注册成功
-				User user = UserDao.registerUser(username, password, name);
+				User user = UserDao.registerUser(username, password);
 				return getResponseMap(200, "", new Format_Login(user));
 			} else {
 				return doEMException(createNewIMUserSingle);
@@ -157,6 +145,10 @@ public class UserEngine {
 			return getResponseMap(321, "服务器连接数据库失败", null);
 		} catch (UnKnownErrorException e) {
 			return getResponseMap(322, "未知错误", null);
+		} catch (UserExistsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return getResponseMap(320, "此帐号已经被注册",null);
 		}
 	}
 

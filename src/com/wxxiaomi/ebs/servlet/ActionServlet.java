@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+import com.wxxiaomi.ebs.engine.CarEngine;
 import com.wxxiaomi.ebs.engine.MapEngine;
 import com.wxxiaomi.ebs.engine.UserEngine;
 import com.wxxiaomi.ebs.util.JsonUtil;
@@ -35,18 +36,17 @@ public class ActionServlet extends HttpServlet {
 			System.out.println("action=login");
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
-//			String isFirst = request.getParameter("isfirst");
-//			System.out.println("isFirst="+isFirst);
 			outMap.putAll(UserEngine.Login(username, password));
 		}else if("checkphone".equals(action)){
+			
 			String phone  = request.getParameter("phone");
+			System.out.println("phone="+phone);
 			outMap.putAll(UserEngine.checkPhone(phone));
 		}else if("register".equals(action)){
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
-			String name = request.getParameter("name");
-			System.out.println("username="+username+"--password="+password+"--name="+name);
-			outMap.putAll(UserEngine.Register(username, password,name));
+			System.out.println("username="+username+"--password="+password);
+			outMap.putAll(UserEngine.Register(username, password));
 		}else if("getnearby".equals(action)){//请求附近的人
 			System.out.println("getnearby");
 			double latitude = Double.valueOf(request.getParameter("latitude"));
@@ -58,6 +58,20 @@ public class ActionServlet extends HttpServlet {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			outMap.putAll(UserEngine.initUserInfo(username, password));
+		}else if("getbicycleinfo".equals(action)){
+			int id = Integer.valueOf(request.getParameter("bicycleid"));
+			outMap.putAll(CarEngine.getCarInfos(id));
+		}else if("bundbicycle".equals(action)){
+			int userid = Integer.valueOf(request.getParameter("userid"));
+			int carid = Integer.valueOf(request.getParameter("cardid"));
+			System.out.println("bundbicycle->userid="+userid+"--carid="+carid);
+			outMap.putAll(CarEngine.bundBicycle(userid, carid));
+		}else if("improveuserinfo".equals(action)){
+			String emname = request.getParameter("username");
+			String name = request.getParameter("name");
+			int userid = Integer.valueOf(request.getParameter("userid"));
+			String description = request.getParameter("description");
+			outMap.putAll(UserEngine.improveUserInfo(userid, emname, name, description));
 		}
 		JsonUtil.renderJson(response, outMap);
 	}
