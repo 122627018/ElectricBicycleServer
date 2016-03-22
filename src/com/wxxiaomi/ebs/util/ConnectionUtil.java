@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class ConnectionUtil {
 	
-	private static String url= "jdbc:mysql://localhost:3306/bicycle";
+	private static String url= "jdbc:mysql://localhost:3306/bicycle?characterEncoding=UTF-8";
 	private static String user = "root";
 	private static String password = "root";
 //	private static String url= "jdbc:mysql://qdm175613403.my3w.com/qdm175613403_db";

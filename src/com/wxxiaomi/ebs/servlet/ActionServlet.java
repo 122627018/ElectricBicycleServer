@@ -14,6 +14,7 @@ import com.wxxiaomi.ebs.engine.CarEngine;
 import com.wxxiaomi.ebs.engine.MapEngine;
 import com.wxxiaomi.ebs.engine.UserEngine;
 import com.wxxiaomi.ebs.util.JsonUtil;
+import com.wxxiaomi.ebs.util.MyUtils;
 
 public class ActionServlet extends HttpServlet {
 
@@ -43,7 +44,12 @@ public class ActionServlet extends HttpServlet {
 			System.out.println("phone="+phone);
 			outMap.putAll(UserEngine.checkPhone(phone));
 		}else if("register".equals(action)){
+			request.setCharacterEncoding("UTF-8");
 			String username = request.getParameter("username");
+//			System.out.println("username="+username);
+//			System.out.println(new String(username.getBytes("iso-8859-1"),"UTF-8"));
+//			System.out.println(new String(username.getBytes("UTF-8")));
+//			System.out.println("username="+URLEncoder.encode(username, "UTF-8"));
 			String password = request.getParameter("password");
 			System.out.println("username="+username+"--password="+password);
 			outMap.putAll(UserEngine.Register(username, password));
@@ -56,6 +62,7 @@ public class ActionServlet extends HttpServlet {
 			outMap.putAll(MapEngine.getNearByPerson(userid,latitude,longitude));
 		}else if("inituserinfo".equals(action)){
 			String username = request.getParameter("username");
+			
 			String password = request.getParameter("password");
 			outMap.putAll(UserEngine.initUserInfo(username, password));
 		}else if("getbicycleinfo".equals(action)){
@@ -68,10 +75,11 @@ public class ActionServlet extends HttpServlet {
 			outMap.putAll(CarEngine.bundBicycle(userid, carid));
 		}else if("improveuserinfo".equals(action)){
 			String emname = request.getParameter("username");
-			String name = request.getParameter("name");
+			String name = MyUtils.getCodePar(request.getParameter("name"));
+			System.out.println("name="+name);
 			int userid = Integer.valueOf(request.getParameter("userid"));
-			String description = request.getParameter("description");
-			outMap.putAll(UserEngine.improveUserInfo(userid, emname, name, description));
+			String description =  MyUtils.getCodePar(request.getParameter("description"));
+			outMap.putAll(UserEngine.improveUserInfo(userid, emname, "王浩明ceshi", description));
 		}
 		JsonUtil.renderJson(response, outMap);
 	}
