@@ -79,7 +79,7 @@ public class ActionServlet extends HttpServlet {
 			System.out.println("name="+name);
 			int userid = Integer.valueOf(request.getParameter("userid"));
 			String description =  MyUtils.getCodePar(request.getParameter("description"));
-			outMap.putAll(UserEngine.improveUserInfo(userid, emname, "王浩明ceshi", description));
+			outMap.putAll(UserEngine.improveUserInfo(userid, emname, name, description));
 		}
 		JsonUtil.renderJson(response, outMap);
 	}

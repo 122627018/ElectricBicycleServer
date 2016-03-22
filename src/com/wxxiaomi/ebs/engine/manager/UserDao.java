@@ -34,6 +34,9 @@ public class UserDao {
 		List<UserCommonInfo> result = new ArrayList<UserCommonInfo>();
 		Connection conn = null;
 		try {
+			if(list.size() == 0){
+				return result;
+			}
 			String temp = "(";
 			for (int i = 0; i < list.size(); i++) {
 				if (i == 0) {

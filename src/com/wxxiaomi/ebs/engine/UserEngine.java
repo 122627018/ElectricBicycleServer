@@ -74,7 +74,6 @@ public class UserEngine {
 			if (stateCode == 200) {
 				JsonNode jsonNode = friends.get("data");
 				List<String> list = jsonToArray(jsonNode);
-
 				List<UserCommonInfo> userListByEMUsername = UserDao
 						.getUserListByEMUsername(list);
 				return getResponseMap(200, "", new Format_InitUserData(userListByEMUsername));
