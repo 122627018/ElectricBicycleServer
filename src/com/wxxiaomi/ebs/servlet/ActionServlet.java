@@ -39,17 +39,12 @@ public class ActionServlet extends HttpServlet {
 			String password = request.getParameter("password");
 			outMap.putAll(UserEngine.Login(username, password));
 		}else if("checkphone".equals(action)){
-			
 			String phone  = request.getParameter("phone");
 			System.out.println("phone="+phone);
 			outMap.putAll(UserEngine.checkPhone(phone));
 		}else if("register".equals(action)){
 			request.setCharacterEncoding("UTF-8");
 			String username = request.getParameter("username");
-//			System.out.println("username="+username);
-//			System.out.println(new String(username.getBytes("iso-8859-1"),"UTF-8"));
-//			System.out.println(new String(username.getBytes("UTF-8")));
-//			System.out.println("username="+URLEncoder.encode(username, "UTF-8"));
 			String password = request.getParameter("password");
 			System.out.println("username="+username+"--password="+password);
 			outMap.putAll(UserEngine.Register(username, password));
@@ -62,7 +57,6 @@ public class ActionServlet extends HttpServlet {
 			outMap.putAll(MapEngine.getNearByPerson(userid,latitude,longitude));
 		}else if("inituserinfo".equals(action)){
 			String username = request.getParameter("username");
-			
 			String password = request.getParameter("password");
 			outMap.putAll(UserEngine.initUserInfo(username, password));
 		}else if("getbicycleinfo".equals(action)){

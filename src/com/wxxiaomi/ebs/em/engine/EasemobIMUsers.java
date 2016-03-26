@@ -40,23 +40,22 @@ public class EasemobIMUsers {
 		// check Constants.APPKEY format
 		if (!HTTPClientUtils.match("^(?!-)[0-9a-zA-Z\\-]+#[0-9a-zA-Z]+",
 				Constants.APPKEY)) {
-			System.out.println("Bad format of Constants.APPKEY: "
-					+ Constants.APPKEY);
+//			System.out.println("Bad format of Constants.APPKEY: "
+//					+ Constants.APPKEY);
 			objectNode.put("message", "Bad format of Constants.APPKEY");
 			return objectNode;
 		}
 		objectNode.removeAll();
-		// check properties that must be provided
 		if (null != dataNode && !dataNode.has("username")) {
-			System.out
-					.println("Property that named username must be provided .");
+//			System.out
+//					.println("Property that named username must be provided .");
 			objectNode.put("message",
 					"Property that named username must be provided .");
 			return objectNode;
 		}
 		if (null != dataNode && !dataNode.has("password")) {
-			System.out
-					.println("Property that named password must be provided .");
+//			System.out
+//					.println("Property that named password must be provided .");
 			objectNode.put("message",
 					"Property that named password must be provided .");
 			return objectNode;
@@ -65,7 +64,8 @@ public class EasemobIMUsers {
 			objectNode = HTTPClientUtils.sendHTTPRequest(EndPoints.USERS_URL,
 					credential, dataNode, HTTPMethod.METHOD_POST);
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+//			throw new 
 		}
 		return objectNode;
 	}

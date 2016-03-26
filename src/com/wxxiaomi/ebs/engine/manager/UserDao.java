@@ -109,22 +109,11 @@ public class UserDao {
 					.prepareStatement("insert into bicycle_user_personal values(null,?,?)");
 			ps.setString(1, username);
 			ps.setString(2, password);
-			// ps.setString(3, name);
 			if (ps.executeUpdate() > 0) {
 				ps = conn.prepareStatement("select max(id) from bicycle_user_personal");
 				ResultSet rs = ps.executeQuery();
 				if (rs.next()) {
 					User user = new User(rs.getInt(1), username, password, null);
-//					ps = conn
-//							.prepareStatement("insert into bicycle_user_common values(?,?,'demo',?)");
-//					ps.setInt(1, user.getId());
-//					ps.setString(2, name);
-//					ps.setString(3, username);
-//					if (ps.executeUpdate() > 0) {
-//						user.setUserCommonInfo(getUserCommonInfoById(user
-//								.getId()));
-//						return user;
-//					}
 					return user;
 				}
 			}
