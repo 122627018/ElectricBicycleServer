@@ -25,7 +25,18 @@ public class NearByPerson {
 		public void setLocat(double[] locat) {
 			this.locat = locat;
 		}
+		public UserLocat(UserCommonInfo userCommonInfo, double[] locat) {
+			super();
+			this.userCommonInfo = userCommonInfo;
+			this.locat = locat;
+		}
+		public UserLocat() {
+			super();
+		}
+		
+		
 	}
+	
 
 
 	public List<UserLocat> getUserLocatList() {

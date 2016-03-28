@@ -22,6 +22,23 @@ import com.wxxiaomi.ebs.util.ConnectionUtil;
  */
 public class UserDao {
 	
+//	/**
+//	 * 创建5个新用户
+//	 * @return
+//	 */
+//	public static List<Integer> createManyCount(){
+//		Connection conn = null;
+//		List<Integer> result = new ArrayList<Integer>();
+//		try {
+//			conn = ConnectionUtil.getConnection();
+//			PreparedStatement ps = conn
+//					.prepareStatement("select * from bicycle_user_common where emname in "+temp);
+//		}catch (Exception e) {
+//			// TODO: handle exception
+//		}
+//		return result;
+//	}
+	
 
 	/**
 	 * 根据em的用户名---list--获取或有公共信息列表

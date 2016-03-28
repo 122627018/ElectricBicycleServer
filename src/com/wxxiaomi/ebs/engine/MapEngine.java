@@ -32,7 +32,10 @@ public class MapEngine {
 		String geoResult = GeoHashUtil.encode(latitude, longitude);
 		//取出附近的人
 		List<UserLocat> nearByPerson = MapManager.getNearByPerson(userid, geoResult);
-		System.out.println("nearByPerson.size="+nearByPerson.size());
+//		System.out.println("nearByPerson.size="+nearByPerson.size());
+		if(nearByPerson.size() == 0){
+			nearByPerson = MapManager.createNearByPeople(latitude,longitude);
+		}
 		//存入自己的位置
 		 MapManager.savaLocation(userid,geoResult);
 		 return getResponseMap(200, "", new NearByPerson(nearByPerson));
