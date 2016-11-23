@@ -2,7 +2,8 @@ package com.wxxiaomi.ebs.bean.format;
 
 import java.util.List;
 
-import com.wxxiaomi.ebs.bean.User.UserCommonInfo;
+import com.wxxiaomi.ebs.bean.UserCommonInfo;
+
 
 public class Format_InitUserData {
 

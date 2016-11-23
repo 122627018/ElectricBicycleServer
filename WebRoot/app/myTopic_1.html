@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--   <title>我的生活</title> -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <!-- <link rel="shortcut icon" href="/favicon.ico"> -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+
+</head>
+
+<body>
+<!--  <img class="image-roll" src="./images/test.jpg" alt=""> -->
+<!-- 你的html代码 -->
+<!-- page集合的容器，里面放多个平行的.page，其他.page作为内联页面由路由控制展示 -->
+
+<!-- 单个page ,第一个.page默认被展示-->
+<div class="page page-current" id="index">
+    <!-- content应该拥有"pull-to-refresh-content"类,表示启用下拉刷新 -->
+    <div class="content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="20"
+         data-distance="100">
+        <!-- 默认的下拉刷新层 -->
+        <div class="pull-to-refresh-layer">
+            <div class="preloader"></div>
+            <div class="pull-to-refresh-arrow"></div>
+        </div>
+
+        <div class="list-container">
+
+            <div class="card demo-card-header-pic">
+                <div valign="bottom" class="card-header color-white no-border no-padding">
+                    <img class='card-cover'
+                         src="http://img.alicdn.com/tps/i4/TB1AdxNHVXXXXasXpXX0HY8HXXX-1024-1024.jpeg"
+                         alt="">
+                </div>
+                <div class="card-content">
+                    <div class="card-content-inner">
+                        <p class="color-gray">2015/01/15</p>
+
+                        <p>听说昨晚这里发生了很大的车祸</p>
+                    </div>
+                </div>
+                <div class="card-footer no-border">
+                    <a href="#" class="link">揭阳科技馆</a>
+                    <a href="#" class="link">删除</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-content-inner">
+                        <p class="color-gray">2015/01/15</p>
+
+                        <p> 这是一个用纯文本的简单卡片。但卡片可以包含自己的页头，页脚，列表视图，图像，和里面的任何元素。</p></div>
+                </div>
+                <div class="card-footer no-border">
+                    <a href="#" class="link">揭阳科技馆</a>
+                    <a href="#" class="link">删除</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="infinite-scroll-preloader">
+            <div class="preloader"></div>
+        </div>
+    </div>
+</div>
+
+
+<script type='text/javascript' src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+
+<script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+<script>
+    $.init();
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+    });
+    // 加载flag
+    var loading = false;
+    // 最多可加载的条目
+    var maxItems = 100;
+
+    // 每次加载添加多少条目
+    var itemsPerLoad = 2;
+
+    function addItems(number, lastIndex) {
+        // 生成新条目的HTML
+        var html = '';
+        for (var i = lastIndex + 1; i <= lastIndex + number; i++) {
+            html += '<li class="card facebook-card">' +
+                    '<div class="card-header no-border">' +
+                    '<div style="float:right">' +
+                    '<span style="color:#f97711;font-size:13px;">置顶</span>' +
+                    '</div>' +
+                    '<div class="facebook-avatar"><img src="./images/user.png" width="44" height="44"></div>' +
+                    '<div class="facebook-name">李女士</div>' +
+                    '<div class="facebook-date">一天前&nbsp&nbsp&nbsp&nbsp&nbsp来自<span style="color:#f97711">健康养生话题</span></div>' +
+                    '</div>' +
+                    '<div class="text-c">测试2测试2测试2测试2测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试</div>' +
+                    '<div class="card-content"><img class="img-c" src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg">' +
+                    '<img class="img-c" src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg">' +
+                    '<img class="img-c" src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg"></div>' +
+                    '<div class="card-footer no-border" style="    width: 220px;padding-left:5px;background-color:#fff">' +
+                    '<div class="foot-c"><a href="#"><i class="fa fa-eye icon-c"></i>231</a></div>' +
+                    '<div class="foot-c"><a href="#"><i class="fa fa-thumbs-o-up icon-c"></i>231</a></div>' +
+                    '<div class="foot-c"><a href="#"><i class="fa fa-comment-o icon-c"></i>231</a></div>' +
+                    '</div>' +
+                    '</li>'
+        }
+        // 添加新条目
+        $('.infinite-scroll-bottom .list-container').append(html);
+
+    }
+    //预先加载20条
+    addItems(itemsPerLoad, 0);
+
+    // 上次加载的序号
+
+    var lastIndex = 20;
+
+    // 注册'infinite'事件处理函数
+    $(document).on('infinite', '.infinite-scroll-bottom', function () {
+        // 如果正在加载，则退出
+        if (loading) return;
+        // 设置flag
+        loading = true;
+        // 模拟1s的加载过程
+        setTimeout(function () {
+            // 重置加载flag
+            loading = false;
+            if (lastIndex >= maxItems) {
+                // 加载完毕，则注销无限加载事件，以防不必要的加载
+                $.detachInfiniteScroll($('.infinite-scroll'));
+                // 删除加载提示符
+                $('.infinite-scroll-preloader').remove();
+                return;
+            }
+
+            // 添加新条目
+            addItems(itemsPerLoad, lastIndex);
+            // 更新最后加载的序号
+            lastIndex = $('.list-container li').length;
+            //容器发生改变,如果是js滚动，需要刷新滚动
+            $.refreshScroller();
+        }, 1000);
+    });
+
+    $(document).on('refresh', '.pull-to-refresh-content', function (e) {
+        // 模拟2s的加载过程
+        setTimeout(function () {
+            var cardNumber = $(e.target).find('.card').length + 1;
+            var cardHTML = '<div class="card">' +
+                    '<div class="card-header">card' + cardNumber + '</div>' +
+                    '<div class="card-content">' +
+                    '<div class="card-content-inner">' +
+                    '这里是第' + cardNumber + '个card，下拉刷新会出现第' + (cardNumber + 1) + '个card。' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+
+            $(e.target).find('.card-container').prepend(cardHTML);
+            // 加载完毕需要重置
+            $.pullToRefreshDone('.pull-to-refresh-content');
+        }, 2000);
+    });
+</script>
+</body>
+
+</html>

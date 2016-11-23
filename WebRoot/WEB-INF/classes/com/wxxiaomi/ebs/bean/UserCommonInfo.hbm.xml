@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.wxxiaomi.ebs.bean">
+    <class name="UserCommonInfo" table="bicycle_user_common">
+    	<id name="id" length="11">
+			<generator class="native"/>
+		</id>
+       <property name="name" length="20" not-null="true"/>
+       <property name="head" length="240" />
+       <property name="emname" length="30" not-null="true"/>
+    </class>
+</hibernate-mapping>

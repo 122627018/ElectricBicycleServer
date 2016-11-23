@@ -2,54 +2,25 @@ package com.wxxiaomi.ebs.bean.format;
 
 import java.util.List;
 
-import com.wxxiaomi.ebs.bean.User.UserCommonInfo;
+import com.wxxiaomi.ebs.bean.Locat;
+
 
 
 public class NearByPerson {
-	private List<UserLocat> userLocatList;
-
-	
-	public static class UserLocat{
-		private UserCommonInfo userCommonInfo;
-		private double[] locat;
-		
-		public UserCommonInfo getUserCommonInfo() {
-			return userCommonInfo;
-		}
-		public void setUserCommonInfo(UserCommonInfo userCommonInfo) {
-			this.userCommonInfo = userCommonInfo;
-		}
-		public double[] getLocat() {
-			return locat;
-		}
-		public void setLocat(double[] locat) {
-			this.locat = locat;
-		}
-		public UserLocat(UserCommonInfo userCommonInfo, double[] locat) {
-			super();
-			this.userCommonInfo = userCommonInfo;
-			this.locat = locat;
-		}
-		public UserLocat() {
-			super();
-		}
-		
-		
-	}
-	
+	private List<Locat> userLocatList;
 
 
-	public List<UserLocat> getUserLocatList() {
+	public List<Locat> getUserLocatList() {
 		return userLocatList;
 	}
 
 
-	public void setUserLocatList(List<UserLocat> userLocatList) {
+	public void setUserLocatList(List<Locat> userLocatList) {
 		this.userLocatList = userLocatList;
 	}
 
 
-	public NearByPerson(List<UserLocat> userLocatList) {
+	public NearByPerson(List<Locat> userLocatList) {
 		super();
 		this.userLocatList = userLocatList;
 	}

@@ -1,10 +1,16 @@
 package com.wxxiaomi.ebs.bean.format;
 
 
+import java.io.Serializable;
+
 import com.wxxiaomi.ebs.bean.User;
 
-public class Format_Login {
+public class Format_Login implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private User userInfo;
 //	private List<UserCommonInfo> friendList;
 

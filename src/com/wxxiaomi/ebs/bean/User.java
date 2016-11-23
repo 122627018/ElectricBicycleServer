@@ -1,7 +1,13 @@
 package com.wxxiaomi.ebs.bean;
 
-public class User {
+import java.io.Serializable;
 
+public class User implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String username;
 	private String password;
@@ -9,6 +15,20 @@ public class User {
 	
 	
 	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password="
+				+ password + ", userCommonInfo=" + userCommonInfo + "]";
+	}
+
+
+
+	public User() {
+		super();
+	}
+
+
+
 	public int getId() {
 		return id;
 	}
@@ -75,48 +95,6 @@ public class User {
 
 
 
-	public static class UserCommonInfo{
-		private int userid;
-		private String name;
-		private String head;
-		private String emname;
-		
-		public String getEmname() {
-			return emname;
-		}
-		public void setEmname(String emname) {
-			this.emname = emname;
-		}
-		public String getName() {
-			return name;
-		}
-		public void setName(String name) {
-			this.name = name;
-		}
-		public String getHead() {
-			return head;
-		}
-		public void setHead(String head) {
-			this.head = head;
-		}
-		public int getUserid() {
-			return userid;
-		}
-		public void setUserid(int userid) {
-			this.userid = userid;
-		}
-		public UserCommonInfo(int userid, String name, String head,String emname) {
-			super();
-			this.userid = userid;
-			this.name = name;
-			this.head = head;
-			this.emname = emname;
-		}
-		
-		
-		
-	}
-	
 	
 	
 	

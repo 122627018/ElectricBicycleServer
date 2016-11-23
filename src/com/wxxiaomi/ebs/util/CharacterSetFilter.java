@@ -11,7 +11,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class CharacterSetFilter implements Filter {
+import org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter;
+
+public class CharacterSetFilter extends StrutsPrepareAndExecuteFilter implements Filter {
 
 	public void destroy() {	}
 
@@ -19,7 +21,7 @@ public class CharacterSetFilter implements Filter {
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
-		
+//		System.out.println("doFilter");
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
