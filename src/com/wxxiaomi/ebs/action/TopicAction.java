@@ -73,7 +73,7 @@ public class TopicAction {
 				from_nick, from_head, to_uid, to_unick);
 		service.publishComment(comment);
 		state = "200";
-		infos = "success";
+		infos = comment;
 		return "publishComment";
 	}
 
