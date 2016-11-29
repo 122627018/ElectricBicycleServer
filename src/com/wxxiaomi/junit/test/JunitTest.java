@@ -126,12 +126,29 @@ public class JunitTest {
 			Topic p = new Topic();
 			p.setContent("今天好像这里发生了火灾" + i);
 			p.setTime(new Date());
-			p.setPics("/upload/demodemo1478183543431.jpg#/upload/demodemo1478576267463.jpg#/upload/demodemo1478576352769.jpg");
+			p.setPics("http://mttext.oss-cn-shanghai.aliyuncs.com/25fba402-b5de-4c87-a24c-1e77ce4e4e80.jpg#http://mttext.oss-cn-shanghai.aliyuncs.com/d8c6ce7a-00b0-4ff2-849f-0d4c1e5bfc9b.jpg#http://mttext.oss-cn-shanghai.aliyuncs.com/7a1cf774-efd6-49ae-b1a2-84747a88fef2.jpg#http://mttext.oss-cn-shanghai.aliyuncs.com/5fe2666c-2264-405c-8943-85e8586dc411.jpg#http://mttext.oss-cn-shanghai.aliyuncs.com/ab733356-0066-4b91-a078-ca26cd382d95.jpg#http://mttext.oss-cn-shanghai.aliyuncs.com/60e7d603-a338-43f5-ac50-b36657b1b04b.jpg");
 			UserCommonInfo info = new UserCommonInfo();
 			info.setId(10+i);
 			p.setUserCommonInfo(info);
 			topicService.publishTopic(p);
 		}
+	}
+	
+	@Test
+	public void testPublishTopic2() {
+			UserCommonInfo userInfo = new UserCommonInfo();
+			userInfo.setId(25);
+			Topic t = new Topic();
+			t.setContent("asdasdasdsa");
+			t.setPics("http://mttext.oss-cn-shanghai.aliyuncs.com/25fba402-b5de-4c87-a24c-1e77ce4e4e80.jpg#http://mttext.oss-cn-shanghai.aliyuncs.com/d8c6ce7a-00b0-4ff2-849f-0d4c1e5bfc9b.jpg#http://mttext.oss-cn-shanghai.aliyuncs.com/7a1cf774-efd6-49ae-b1a2-84747a88fef2.jpg#http://mttext.oss-cn-shanghai.aliyuncs.com/5fe2666c-2264-405c-8943-85e8586dc411.jpg#http://mttext.oss-cn-shanghai.aliyuncs.com/ab733356-0066-4b91-a078-ca26cd382d95.jpg#http://mttext.oss-cn-shanghai.aliyuncs.com/60e7d603-a338-43f5-ac50-b36657b1b04b.jpg");
+			t.setTime(new Date());
+			t.setCcount(0);
+			t.setLocat("ws4wpf4wk48t");
+			t.setLocat_tag("科技馆");
+			t.setHot(0);
+			t.setUserCommonInfo(userInfo);
+			t.setTitle("");
+			topicService.publishTopic(t);
 	}
 
 	@Test

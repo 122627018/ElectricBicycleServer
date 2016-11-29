@@ -66,7 +66,7 @@ public class TopicServiceImpl implements TopicService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Topic> getTopicByUserid(int userid) {
-		String queryString = "from Topic t where t.userCommonInfo.id=?";
+		String queryString = "from Topic t where t.userCommonInfo.id=? order by t.id desc";
 		Query queryObject = factory.getCurrentSession()
 				.createQuery(queryString);
 		queryObject.setParameter(0, userid);

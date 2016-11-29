@@ -157,7 +157,7 @@
 			sendGetRequest(pars, function(responseData) {
 				loading = false;
 				var result = eval("(" + responseData + ")");
-				//showLog("result=" + responseData);
+				showLog("result=" + responseData);
 				addItemss(result);
 				if (pageStart != 0 && result.infos.length == 0) {
 					isComplete = true;
@@ -208,13 +208,14 @@
 		function addItemss(datas) {
 			var number = datas.infos.length;
 			list = datas;
-			//showLog("number=" + number+"last="+last);
+			showLog("number=" + number+"last="+last);
 			// 生成新条目的HTML
 			var html = '';
 			for ( var i = last + 1; i <= number + last; i++) {
 				//showLog(datas.infos[i-1-last].id);
+				showLog("i="+datas.infos[i - 1 - last].pics);
 				if (datas.infos[i - 1 - last].pics == "") {
-
+					
 					html += '<div class="card" ><div class="card-content" data-topicid='
 							+ datas.infos[i - 1 - last].id
 							+ ' onClick="onItemClick(this)"><div class="card-content-inner">'
@@ -225,7 +226,7 @@
 							+ datas.infos[i - 1 - last].content
 							+ '</p>'
 							+ '</div></div><div class="card-footer no-border">'
-							+ '<a href="#" class="link">揭阳科技馆</a></div></div>'
+							+ '<a href="#" class="link">揭阳科技馆</a></div></div>';
 				} else {
 					html += '<div class="list-container" ><div  data-topicid='
 							+ datas.infos[i - 1 - last].id
@@ -238,10 +239,11 @@
 							+ '</p> <p>'
 							+ datas.infos[i - 1 - last].content
 							+ '</p>'
-							+ '</div></div><div class="card-footer no-border"><a href="#" class="link">揭阳科技馆</a></div></div></div>'
+							+ '</div></div><div class="card-footer no-border"><a href="#" class="link">揭阳科技馆</a></div></div></div>';
 				}
 			}
 			last += number;
+			showLog("html:"+html);
 			// 添加新条目
 			$('.infinite-scroll-bottom .list-container').append(html);
 			loading = false;

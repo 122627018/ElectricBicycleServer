@@ -120,9 +120,7 @@
 							+ '</div></div><div class="card-footer no-border">'
 							+ '<a href="#" class="link">揭阳科技馆</a></div></div>'
 				} else {
-					html += '<div class="list-container" id="info_item_'+datas.infos[i - 1].id+'"><div  data-topicid='
-							+ datas.infos[i - 1].id
-							+ ' onClick="onItemClick(this)"><div class="card demo-card-header-pic">'
+					html += '<div class="card demo-card-header-pic" id="info_'+datas.infos[i - 1].id+'_item">'
 							+ '<div valign="bottom" class="card-header color-white no-border no-padding" >'
 							+ '<img class="card-cover" src="'+datas.infos[i-1].picss[0]+'" alt="" height="240" >'
 							+ '</div> <div class="card-content"> <div class="card-content-inner">'
@@ -133,7 +131,7 @@
 							+ '</p>'
 							+ '</div></div><div class="card-footer no-border"><a href="#" class="link">揭阳科技馆</a><a href="#" class="link" onclick="onDelete('
 							+ datas.infos[i - 1].id
-							+ ')">删除</a></div></div></div>'
+							+ ')">删除</a></div></div>'
 				}
 			}
 			// 添加新条目
@@ -151,14 +149,10 @@
 			sendGetRequest(pars, function(responseData) {
 				 showLog("responseData:"+responseData);
 				var result = eval("(" + responseData + ")");
-				var tag = "#info_item_"+delate_id;
-				showLog("tag:"+tag);
-				tag = "#"+tag;
+				var tag = "#info_"+delate_id+"_item";
+				//showLog("tag:"+tag);
 				$(tag).remove();
-
-				
 			});
-			
 		}
 	</script>
 </body>
