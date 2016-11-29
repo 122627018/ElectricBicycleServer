@@ -43,6 +43,18 @@ public class TopicAction {
 		state = "200";
 		return "one";
 	}
+	
+	public String topicDelete(){
+		boolean deleteTopic = service.deleteTopic(topicId);
+		if(deleteTopic){
+			state = "200";
+			infos = "success";
+		}else{
+			state = "404";
+			System.out.println("删除失败");
+		}
+		return "topicDelete";
+	}
 
 	public String commentList() {
 		System.out.println("getComment->topicId=" + topicId);
@@ -95,6 +107,7 @@ public class TopicAction {
 		userInfo.setId(userid);
 		Topic t = new Topic();
 		t.setContent(content);
+		System.out.println("pics:"+pics);
 		t.setPics(pics);
 		t.setTime(new Date());
 		t.setCcount(0);

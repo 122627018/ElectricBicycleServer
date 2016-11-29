@@ -155,10 +155,25 @@
 					responseCallback) {
 				addPicture(data);
 			});
+			bridge.registerHandler("callMe", function(data,
+					responseCallback) {
+				showLog("adapterImgTag");
+				doMe(data);
+			});
+		
+		
+		}
+		
+		function doMe(data){
+		showLog("adapterImgTag->data:"+data);
+		$("#info_img").html("");
+		$("#info_img").prepend(data);
 		}
 		
 		function addPicture(tag){
+		showLog("addPicture->tag:"+tag);
 			showLog("tag:"+tag);
+			$("#info_img").html("");
 			$("#info_img").prepend(tag);
 		}
 

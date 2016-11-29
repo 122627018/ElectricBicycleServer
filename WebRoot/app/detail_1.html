@@ -44,15 +44,7 @@
 				<div class="card-content-inner">
 					<p class="color-gray" id="info_time"></p>
 					<p id="info_content"></p>
-					<span><img
-						src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2033765348,1346395611&fm=116&gp=0.jpg"
-						width="50"> </span> <span><img
-						src="http://img06.tooopen.com/images/20161112/tooopen_sl_185726827722.jpg"
-						width="50"> </span> <span><img
-						src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg"
-						width="50"> </span> <span><img
-						src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg"
-						width="50"> </span>
+					<span id="info_img_content">
 				</div>
 
 			</div>
@@ -144,6 +136,15 @@
 			$("#info_user_description").html("假装是个人签名");
 			$("#info_content").html(infos.content);
 			$("#info_time").html(infos.time);
+			if(infos.picss!=null){
+				var html = '';
+				
+				for(var i=0;i<infos.picss.length;i++){
+					html+= '<img src="'+infos.picss[i]+'" height="60" width="60"> </span>';
+				}
+				$("#info_img_content").prepend(html);
+				
+			}
 		}
 
 		//回复按钮被点击的时候

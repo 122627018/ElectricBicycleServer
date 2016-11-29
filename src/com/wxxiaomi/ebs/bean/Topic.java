@@ -1,5 +1,6 @@
 package com.wxxiaomi.ebs.bean;
 
+import java.util.Arrays;
 import java.util.Date;
 
 
@@ -14,6 +15,7 @@ public class Topic {
 	private int ccount;
 	private String locat;
 	private String locat_tag;
+	private String picss[];
 	
 	public int getId() {
 		return id;
@@ -44,6 +46,7 @@ public class Topic {
 		return pics;
 	}
 	public void setPics(String pics) {
+		picss = pics.split("#");
 		this.pics = pics;
 	}
 	public String getTitle() {
@@ -79,12 +82,19 @@ public class Topic {
 	public Topic() {
 		super();
 	}
+	public String[] getPicss() {
+		return picss;
+	}
+	public void setPicss(String[] picss) {
+		this.picss = picss;
+	}
 	@Override
 	public String toString() {
 		return "Topic [id=" + id + ", userCommonInfo=" + userCommonInfo
 				+ ", content=" + content + ", time=" + time + ", pics=" + pics
 				+ ", title=" + title + ", hot=" + hot + ", ccount=" + ccount
-				+ ", locat=" + locat + ", locat_tag=" + locat_tag + "]";
+				+ ", locat=" + locat + ", locat_tag=" + locat_tag + ", picss="
+				+ Arrays.toString(picss) + "]";
 	}
 	
 	

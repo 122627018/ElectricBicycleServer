@@ -17,29 +17,51 @@
 </head>
 
 <body>
-	<div class="page page-current" id="index">
-		<!-- content应该拥有"pull-to-refresh-content"类,表示启用下拉刷新 -->
-		<div
-			class="content pull-to-refresh-content infinite-scroll infinite-scroll-bottom"
-			data-ptr-distance="20" data-distance="100">
-			<!-- 默认的下拉刷新层 -->
-			<div class="pull-to-refresh-layer">
-				<div class="preloader"></div>
-				<div class="pull-to-refresh-arrow"></div>
-			</div>
+	<div class="content">
+		<div class="page page-current" id="index">
+			<!-- content应该拥有"pull-to-refresh-content"类,表示启用下拉刷新 -->
+			<div
+				class="content pull-to-refresh-content infinite-scroll infinite-scroll-bottom"
+				data-ptr-distance="20" data-distance="100">
+				<!-- 默认的下拉刷新层 -->
+				<div class="pull-to-refresh-layer">
+					<div class="preloader"></div>
+					<div class="pull-to-refresh-arrow"></div>
+				</div>
 
-			<div class="list-container">
+				<div class="list-container">
+					<!-- Slider -->
+					<div class="swiper-container" data-space-between='10'>
+						<div class="swiper-wrapper">
+							<div class="swiper-slide">
+								<img
+									src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=4271053251,2424464488&fm=116&gp=0.jpg"
+									style="width: 100%;height:220px" alt="">
+							</div>
+							<div class="swiper-slide">
+								<img
+									src="//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i4/TB10rkPGVXXXXXGapXXXXXXXXXX_!!0-item_pic.jpg_320x320q60.jpg"
+									style="width: 100%;height:220px" alt="">
+							</div>
+							<div class="swiper-slide">
+								<img
+									src="//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i1/TB1kQI3HpXXXXbSXFXXXXXXXXXX_!!0-item_pic.jpg_320x320q60.jpg"
+									style="width: 100%;height:220px" alt="">
+							</div>
+						</div>
 
-				
+					</div>
 
-			</div>
-			<div class="infinite-scroll-preloader">
-				<div class="preloader"></div>
+
+
+				</div>
+				<div class="infinite-scroll-preloader">
+					<div class="preloader"></div>
+				</div>
 			</div>
 		</div>
+
 	</div>
-
-
 	<script type='text/javascript'
 		src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
 
@@ -56,7 +78,6 @@
 		$(document).ready(function() {
 
 		});
-
 		// 加载flag
 		var loading = false;
 		var isComplete = false;
@@ -74,7 +95,7 @@
 					"description" : "描述",
 					"callback" : "onRightBtnClick"
 				},
-				"floatBtn":{
+				"floatBtn" : {
 					"icon" : "R.mipmap.ic_notify_none",
 					"callback" : "onAddBtnClick"
 				}
@@ -85,6 +106,7 @@
 		function register(bridge) {
 			bridge.registerHandler("onEditCallback", function(data,
 					responseCallback) {
+				showSnack();
 				if (data) {
 					$('.infinite-scroll-bottom .list-container').children()
 							.remove();
@@ -96,12 +118,22 @@
 					responseCallback) {
 				onRightBtnClick();
 			});
-			
+
 			bridge.registerHandler("onAddBtnClick", function(data,
 					responseCallback) {
 				onEditClick();
 			});
 		}
+
+		// 添加'refresh'监听器
+		$(document).on('refresh', '.pull-to-refresh-content', function(e) {
+			last = 0;
+			getData3(0);
+
+			// 加载完毕需要重置
+			
+
+		});
 
 		// 注册'infinite'事件处理函数
 		$(document).on('infinite', '.infinite-scroll-bottom', function() {
@@ -114,33 +146,41 @@
 			getData3(last);
 		});
 
+		function showSnack() {
+			window.WebViewJavascriptBridge.callHandler('showSnack', "发表成功",
+					function(responseData) {
+					});
+		}
+
 		function getData3(pageStart) {
 			var pars = "url=android/topic_list&start=" + pageStart;
 			sendGetRequest(pars, function(responseData) {
 				loading = false;
 				var result = eval("(" + responseData + ")");
-				showLog("result=" + responseData);
+				//showLog("result=" + responseData);
 				addItemss(result);
 				if (pageStart != 0 && result.infos.length == 0) {
 					isComplete = true;
 					$.detachInfiniteScroll($('.infinite-scroll'));
 					$('.infinite-scroll-preloader').remove();
+				} else {
+					$.pullToRefreshDone('.pull-to-refresh-content');
 				}
 				// 更新最后加载的序号
 				//last = $('.list-container li').length;
 				//容器发生改变,如果是js滚动，需要刷新滚动
 				$.refreshScroller();
 
-				loadComplete();
 			});
 		}
 
 		function onItemClick(ItemInfo) {
 			//showLog("onItemClick");
 			var topicid = ItemInfo.getAttribute("data-topicid");
-			showLog("topicid=" + topicid);
-			toH5Page('http://192.168.1.46:8080/ElectricBicycleServer/app/detail_1.html', topicid,
-					"false", "");
+			//showLog("topicid=" + topicid);
+			toH5Page(
+					'http://192.168.1.46:8080/ElectricBicycleServer/app/detail_1.html',
+					topicid, "false", "");
 		}
 
 		function onHeadClick(view) {
@@ -149,14 +189,16 @@
 		}
 
 		function onEditClick() {
-			toH5Page('file:///android_asset/topic_publish.html', "", "true",
-					"onEditCallback");
+			toH5Page(
+					'http://192.168.1.46:8080/ElectricBicycleServer/app/topic_publish2.html',
+					"", "true", "onEditCallback");
 		}
 
 		function onRightBtnClick() {
-			showLog("右上角被点击拉");
-			var pages = [ 'http://192.168.1.46:8080/ElectricBicycleServer/app/myTopic_1.html',
-					'http://192.168.1.46:8080/ElectricBicycleServer/app/reply_1.html' ];
+			//showLog("右上角被点击拉");
+			var pages = [
+					'http://192.168.1.46:8080/ElectricBicycleServer/app/myTopic_1.html',
+					'http://192.168.1.46:8080/ElectricBicycleServer/app/reply_1.html'];
 			var mmmData = [ 'asd', 'asd' ];
 			var title = '个人页面';
 			var tabs = [ '我的帖子', '我的消息' ];
@@ -170,20 +212,32 @@
 			// 生成新条目的HTML
 			var html = '';
 			for ( var i = last + 1; i <= number + last; i++) {
-				showLog(datas.infos[i-1-last].id);
-				if (datas.infos[i-1-last].pics == "") {
-				
-					html +=	'<div class="card" ><div class="card-content" data-topicid='+datas.infos[i-1-last].id+' onClick="onItemClick(this)"><div class="card-content-inner">'
-							+'<p class="color-gray">'+datas.infos[i-1-last].time+'</p>'
-							+'<p>'+datas.infos[i-1-last].content+'</p>'
-						+'</div></div><div class="card-footer no-border">'
-						+'<a href="#" class="link">揭阳科技馆</a></div></div>'
+				//showLog(datas.infos[i-1-last].id);
+				if (datas.infos[i - 1 - last].pics == "") {
+
+					html += '<div class="card" ><div class="card-content" data-topicid='
+							+ datas.infos[i - 1 - last].id
+							+ ' onClick="onItemClick(this)"><div class="card-content-inner">'
+							+ '<p class="color-gray">'
+							+ datas.infos[i - 1 - last].time
+							+ '</p>'
+							+ '<p>'
+							+ datas.infos[i - 1 - last].content
+							+ '</p>'
+							+ '</div></div><div class="card-footer no-border">'
+							+ '<a href="#" class="link">揭阳科技馆</a></div></div>'
 				} else {
-					html += '<div class="list-container" ><div  data-topicid='+datas.infos[i-1-last].id+' onClick="onItemClick(this)"><div class="card demo-card-header-pic">'
+					html += '<div class="list-container" ><div  data-topicid='
+							+ datas.infos[i - 1 - last].id
+							+ ' onClick="onItemClick(this)"><div class="card demo-card-header-pic">'
 							+ '<div valign="bottom" class="card-header color-white no-border no-padding" >'
-							+ '<img class="card-cover" src="http://img.alicdn.com/tps/i4/TB1AdxNHVXXXXasXpXX0HY8HXXX-1024-1024.jpeg" alt="">'
+							+ '<img class="card-cover" src="'+datas.infos[i-1-last].picss[0]+'" alt="" height="240" >'
 							+ '</div> <div class="card-content"> <div class="card-content-inner">'
-							+ '<p class="color-gray">'+datas.infos[i-1-last].time+'</p> <p>'+datas.infos[i-1-last].content+'</p>'
+							+ '<p class="color-gray">'
+							+ datas.infos[i - 1 - last].time
+							+ '</p> <p>'
+							+ datas.infos[i - 1 - last].content
+							+ '</p>'
 							+ '</div></div><div class="card-footer no-border"><a href="#" class="link">揭阳科技馆</a></div></div></div>'
 				}
 			}
@@ -192,8 +246,6 @@
 			$('.infinite-scroll-bottom .list-container').append(html);
 			loading = false;
 		}
-		
-		
 	</script>
 </body>
 
