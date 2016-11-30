@@ -65,10 +65,24 @@ public interface TopicService {
 	boolean deleteComment(int userid,int comment_id);
 	
 	/**
-	 * 获取回复某个用户的所有评论
+	 * 获取回复某个用户的所有回复
 	 * @param userid
 	 * @return
 	 */
 	List<Comment> getUserReply(int userid);
+	
+	/**
+	 * 获取某个用户所得到的所有评论
+	 * @param userid
+	 * @return
+	 */
+	List<Comment> getUserTopicComment(int userid);
+	
+	/**
+	 * 获取某个用户发出去的所有评论(包括回复)
+	 * @param useid
+	 * @return
+	 */
+	List<Comment> getUserDoReply(int useid);
 
 }

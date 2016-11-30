@@ -36,6 +36,14 @@ public class TopicAction {
 	private String to_unick;
 	private int topicId;
 	
+	public String replyMeList(){
+		System.out.println("replyMeList,userid:"+userid);
+		List<Comment> userReply = service.getUserReply(userid);
+		state = "200";
+		infos = userReply;
+		return "replyMeList";
+	}
+	
 	public String one(){
 		System.out.println("getOneTopic->topicid:"+topicId);
 		Topic topic = service.getTopicById(topicId);

@@ -129,4 +129,24 @@ public class TopicServiceImpl implements TopicService {
 		return queryObject.list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Comment> getUserTopicComment(int userid) {
+		String queryString = "from Comment c where c.to_uid=? order by c.id desc";
+		Query queryObject = factory.getCurrentSession()
+				.createQuery(queryString);
+		queryObject.setParameter(0, userid);
+		return queryObject.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Comment> getUserDoReply(int userid) {
+		String queryString = "from Comment c where c.from_uid=? order by c.id desc";
+		Query queryObject = factory.getCurrentSession()
+				.createQuery(queryString);
+		queryObject.setParameter(0, userid);
+		return queryObject.list();
+	}
+
 }

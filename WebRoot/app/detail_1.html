@@ -18,7 +18,7 @@
 
 		<div class="card facebook-card">
 			<div class="card-header no-border">
-				<div class="facebook-avatar">
+				<div class="facebook-avatar" >
 					<img
 						src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg"
 						width="34" height="34">
@@ -35,9 +35,9 @@
 
 		<div class="card demo-card-header-pic">
 			<div valign="bottom"
-				class="card-header color-white no-border no-padding">
-				<img class='card-cover'
-					src="//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg"
+				class="card-header color-white no-border no-padding" id="info_big_content" style="display:none;">
+				<img class='card-cover' id="info_big_img"
+					style="width: 100%;height:220px"
 					alt="">
 			</div>
 			<div class="card-content">
@@ -145,15 +145,25 @@
 			$("#info_user_description").html("假装是个人签名");
 			$("#info_content").html(infos.content);
 			$("#info_time").html(infos.time);
-			if (infos.picss != null) {
+			
+			if (infos.pics != "") {
+				showLog("infos.pics !=null");
+				//$("#info_img_content").attr("display","block");
+				//$("#info_big_img").show();
+				$("#info_big_content").css('display','block');
 				var html = '';
-
 				for ( var i = 0; i < infos.picss.length; i++) {
-					html += '<img src="'+infos.picss[i]+'" height="60" width="60"> </span>';
-				}
+					if(i==0){
+						$("#info_big_img").attr("src",infos.picss[0]);
+					}else
+						html += '<img src="'+infos.picss[i]+'" height="60" width="60"> </span>';
+					}
 				$("#info_img_content").prepend(html);
-
+			}else{
+				
 			}
+			
+
 		}
 
 		var last = 0;
