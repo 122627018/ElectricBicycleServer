@@ -39,6 +39,7 @@
 			      <value>com/wxxiaomi/ebs/bean/Locat.hbm.xml</value>
 			      <value>com/wxxiaomi/ebs/bean/Topic.hbm.xml</value>
 			      <value>com/wxxiaomi/ebs/bean/Comment.hbm.xml</value>
+			      <value>com/wxxiaomi/ebs/bean/OptionLogs.hbm.xml</value>
 			    </list>
 		</property>
 		 <property name="hibernateProperties">

@@ -94,14 +94,15 @@
 		registerBridge(MyInit, register);
 		function MyInit(message, responseCallback) {
 			showLog("replt_MyInit");
+			getDataReplyMe();
+				getDataCommentMe();
 			responseCallback("initSuccess");
 		}
 		function register(bridge) {
 			bridge.registerHandler("bridgeInit", function(data,
 					responseCallback) {
 				//onDeleteComfirm();
-				getDataReplyMe();
-				getDataCommentMe();
+				
 			});
 		}
 

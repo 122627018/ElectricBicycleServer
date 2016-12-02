@@ -13,10 +13,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.fasterxml.jackson.core.JsonParser;
 import com.wxxiaomi.ebs.bean.Comment;
 import com.wxxiaomi.ebs.bean.Locat;
+import com.wxxiaomi.ebs.bean.OptionLogs;
 import com.wxxiaomi.ebs.bean.Topic;
 import com.wxxiaomi.ebs.bean.User;
 import com.wxxiaomi.ebs.bean.UserCommonInfo;
+import com.wxxiaomi.ebs.bean.constant.OptionType;
 import com.wxxiaomi.ebs.service.MapService;
+import com.wxxiaomi.ebs.service.OptLogsService;
 import com.wxxiaomi.ebs.service.TopicService;
 import com.wxxiaomi.ebs.service.UpLoadService;
 import com.wxxiaomi.ebs.service.UserService;
@@ -28,6 +31,7 @@ public class JunitTest {
 	static TopicService topicService;
 	static UpLoadService upLoadService;
 
+	static OptLogsService optionService;
 	@BeforeClass
 	public static void setUp() {
 		try {
@@ -37,7 +41,7 @@ public class JunitTest {
 			mapService = (MapService) act.getBean("mapServiceImpl");
 			topicService = (TopicService) act.getBean("topicServiceImpl");
 			upLoadService = (UpLoadService) act.getBean("upLoadServiceImpl");
-
+			optionService = (OptLogsService)act.getBean("optionLogsServiceImpl");
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -220,5 +224,23 @@ public class JunitTest {
 		for(Comment item : list){
 			System.out.println(item.toString());
 		}
+	}
+	
+	@Test
+	public void testInsertOption(){
+		OptionLogs log = new OptionLogs();
+		log.setContent("考虑考虑");
+		log.setCreate_time(new Date());
+		log.setLocat("ws4wpf4wk48t");
+		log.setLocat_tag("科技馆");
+		log.setObj_id(117);
+		log.setObj_type(OptionType.TOPIC_PUBLISH);
+		log.setPictures("http://mttext.oss-cn-shanghai.aliyuncs.com/49d4fc4f-d93a-449c-956c-6e5e1eb19891.jpg#http://mttext.oss-cn-shanghai.aliyuncs.com/4aa8f07c-4c0e-49cc-9201-c93c6f58b9ef.jpg#http://mttext.oss-cn-shanghai.aliyuncs.com/0754de10-2e40-4e74-9969-2ed394495562.jpg");
+		log.setTitle("发布了一条话题");
+		log.setUserid(25);
+		log.setFoor_note("");
+		optionService.insertOption(log);
+		
+		
 	}
 }

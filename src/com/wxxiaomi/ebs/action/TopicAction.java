@@ -9,8 +9,11 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 
 import com.wxxiaomi.ebs.bean.Comment;
+import com.wxxiaomi.ebs.bean.OptionLogs;
 import com.wxxiaomi.ebs.bean.Topic;
 import com.wxxiaomi.ebs.bean.UserCommonInfo;
+import com.wxxiaomi.ebs.bean.constant.OptionType;
+import com.wxxiaomi.ebs.service.OptLogsService;
 import com.wxxiaomi.ebs.service.TopicService;
 
 @Controller
@@ -18,6 +21,9 @@ public class TopicAction {
 
 	@Resource
 	TopicService service;
+	
+	@Resource
+	OptLogsService logService;
 	private int start = 0;
 
 	// 以下参数是提交topic的
@@ -80,9 +86,26 @@ public class TopicAction {
 		Comment comment = new Comment(0, topicId, content1, from_uid,
 				from_nick, from_head, to_uid, to_unick);
 		service.publishComment(comment);
+		LogCommentPublish(comment);
 		state = "200";
 		infos = comment;
 		return "publishComment";
+	}
+
+	private void LogCommentPublish(Comment comment) {
+		OptionLogs log = new OptionLogs();
+		log.setContent(comment.getContent());
+		log.setCreate_time(new Date());
+		log.setLocat("");
+		log.setLocat_tag("");
+		log.setObj_id(comment.getId());
+		log.setObj_type(OptionType.TOPIC_COMMENT);
+		log.setPictures("");
+		log.setTitle("发表了一条评论");
+		log.setUserid(comment.getFrom_uid());
+		log.setFoor_note(comment.getContent());
+		logService.insertOption(log);
+		
 	}
 
 	public String list() {
@@ -125,8 +148,25 @@ public class TopicAction {
 		t.setUserCommonInfo(userInfo);
 		t.setTitle("");
 		service.publishTopic(t);
+		LogTopicPublic(t);
 		infos = "success";
 		return "submitTopic";
+	}
+
+	private void LogTopicPublic(Topic t) {
+		OptionLogs log = new OptionLogs();
+		log.setContent(t.getContent());
+		log.setCreate_time(t.getTime());
+		log.setLocat(t.getLocat());
+		log.setLocat_tag(t.getLocat_tag());
+		log.setObj_id(t.getId());
+		log.setObj_type(OptionType.TOPIC_PUBLISH);
+		log.setPictures(t.getPics());
+		log.setTitle("发布了一条话题");
+		log.setUserid(t.getUserCommonInfo().id);
+		log.setFoor_note("");
+		logService.insertOption(log);
+		
 	}
 
 	private String state = "404";

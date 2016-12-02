@@ -7,22 +7,25 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 
+import com.wxxiaomi.ebs.bean.OptionLogs;
 import com.wxxiaomi.ebs.bean.User;
 import com.wxxiaomi.ebs.bean.UserCommonInfo;
 import com.wxxiaomi.ebs.bean.format.Format_InitUserData;
 import com.wxxiaomi.ebs.bean.format.Format_Login;
+import com.wxxiaomi.ebs.service.OptLogsService;
 import com.wxxiaomi.ebs.service.UserService;
 
 @Controller
 public class UserAction {
 
 	@Resource UserService service;
+	@Resource OptLogsService optService;
 	
 	public String username;
 	public String password;
 	Object infos;
 	public String state;
-	public String error;
+	public String error = "";
 	public String name;
 	
 	public String emnamelist;
@@ -31,7 +34,7 @@ public class UserAction {
 
 	private String emname;
 
-	private int userid;
+	public int userid;
 	
 	
 	public String getState() {
@@ -102,6 +105,15 @@ public class UserAction {
 		error = "";
 		infos = new Format_InitUserData(users);
 		return "userinfobyname";
+	}
+	
+	public String optionlog(){
+		System.out.println("optionlog");
+		List<OptionLogs> userLogs = optService.getUserLogs(userid);
+		infos = userLogs;
+		System.out.println(userLogs.size());
+		state = "200";
+		return "optionlog";
 	}
 	
 //	public String userinfobyemname(){
