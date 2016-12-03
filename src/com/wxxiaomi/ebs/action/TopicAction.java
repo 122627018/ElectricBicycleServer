@@ -86,21 +86,22 @@ public class TopicAction {
 		Comment comment = new Comment(0, topicId, content1, from_uid,
 				from_nick, from_head, to_uid, to_unick);
 		service.publishComment(comment);
-		LogCommentPublish(comment);
+		
+		LogCommentPublish(service.getTopicById(topicId),comment);
 		state = "200";
 		infos = comment;
 		return "publishComment";
 	}
 
-	private void LogCommentPublish(Comment comment) {
+	private void LogCommentPublish(Topic tpoic,Comment comment) {
 		OptionLogs log = new OptionLogs();
-		log.setContent(comment.getContent());
+		log.setContent(tpoic.getContent());
 		log.setCreate_time(new Date());
-		log.setLocat("");
-		log.setLocat_tag("");
-		log.setObj_id(comment.getId());
+		log.setLocat(tpoic.getLocat());
+		log.setLocat_tag(tpoic.getLocat_tag());
+		log.setObj_id(tpoic.getId());
 		log.setObj_type(OptionType.TOPIC_COMMENT);
-		log.setPictures("");
+		log.setPictures(tpoic.getPics());
 		log.setTitle("发表了一条评论");
 		log.setUserid(comment.getFrom_uid());
 		log.setFoor_note(comment.getContent());
