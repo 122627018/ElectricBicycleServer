@@ -15,6 +15,7 @@ import com.wxxiaomi.ebs.bean.UserCommonInfo;
 import com.wxxiaomi.ebs.bean.constant.OptionType;
 import com.wxxiaomi.ebs.service.OptLogsService;
 import com.wxxiaomi.ebs.service.TopicService;
+import com.wxxiaomi.ebs.util.GeoHashUtil;
 
 @Controller
 public class TopicAction {
@@ -143,7 +144,9 @@ public class TopicAction {
 		t.setPics(pics);
 		t.setTime(new Date());
 		t.setCcount(0);
-		t.setLocat(locat);
+		String[] split = locat.split("#");
+		String encode = GeoHashUtil.encode(Double.valueOf(split[0]), Double.valueOf(split[1]));
+		t.setLocat(encode);
 		t.setLocat_tag(locat_tag);
 		t.setHot(0);
 		t.setUserCommonInfo(userInfo);

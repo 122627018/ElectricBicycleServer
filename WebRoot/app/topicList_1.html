@@ -226,7 +226,7 @@
 							+ datas.infos[i - 1 - last].content
 							+ '</p>'
 							+ '</div></div><div class="card-footer no-border">'
-							+ '<a href="#" class="link">揭阳科技馆</a></div></div>';
+							+ '<a href="#" class="link">'+datas.infos[i - 1 - last].locat_tag+'</a></div></div>';
 				} else {
 					html += '<div class="list-container" ><div  data-topicid='
 							+ datas.infos[i - 1 - last].id
@@ -239,7 +239,7 @@
 							+ '</p> <p>'
 							+ datas.infos[i - 1 - last].content
 							+ '</p>'
-							+ '</div></div><div class="card-footer no-border"><a href="#" class="link">揭阳科技馆</a></div></div></div>';
+							+ '</div></div><div class="card-footer no-border"><a href="#" class="link">'+datas.infos[i - 1 - last].locat_tag+'</a></div></div></div>';
 				}
 			}
 			last += number;

@@ -177,10 +177,11 @@
 			$("#info_img").prepend(tag);
 		}
 
-		function getUserId(callBack) {
-			window.WebViewJavascriptBridge.callHandler('getUserId', "",
+		function getUserSimpleInfo(callBack) {
+			window.WebViewJavascriptBridge.callHandler('usrSimInfo', "",
 					function(mingData) {
-						callBack(mingData);
+						 var result = eval("(" + mingData + ")");
+						callBack(result);
 					});
 		}
 		function onPicClick(){
@@ -223,29 +224,20 @@
 
 		function submitData() {
 			showLoading('请稍等', '正在发布');
-			getUserId(getPageData);
+			getUserSimpleInfo(getPageData);
 		}
 
-		function getPageData(userid) {
-		    showLog("userId:"+userid);
-		   // var pics = "";
-		    //for(var i=0;i<pathList.length;i++){
-		    //    if(i==0)
-		          //   pics += pathList[0];
-		      //  else
-		        //    pics += '#'+pathList[i];
-
-		 //   }
+		function getPageData(info) {
+			showLog("userid:"+info.userid);
 			var content = $("#info_content").val();
-			var locat = "ws4wpf4wk48t";
-			var locat_tag = "科技馆";
+			
             showLog("I.m here1");
 			var obj =
-				'userid='+userid+
+				'userid='+info.userid+
 				'&content='+content+
 
-				'&locat='+locat+
-				'&locat_tag='+locat_tag;
+				'&locat='+info.locat+
+				'&locat_tag='+info.locat_tag;
 			var url = "android/topic_submitTopic";
             showLog("I.m here");
 			var parss={
