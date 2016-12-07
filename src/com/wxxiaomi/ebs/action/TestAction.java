@@ -34,14 +34,15 @@ public class TestAction {
 		System.out.println("msg");
 //		System.out.println("par="+par);
 		try {
-			System.out.println("topic="+topic.toString());
+//			System.out.println("topic="+topic.toString());
 //			String string = new String(par.getBytes("ISO-8859-1"),"UTF-8");
 //			System.out.println("string="+par);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		message = "测试json";
+		String json = "{\"infos\":\"success\"}";
+		message = json;
 		return "result";
 	}
 

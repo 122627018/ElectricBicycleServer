@@ -30,7 +30,9 @@ public class UpLoadAction {
 	private int userid;
 
 	/**
-	 * 头像上传 逻辑： 1.取得用户id和上传的头像 2.存储头像到本地并取得对应的地址 3.调用service保存id对应用户的头像地址
+	 * 头像上传 逻辑： 1.取得用户id和上传的头像 
+	 * 2.存储头像到本地并取得对应的地址 
+	 * 3.调用service保存id对应用户的头像地址
 	 * 4.返回保存的头像地址
 	 * 
 	 * @return

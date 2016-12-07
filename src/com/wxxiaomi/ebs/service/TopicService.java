@@ -1,6 +1,7 @@
 package com.wxxiaomi.ebs.service;
 
 import java.util.List;
+import java.util.Set;
 
 import com.wxxiaomi.ebs.bean.Comment;
 import com.wxxiaomi.ebs.bean.Topic;
@@ -19,7 +20,7 @@ public interface TopicService {
 	 * 发布一则话题
 	 * @param topic
 	 */
-	boolean publishTopic(Topic topic);
+	int publishTopic(Topic topic);
 	
 	/**
 	 * 删除一则话题
@@ -47,7 +48,7 @@ public interface TopicService {
 	 * 发表一则评论
 	 * @return
 	 */
-	boolean publishComment(Comment comment);
+	int publishComment(Comment comment);
 	
 	/**
 	 * 回复一则评论
@@ -84,5 +85,10 @@ public interface TopicService {
 	 * @return
 	 */
 	List<Comment> getUserDoReply(int useid);
+	
+	Comment getCommentById(int comment_id);
 
+	
+	List<Topic> getTopics(Set<Integer> ids);
+	List<Comment> getComments(Set<Integer> ids);
 }

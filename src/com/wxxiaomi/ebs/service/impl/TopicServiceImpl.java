@@ -1,6 +1,7 @@
 package com.wxxiaomi.ebs.service.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -34,15 +35,15 @@ public class TopicServiceImpl implements TopicService {
 	}
 
 	@Override
-	public boolean publishTopic(Topic topic) {
+	public int publishTopic(Topic topic) {
 		// TODO Auto-generated method stub
 		try {
 			factory.getCurrentSession().save(topic);
-			return true;
+			return topic.getId();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			return false;
+			return 0;
 		}
 
 	}
@@ -89,14 +90,14 @@ public class TopicServiceImpl implements TopicService {
 	}
 
 	@Override
-	public boolean publishComment(Comment comment) {
+	public int publishComment(Comment comment) {
 		try {
 			factory.getCurrentSession().save(comment);
-			return true;
+			return comment.getId();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			return false;
+			return 0;
 		}
 
 	}
@@ -147,6 +148,31 @@ public class TopicServiceImpl implements TopicService {
 				.createQuery(queryString);
 		queryObject.setParameter(0, userid);
 		return queryObject.list();
+	}
+
+	@Override
+	public Comment getCommentById(int comment_id) {
+		// TODO Auto-generated method stub
+		return (Comment) factory.getCurrentSession().get(Comment.class, comment_id);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Topic> getTopics(Set<Integer> ids) {
+		// TODO Auto-generated method stub
+		Object[] array = ids.toArray();
+		return factory.getCurrentSession().createQuery("from Topic t where t.id in(:ids)")
+		.setParameterList("ids", array)
+		.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Comment> getComments(Set<Integer> ids) {
+		Object[] array = ids.toArray();
+		return factory.getCurrentSession().createQuery("from Comment t where t.id in(:ids)")
+		.setParameterList("ids", array)
+		.list();
 	}
 
 }

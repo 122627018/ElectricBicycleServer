@@ -40,6 +40,9 @@
 			      <value>com/wxxiaomi/ebs/bean/Topic.hbm.xml</value>
 			      <value>com/wxxiaomi/ebs/bean/Comment.hbm.xml</value>
 			      <value>com/wxxiaomi/ebs/bean/OptionLogs.hbm.xml</value>
+			      <value>com/wxxiaomi/ebs/bean/Photo.hbm.xml</value>
+			      <value>com/wxxiaomi/ebs/bean/Album.hbm.xml</value>
+			      <value>com/wxxiaomi/ebs/bean/Option.hbm.xml</value>
 			    </list>
 		</property>
 		 <property name="hibernateProperties">

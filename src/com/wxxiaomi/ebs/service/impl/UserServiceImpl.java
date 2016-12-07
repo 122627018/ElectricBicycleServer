@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.wxxiaomi.ebs.bean.Option;
+import com.wxxiaomi.ebs.bean.Photo;
 import com.wxxiaomi.ebs.bean.User;
 import com.wxxiaomi.ebs.bean.UserCommonInfo;
+import com.wxxiaomi.ebs.bean.constant.OptionType;
 import com.wxxiaomi.ebs.em.engine.EasemobIMUsers;
 import com.wxxiaomi.ebs.service.UserService;
 
@@ -146,5 +149,34 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}
 	}
+
+	
+	@Override
+	public boolean insertUserPhoto(List<Photo> photos) {
+		for(Photo item : photos){
+			factory.getCurrentSession().persist(item);
+		}
+		
+		return true;
+	}
+
+	@Override
+	public List<String> getUserPhoto(int album_id, int size) {
+		String queryString = "select url from Photo p where p.album_id=?";
+		Query queryObject = factory.getCurrentSession()
+				.createQuery(queryString);
+		queryObject.setParameter(0, album_id);
+		return queryObject.list();
+	}
+
+	
+
+//	@Override
+//	public boolean insertUserPhoto(int userid, int album_id, String[] imgUrl,
+//			String create_time) {
+//		//更新user的相片数量
+//		//向数据库插入photo
+//		return false;
+//	}
 
 }

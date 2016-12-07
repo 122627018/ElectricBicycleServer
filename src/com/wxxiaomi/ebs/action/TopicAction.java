@@ -9,11 +9,13 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 
 import com.wxxiaomi.ebs.bean.Comment;
+import com.wxxiaomi.ebs.bean.Option;
 import com.wxxiaomi.ebs.bean.OptionLogs;
 import com.wxxiaomi.ebs.bean.Topic;
 import com.wxxiaomi.ebs.bean.UserCommonInfo;
 import com.wxxiaomi.ebs.bean.constant.OptionType;
 import com.wxxiaomi.ebs.service.OptLogsService;
+import com.wxxiaomi.ebs.service.OptionService;
 import com.wxxiaomi.ebs.service.TopicService;
 import com.wxxiaomi.ebs.util.GeoHashUtil;
 
@@ -24,7 +26,8 @@ public class TopicAction {
 	TopicService service;
 	
 	@Resource
-	OptLogsService logService;
+	OptionService optionService;
+//	OptLogsService logService;
 	private int start = 0;
 
 	// 以下参数是提交topic的
@@ -86,28 +89,22 @@ public class TopicAction {
 				+ ", to_uid=" + to_uid + ", to_unick=" + to_unick + "]");
 		Comment comment = new Comment(0, topicId, content1, from_uid,
 				from_nick, from_head, to_uid, to_unick);
-		service.publishComment(comment);
+		int comment_id = service.publishComment(comment);
 		
-		LogCommentPublish(service.getTopicById(topicId),comment);
+		LogCommentPublish(userid,topicId,comment_id);
 		state = "200";
 		infos = comment;
 		return "publishComment";
 	}
 
-	private void LogCommentPublish(Topic tpoic,Comment comment) {
-		OptionLogs log = new OptionLogs();
-		log.setContent(tpoic.getContent());
-		log.setCreate_time(new Date());
-		log.setLocat(tpoic.getLocat());
-		log.setLocat_tag(tpoic.getLocat_tag());
-		log.setObj_id(tpoic.getId());
-		log.setObj_type(OptionType.TOPIC_COMMENT);
-		log.setPictures(tpoic.getPics());
-		log.setTitle("发表了一条评论");
-		log.setUserid(comment.getFrom_uid());
-		log.setFoor_note(comment.getContent());
-		logService.insertOption(log);
-		
+	private void LogCommentPublish(int userid,int topicId,int comment_id) {
+		Option o = new Option();
+		o.setUser_id(userid);
+		o.setObj_id(comment_id);
+		o.setParent_id(topicId);
+		o.setCreate_time(new Date());
+		o.setObj_type(OptionType.TOPIC_COMMENT);
+		optionService.insertOption(o);
 	}
 
 	public String list() {
@@ -151,26 +148,38 @@ public class TopicAction {
 		t.setHot(0);
 		t.setUserCommonInfo(userInfo);
 		t.setTitle("");
-		service.publishTopic(t);
-		LogTopicPublic(t);
+		int id = service.publishTopic(t);
+		LogTopicPublic(userid,id);
 		infos = "success";
 		return "submitTopic";
 	}
 
-	private void LogTopicPublic(Topic t) {
-		OptionLogs log = new OptionLogs();
-		log.setContent(t.getContent());
-		log.setCreate_time(t.getTime());
-		log.setLocat(t.getLocat());
-		log.setLocat_tag(t.getLocat_tag());
-		log.setObj_id(t.getId());
-		log.setObj_type(OptionType.TOPIC_PUBLISH);
-		log.setPictures(t.getPics());
-		log.setTitle("发布了一条话题");
-		log.setUserid(t.getUserCommonInfo().id);
-		log.setFoor_note("");
-		logService.insertOption(log);
+	private void LogTopicPublic(int userid,int topicid) {
+//		OptionLogs log = new OptionLogs();
+//		log.setContent(t.getContent());
+//		log.setCreate_time(t.getTime());
+//		log.setLocat(t.getLocat());
+//		log.setLocat_tag(t.getLocat_tag());
+//		log.setObj_id(t.getId());
+//		log.setObj_type(OptionType.TOPIC_PUBLISH);
+//		log.setPictures(t.getPics());
+//		log.setTitle("发布了一条话题");
+//		log.setUserid(t.getUserCommonInfo().id);
+//		log.setFoor_note("");
+//		logService.insertOption(log);
+		try{
+		System.out.println("LogTopicPublic,userid:"+userid+",topicid:"+topicid);
+		Option o = new Option();
+		o.setObj_type(OptionType.TOPIC_PUBLISH);
+		o.setObj_id(topicid);
+		o.setUser_id(userid);
+		o.setCreate_time(new Date());
+		optionService.insertOption(o);
 		
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 
 	private String state = "404";

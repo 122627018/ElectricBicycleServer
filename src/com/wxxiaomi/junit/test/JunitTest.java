@@ -13,7 +13,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.fasterxml.jackson.core.JsonParser;
 import com.wxxiaomi.ebs.bean.Comment;
 import com.wxxiaomi.ebs.bean.Locat;
+import com.wxxiaomi.ebs.bean.Option;
 import com.wxxiaomi.ebs.bean.OptionLogs;
+import com.wxxiaomi.ebs.bean.Photo;
 import com.wxxiaomi.ebs.bean.Topic;
 import com.wxxiaomi.ebs.bean.User;
 import com.wxxiaomi.ebs.bean.UserCommonInfo;
@@ -240,7 +242,30 @@ public class JunitTest {
 		log.setUserid(25);
 		log.setFoor_note("");
 		optionService.insertOption(log);
-		
-		
 	}
+	
+	@Test
+	public void testInsertUserPhoto(){
+		Photo p = new Photo();
+		p.setAlbum_id(1);
+		p.setCreate_time(new Date());
+		p.setUrl("https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3706555796,1550133346&fm=58");
+		List<Photo> list = new ArrayList<Photo>();
+		list.add(p);
+		service.insertUserPhoto(list);
+	}
+	
+	@Test
+	public void testGetUserPhoto(){
+		List<String> userPhoto = service.getUserPhoto(1, 0);
+		for(String img : userPhoto){
+			System.out.println(img);
+		}
+		}
+	@Test
+	public void getOption(){
+//		List<Option> userOptions = service.getUserOptions(25);
+//		System.out.println(userOptions.size());
+	}
+		
 }

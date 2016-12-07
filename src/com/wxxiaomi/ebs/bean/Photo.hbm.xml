@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.wxxiaomi.ebs.bean">
+	<class name="Photo" table="bicycle_photo">
+		<id name="id" length="11" >
+		<generator class="native" />
+		</id>
+		<property name="album_id"/>
+		<property name="type"/>
+		<property name="url"/>
+		<property name="small_url"/>
+		<property name="description"/>
+<property name="create_time" column="create_time" type="timestamp" length="19"/> 
+	</class>
+</hibernate-mapping>
