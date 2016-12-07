@@ -2,90 +2,87 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!--   <title>我的生活</title> -->
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <!-- <link rel="shortcut icon" href="/favicon.ico"> -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="stylesheet"
-          href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
-    <link rel="stylesheet"
-          href="http://g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!--   <title>我的生活</title> -->
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+<!-- <link rel="shortcut icon" href="/favicon.ico"> -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet"
+	href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+<link rel="stylesheet"
+	href="http://g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
 
 
-    <!--引入JS-->
-    <style type="text/css">
+<!--引入JS-->
+<style type="text/css">
 #box {
 	margin: 10px auto;
 	width: 100%;
 	min-height: 20%;
 }
-
-    </style>
+</style>
 
 
 </head>
 
 <body style="background: #fff">
 
-<!--  <img class="image-roll" src="./images/test.jpg" alt=""> -->
-<!-- 你的html代码 -->
-<!-- page集合的容器，里面放多个平行的.page，其他.page作为内联页面由路由控制展示 -->
-<div class="page-group" style="background: #fff">
-    <!-- 单个page ,第一个.page默认被展示-->
-    <div class="page" style="background: #fff">
+	<!--  <img class="image-roll" src="./images/test.jpg" alt=""> -->
+	<!-- 你的html代码 -->
+	<!-- page集合的容器，里面放多个平行的.page，其他.page作为内联页面由路由控制展示 -->
+	<div class="page-group" style="background: #fff">
+		<!-- 单个page ,第一个.page默认被展示-->
+		<div class="page" style="background: #fff">
 
-        <div class="content-block"
-             style="background: #fff!important;height:100%;">
+			<div class="content-block"
+				style="background: #fff!important;height:100%;">
 
-            <div class="left-con">
+				<div class="left-con">
 
 
-                <div class="list-block" style="margin:0">
-                    <ul>
-                        <li class="align-top">
+					<div class="list-block" style="margin:0">
+						<ul>
+							<li class="align-top">
 
-                            <div class="item-input">
-                                <textarea id="info_content" placeholder="开始写帖子吧..."></textarea>
-                                <p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div style="background: #fff">
-                    <span class="icon icon-picture" onclick="onPicClick();"></span>
-                </div>
-                <div id="info_img">
-                    <!--<img id="info_demo" src="" height="70" width="70"/>-->
-                    <!--<img id="info_demo2" src="" height="70" width="70"/>-->
-                    <!--<img src="file:///storage/sdcard0/DCIM/Camera/IMG_20161123_152042.jpg" height="70" width="70"/>-->
-                    <!--<img src="file:///storage/sdcard0/DCIM/Camera/IMG_20161123_152042.jpg" height="70" width="70"/>-->
-                    <!--<img src="file:///storage/sdcard0/DCIM/Camera/IMG_20161123_152042.jpg" height="70" width="70"/>-->
-                    <!--<img src="file:///storage/sdcard0/DCIM/Camera/IMG_20161123_152042.jpg" height="70" width="70"/>-->
-                    <!--<img src="file:///storage/sdcard0/DCIM/Camera/IMG_20161123_152042.jpg" height="70" width="70"/>-->
-                    <!--<img src="file:///storage/sdcard0/DCIM/Camera/IMG_20161123_152042.jpg" height="70" width="70"/>-->
-                </div>
+								<div class="item-input">
+									<textarea id="info_content" placeholder="开始写帖子吧..."></textarea>
+									<p>
+								</div></li>
+						</ul>
+					</div>
+					<div style="background: #fff">
+						<span class="icon icon-picture" onclick="onPicClick();"></span>
+					</div>
+					<div id="info_img">
+						<!--<img id="info_demo" src="" height="70" width="70"/>-->
+						<!--<img id="info_demo2" src="" height="70" width="70"/>-->
+						<!--<img src="file:///storage/sdcard0/DCIM/Camera/IMG_20161123_152042.jpg" height="70" width="70"/>-->
+						<!--<img src="file:///storage/sdcard0/DCIM/Camera/IMG_20161123_152042.jpg" height="70" width="70"/>-->
+						<!--<img src="file:///storage/sdcard0/DCIM/Camera/IMG_20161123_152042.jpg" height="70" width="70"/>-->
+						<!--<img src="file:///storage/sdcard0/DCIM/Camera/IMG_20161123_152042.jpg" height="70" width="70"/>-->
+						<!--<img src="file:///storage/sdcard0/DCIM/Camera/IMG_20161123_152042.jpg" height="70" width="70"/>-->
+						<!--<img src="file:///storage/sdcard0/DCIM/Camera/IMG_20161123_152042.jpg" height="70" width="70"/>-->
+					</div>
 
-            </div>
-        </div>
+				</div>
+			</div>
 
-    </div>
-</div>
-<script type='text/javascript'
-        src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
-<script type='text/javascript'
-        src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
-<script type='text/javascript'
-        src='http://g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js'
-        charset='utf-8'></script>
+		</div>
+	</div>
+	<script type='text/javascript'
+		src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+	<script type='text/javascript'
+		src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+	<script type='text/javascript'
+		src='http://g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js'
+		charset='utf-8'></script>
 
-<script>
+	<script>
 		$.init();
-
-</script>
-<script type="text/javascript">
+	</script>
+	<script type="text/javascript">
 		/*
 		 * 服务器地址,成功返回,失败返回参数格式依照jquery.ajax习惯;
 		 * 其他参数同WebUploader
@@ -128,11 +125,10 @@
 		});
 
 		//加载数据的函数
-
-</script>
-<script type="text/javascript" src="js/JsBridge2.js"></script>
-<script type="text/javascript">
-        var pathList = null;
+	</script>
+	<script type="text/javascript" src="js/JsBridge2.js"></script>
+	<script type="text/javascript">
+		var pathList = null;
 		registerBridge(MyInit, register);
 		function MyInit(message, responseCallback) {
 			var datasss = {
@@ -147,7 +143,7 @@
 			responseCallback(datasss);
 		}
 		function register(bridge) {
-            bridge.registerHandler("onRightBtnClick", function(data,
+			bridge.registerHandler("onRightBtnClick", function(data,
 					responseCallback) {
 				submitData();
 			});
@@ -155,24 +151,22 @@
 					responseCallback) {
 				addPicture(data);
 			});
-			bridge.registerHandler("callMe", function(data,
-					responseCallback) {
+			bridge.registerHandler("callMe", function(data, responseCallback) {
 				showLog("adapterImgTag");
 				doMe(data);
 			});
-		
-		
+
 		}
-		
-		function doMe(data){
-		showLog("adapterImgTag->data:"+data);
-		$("#info_img").html("");
-		$("#info_img").prepend(data);
+
+		function doMe(data) {
+			showLog("adapterImgTag->data:" + data);
+			$("#info_img").html("");
+			$("#info_img").prepend(data);
 		}
-		
-		function addPicture(tag){
-		showLog("addPicture->tag:"+tag);
-			showLog("tag:"+tag);
+
+		function addPicture(tag) {
+			showLog("addPicture->tag:" + tag);
+			showLog("tag:" + tag);
 			$("#info_img").html("");
 			$("#info_img").prepend(tag);
 		}
@@ -180,43 +174,43 @@
 		function getUserSimpleInfo(callBack) {
 			window.WebViewJavascriptBridge.callHandler('usrSimInfo', "",
 					function(mingData) {
-						 var result = eval("(" + mingData + ")");
+						var result = eval("(" + mingData + ")");
 						callBack(result);
 					});
 		}
-		function onPicClick(){
-   		    window.WebViewJavascriptBridge.callHandler('takePic', "many",
-                function(mingData) {
-                    showLog("js:result:不说了太长了");
-                    var result = eval("(" + mingData + ")");
-                    //showLog(result);
-                    //pathList = result.path;
-                    //showLog("result.path[0]:"+result.path[0]);
-                    addSomePic2(result);
-            });
+		function onPicClick() {
+			window.WebViewJavascriptBridge.callHandler('takePic', "many",
+					function(mingData) {
+						showLog("js:result:不说了太长了");
+						var result = eval("(" + mingData + ")");
+						//showLog(result);
+						//pathList = result.path;
+						//showLog("result.path[0]:"+result.path[0]);
+						addSomePic2(result);
+					});
 		}
 
-		function addSomePic2(result){
+		function addSomePic2(result) {
 
-		    $("#info_img").html("");
+			$("#info_img").html("");
 
-		    var html = '';
-		    showLog("result.paths.length:"+result.path.length);
-		    for(var i=0;i<result.path.length;i++){
-		     html +='<img src="data:image/png;base64,'+result.path[i]+'" height="70" width="70"/>';
-		    }
-		  $("#info_img").prepend(html);
-		}
-
-		function addSomePic(result){
-		    $("#info_img").html("");
-	        var html = '';
-			showLog("result.path.length:"+result.path.length);
-			for(var i=0;i<result.path.length;i++){
-				html +='<img src="'+result.path[i]+'" height="70" width="70"/>';
+			var html = '';
+			showLog("result.paths.length:" + result.path.length);
+			for ( var i = 0; i < result.path.length; i++) {
+				html += '<img src="data:image/png;base64,'+result.path[i]+'" height="70" width="70"/>';
 			}
-			showLog("html:"+html);
-            $("#info_img").prepend(html);
+			$("#info_img").prepend(html);
+		}
+
+		function addSomePic(result) {
+			$("#info_img").html("");
+			var html = '';
+			showLog("result.path.length:" + result.path.length);
+			for ( var i = 0; i < result.path.length; i++) {
+				html += '<img src="'+result.path[i]+'" height="70" width="70"/>';
+			}
+			showLog("html:" + html);
+			$("#info_img").prepend(html);
 			//$("#info_demo").attr('src',result.path[0]);
 			//$("#info_demo2").attr('src',result.path[1]);
 
@@ -228,31 +222,28 @@
 		}
 
 		function getPageData(info) {
-			showLog("userid:"+info.userid);
+			showLog("userid:" + info.userid);
 			var content = $("#info_content").val();
-			
-            showLog("I.m here1");
-			var obj =
-				'userid='+info.userid+
-				'&content='+content+
 
-				'&locat='+info.locat+
-				'&locat_tag='+info.locat_tag;
+			showLog("I.m here1");
+			var obj = 'userid=' + info.userid + '&content=' + content +
+
+			'&locat=' + info.locat + '&locat_tag=' + info.locat_tag;
 			var url = "android/topic_submitTopic";
-            showLog("I.m here");
-			var parss={
-			        "url":url,
-			        "pars":obj,
-			        "pics":["ss"],
-                    "picsname":"pics"
+			showLog("I.m here");
+			var parss = {
+				"url" : url,
+				"pars" : obj,
+				"pics" : [ "ss" ],
+				"picsname" : "pics"
 			};
-            var parms = JSON.stringify(parss);
+			var parms = JSON.stringify(parss);
 			window.WebViewJavascriptBridge.callHandler('sendUP', parms,
-                function(responseData) {
-                showLog("responseData:"+responseData);
-                loadComplete();
-                Myfinish(1);
-            });
+					function(responseData) {
+						showLog("responseData:" + responseData);
+						loadComplete();
+						Myfinish(1);
+					});
 
 		}
 
@@ -268,10 +259,7 @@
 						})
 			}
 		}
-		
-
-
-</script>
+	</script>
 
 </body>
 

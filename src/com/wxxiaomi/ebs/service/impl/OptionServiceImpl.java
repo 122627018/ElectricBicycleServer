@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wxxiaomi.ebs.bean.Option;
+import com.wxxiaomi.ebs.bean.Option2;
 import com.wxxiaomi.ebs.service.OptionService;
 
 @Service
@@ -33,5 +34,11 @@ public class OptionServiceImpl implements OptionService {
 		queryObject.setParameter(0, userid);
 		List<Option> options= queryObject.list();
 		return options;
+	}
+
+	@Override
+	public List<Option2> getUserOptions2(int userid) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

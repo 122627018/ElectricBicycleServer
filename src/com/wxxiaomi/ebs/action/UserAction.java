@@ -124,6 +124,7 @@ public class UserAction {
 	}
 	
 	public String optionlog(){
+		long startTime=System.currentTimeMillis();
 //		System.out.println("optionlog");
 //		List<OptionLogs> userLogs = optService.getUserLogs(userid);
 //		infos = userLogs;
@@ -175,6 +176,9 @@ public class UserAction {
 //		}
 		state = "200";
 		infos = options;
+		long endTime=System.currentTimeMillis();
+		 float excTime=(float)(endTime-startTime)/1000;
+	       System.out.println("获取用户动态所耗费的执行时间："+excTime+"s");
 		return "optionlog";
 	}
 	

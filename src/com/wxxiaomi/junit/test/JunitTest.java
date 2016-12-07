@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -22,9 +25,11 @@ import com.wxxiaomi.ebs.bean.UserCommonInfo;
 import com.wxxiaomi.ebs.bean.constant.OptionType;
 import com.wxxiaomi.ebs.service.MapService;
 import com.wxxiaomi.ebs.service.OptLogsService;
+import com.wxxiaomi.ebs.service.OptionService;
 import com.wxxiaomi.ebs.service.TopicService;
 import com.wxxiaomi.ebs.service.UpLoadService;
 import com.wxxiaomi.ebs.service.UserService;
+import com.wxxiaomi.ebs.util.JsonDateValueProcessor;
 
 public class JunitTest {
 
@@ -33,7 +38,7 @@ public class JunitTest {
 	static TopicService topicService;
 	static UpLoadService upLoadService;
 
-	static OptLogsService optionService;
+	static OptionService optionService;
 	@BeforeClass
 	public static void setUp() {
 		try {
@@ -43,7 +48,7 @@ public class JunitTest {
 			mapService = (MapService) act.getBean("mapServiceImpl");
 			topicService = (TopicService) act.getBean("topicServiceImpl");
 			upLoadService = (UpLoadService) act.getBean("upLoadServiceImpl");
-			optionService = (OptLogsService)act.getBean("optionLogsServiceImpl");
+			optionService = (OptionService)act.getBean("optionServiceImpl");
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -241,7 +246,7 @@ public class JunitTest {
 		log.setTitle("发布了一条话题");
 		log.setUserid(25);
 		log.setFoor_note("");
-		optionService.insertOption(log);
+//		optionService.insertOption(log);
 	}
 	
 	@Test
@@ -266,6 +271,63 @@ public class JunitTest {
 	public void getOption(){
 //		List<Option> userOptions = service.getUserOptions(25);
 //		System.out.println(userOptions.size());
+	}
+	
+	@Test
+	public void testGetOption(){
+		long startTime=System.currentTimeMillis();
+//		System.out.println("optionlog");
+//		List<OptionLogs> userLogs = optService.getUserLogs(userid);
+//		infos = userLogs;
+//		System.out.println(userLogs.size());
+//		state = "200";
+//		return "optionlog";
+//		Map<Integer,Option> commentMap = new HashMap<Integer,Option>();
+//		Map<Integer,Option> topicMap = new HashMap<Integer,Option>();
+		List<Option> options = optionService.getUserOptions(25);
+		
+		for(Option option : options){
+			JsonConfig jsonConfig = new JsonConfig();  
+			jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());  
+			int type = option.getObj_type();
+			switch (type) {
+			case OptionType.FOOT_PRINT:
+				break;
+			case OptionType.PHOTO_PUBLISH: //更新相册
+				break;
+			case OptionType.TOPIC_COMMENT://话题评论
+				//map.put(option.getParent_id(), option);
+				//取出评论
+				Comment comment = topicService.getCommentById(option.getObj_id());
+				//取出话题
+				Topic topic = topicService.getTopicById(option.getParent_id());
+				System.out.println(topic.toString());
+				option.setJson_obj(JSONObject.fromObject(comment,jsonConfig).toString());
+				option.setJson_parent(JSONObject.fromObject(topic,jsonConfig).toString());
+				
+//				commentMap.put(option.getObj_id(), option);
+//				topicMap.put(option.getParent_id(), option);
+				break;
+			case OptionType.TOPIC_PUBLISH://话题发布
+				Topic t = topicService.getTopicById(option.getObj_id());
+				option.setJson_obj(JSONObject.fromObject(t,jsonConfig).toString());
+//				topicMap.put(option.getObj_id(), option);
+				break;
+			}
+		}
+//		Set<Integer> commentKeySet = commentMap.keySet();
+//		Set<Integer> topicKeySet = topicMap.keySet();
+//		List<Topic> topics = topicService.getTopics(topicKeySet);
+//		List<Comment> comments = topicService.getComments(commentKeySet);
+//		for(Topic t: topics){
+//			commentMap.get(t.getId());
+//		}
+//		for(Comment c:comments){
+//			
+//		}
+		long endTime=System.currentTimeMillis();
+		 float excTime=(float)(endTime-startTime)/1000;
+	       System.out.println("获取用户动态所耗费的执行时间："+excTime+"s");
 	}
 		
 }
