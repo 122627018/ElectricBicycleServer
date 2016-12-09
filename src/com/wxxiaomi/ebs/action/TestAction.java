@@ -8,41 +8,31 @@ import com.wxxiaomi.ebs.bean.Topic;
 @Controller
 public class TestAction {
 
+	private String state = "404";
+	private String error = "";
+	private Object infos;
 	
-	private String message;
-	private String par;
-	private Topic topic;
 	
-	
-	public String getMessage() {
-		return message;
+
+	public String getState() {
+		return state;
 	}
 
-
-	
-
-
-	public void setPar(String par) {
-		this.par = par;
+	public String getError() {
+		return error;
 	}
 
-
+	public Object getInfos() {
+		return infos;
+	}
 
 
 
 	public String msg(){
 		System.out.println("msg");
-//		System.out.println("par="+par);
-		try {
-//			System.out.println("topic="+topic.toString());
-//			String string = new String(par.getBytes("ISO-8859-1"),"UTF-8");
-//			System.out.println("string="+par);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String json = "{\"infos\":\"success\"}";
-		message = json;
+		state = "401";
+		error = "token过期";
+		
 		return "result";
 	}
 
@@ -50,9 +40,6 @@ public class TestAction {
 
 
 
-	public void setTopic(Topic topic) {
-		this.topic = topic;
-	}
 	
 	
 }

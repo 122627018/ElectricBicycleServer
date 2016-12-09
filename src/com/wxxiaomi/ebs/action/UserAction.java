@@ -2,13 +2,19 @@ package com.wxxiaomi.ebs.action;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.ServletResponseAware;
 import org.springframework.stereotype.Controller;
 
 import com.sun.jmx.snmp.Timestamp;
@@ -26,9 +32,10 @@ import com.wxxiaomi.ebs.service.TopicService;
 import com.wxxiaomi.ebs.service.UserService;
 import com.wxxiaomi.ebs.util.DateJsonValueProcessor;
 import com.wxxiaomi.ebs.util.JsonDateValueProcessor;
+import com.wxxiaomi.ebs.util.jwt.Jwt;
 
 @Controller
-public class UserAction {
+public class UserAction{
 
 	@Resource UserService service;
 //	@Resource OptLogsService optService;
@@ -71,6 +78,14 @@ public class UserAction {
 		User user = service.Login(username, password);
 		if(user!=null){
 			System.out.println(user.toString());
+			HttpServletResponse response = ServletActionContext.getResponse();
+			Map<String, Object> payload = new HashMap<String, Object>();
+			Date date = new Date();
+			payload.put("uid", "291969452");// 用户id
+			payload.put("iat", date.getTime());// 生成时间:当前
+			payload.put("ext", date.getTime() + 2000 * 60 * 60);// 过期时间2小时
+			String token = Jwt.createToken(payload);
+			response.setHeader("token", token);
 			state = "200";
 			infos = new Format_Login(user);
 		}else{
@@ -196,4 +211,9 @@ public class UserAction {
 	public Object getInfos() {
 		return infos;
 	}
+
+
+
+
+
 }
