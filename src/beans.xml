@@ -34,15 +34,15 @@
 		<property name="dataSource" ref="dataSource"/>
 		 <property name="mappingResources">
 			    <list>
-			      <value>com/wxxiaomi/ebs/bean/User.hbm.xml</value>
-			      <value>com/wxxiaomi/ebs/bean/UserCommonInfo.hbm.xml</value>
-			      <value>com/wxxiaomi/ebs/bean/Locat.hbm.xml</value>
-			      <value>com/wxxiaomi/ebs/bean/Topic.hbm.xml</value>
-			      <value>com/wxxiaomi/ebs/bean/Comment.hbm.xml</value>
-			      <value>com/wxxiaomi/ebs/bean/OptionLogs.hbm.xml</value>
-			      <value>com/wxxiaomi/ebs/bean/Photo.hbm.xml</value>
-			      <value>com/wxxiaomi/ebs/bean/Album.hbm.xml</value>
-			      <value>com/wxxiaomi/ebs/bean/Option.hbm.xml</value>
+			      <value>com/wxxiaomi/ebs/dao/bean/User.hbm.xml</value>
+			      <value>com/wxxiaomi/ebs/dao/bean/UserCommonInfo.hbm.xml</value>
+			      <value>com/wxxiaomi/ebs/dao/bean/Locat.hbm.xml</value>
+			      <value>com/wxxiaomi/ebs/dao/bean/Topic.hbm.xml</value>
+			      <value>com/wxxiaomi/ebs/dao/bean/Comment.hbm.xml</value>
+			      <value>com/wxxiaomi/ebs/dao/bean/OptionLogs.hbm.xml</value>
+			      <value>com/wxxiaomi/ebs/dao/bean/Photo.hbm.xml</value>
+			      <value>com/wxxiaomi/ebs/dao/bean/Album.hbm.xml</value>
+			      <value>com/wxxiaomi/ebs/dao/bean/Option.hbm.xml</value>
 			    </list>
 		</property>
 		 <property name="hibernateProperties">

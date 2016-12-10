@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.wxxiaomi.ebs.service.UpLoadService;
 
 @Service
+
 public class UpLoadServiceImpl implements UpLoadService {
 
 	@Override

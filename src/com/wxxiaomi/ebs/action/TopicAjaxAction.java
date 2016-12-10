@@ -12,9 +12,9 @@ import net.sf.json.JSONObject;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
-import com.wxxiaomi.ebs.bean.Comment;
-import com.wxxiaomi.ebs.bean.Topic;
-import com.wxxiaomi.ebs.bean.UserCommonInfo;
+import com.wxxiaomi.ebs.dao.bean.Comment;
+import com.wxxiaomi.ebs.dao.bean.Topic;
+import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
 import com.wxxiaomi.ebs.service.TopicService;
 
 @Controller
@@ -45,143 +45,143 @@ public class TopicAjaxAction {
 	
 	
 	public String publishComment(){
-		System.out.println( "publishComment [service=" + service + ", topic_id=" + topic_id
-				+ ", content1=" + content1 + ", from_uid=" + from_uid
-				+ ", from_nick=" + from_nick + ", from_head=" + from_head
-				+ ", to_uid=" + to_uid + ", to_unick=" + to_unick + "]");
-		Comment comment = new Comment(0, topic_id, content1, from_uid, from_nick, from_head, to_uid, to_unick);
-		service.publishComment(comment);
-		HttpServletResponse response = ServletActionContext.getResponse();
-		response.setContentType("application/text;charset=utf-8");
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("state", "200");
-		params.put("error", "");
-		params.put("infos", "success");
-		JSONObject array = JSONObject.fromObject(params);
-		if (callback != null) {
-			try {
-				String result = callback + "(" + array.toString() + ")";
-				System.out.println("返回的json="+result);
-				response.getWriter().write(result);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+//		System.out.println( "publishComment [service=" + service + ", topic_id=" + topic_id
+//				+ ", content1=" + content1 + ", from_uid=" + from_uid
+//				+ ", from_nick=" + from_nick + ", from_head=" + from_head
+//				+ ", to_uid=" + to_uid + ", to_unick=" + to_unick + "]");
+//		Comment comment = new Comment(0, topic_id, content1, from_uid, from_nick, from_head, to_uid, to_unick);
+//		service.publishComment(comment);
+//		HttpServletResponse response = ServletActionContext.getResponse();
+//		response.setContentType("application/text;charset=utf-8");
+//		Map<String, Object> params = new HashMap<String, Object>();
+//		params.put("state", "200");
+//		params.put("error", "");
+//		params.put("infos", "success");
+//		JSONObject array = JSONObject.fromObject(params);
+//		if (callback != null) {
+//			try {
+//				String result = callback + "(" + array.toString() + ")";
+//				System.out.println("返回的json="+result);
+//				response.getWriter().write(result);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 		return null;
 		
 	}
 	
 	public String getComment(){
-		System.out.println("getComment->topicId="+topicId+",callback="+callback);
-		List<Comment> list = service.getTopicComent(topicId);
-		HttpServletResponse response = ServletActionContext.getResponse();
-		response.setContentType("application/text;charset=utf-8");
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("state", "200");
-		params.put("error", "");
-		params.put("infos", list);
-		JSONObject array = JSONObject.fromObject(params);
-		System.out.println("返回的array="+array.toString());
-		if (callback != null) {
-			try {
-				String result = callback + "(" + array.toString() + ")";
-				System.out.println("返回的json="+result);
-				response.getWriter().write(result);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+//		System.out.println("getComment->topicId="+topicId+",callback="+callback);
+//		List<Comment> list = service.getTopicComent(topicId);
+//		HttpServletResponse response = ServletActionContext.getResponse();
+//		response.setContentType("application/text;charset=utf-8");
+//		Map<String, Object> params = new HashMap<String, Object>();
+//		params.put("state", "200");
+//		params.put("error", "");
+//		params.put("infos", list);
+//		JSONObject array = JSONObject.fromObject(params);
+//		System.out.println("返回的array="+array.toString());
+//		if (callback != null) {
+//			try {
+//				String result = callback + "(" + array.toString() + ")";
+//				System.out.println("返回的json="+result);
+//				response.getWriter().write(result);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 		return null;
 	}
 	
 	public String getMyTopic(){
-		System.out.println("getMyTopic->userid="+userid+",callback="+callback);
-		List<Topic> list = service.getTopicByUserid(userid);
-		HttpServletResponse response = ServletActionContext.getResponse();
-		response.setContentType("application/text;charset=utf-8");
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("state", "200");
-		params.put("error", "");
-		params.put("infos", list);
-		JSONObject array = JSONObject.fromObject(params);
-		System.out.println("返回的array="+array.toString());
-		if (callback != null) {
-			try {
-				String result = callback + "(" + array.toString() + ")";
-				System.out.println("返回的json="+result);
-				response.getWriter().write(result);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+//		System.out.println("getMyTopic->userid="+userid+",callback="+callback);
+//		List<Topic> list = service.getTopicByUserid(userid);
+//		HttpServletResponse response = ServletActionContext.getResponse();
+//		response.setContentType("application/text;charset=utf-8");
+//		Map<String, Object> params = new HashMap<String, Object>();
+//		params.put("state", "200");
+//		params.put("error", "");
+//		params.put("infos", list);
+//		JSONObject array = JSONObject.fromObject(params);
+//		System.out.println("返回的array="+array.toString());
+//		if (callback != null) {
+//			try {
+//				String result = callback + "(" + array.toString() + ")";
+//				System.out.println("返回的json="+result);
+//				response.getWriter().write(result);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 		return null;
 	}
 	
 	public String submitTopic(){
-		System.out.println("submitTopic->userid="+userid+"-content="+content+"-timeing="+time+"-pics="+pics);
-		UserCommonInfo userInfo = new UserCommonInfo();
-		userInfo.setId(userid);
-		Topic t = new Topic();
-		t.setContent(content);
-		t.setPics(pics);
-//		t.setTime(time);
-		t.setUserCommonInfo(userInfo);
-		service.publishTopic(t);
-		HttpServletResponse response = ServletActionContext.getResponse();
-		response.setContentType("application/text;charset=utf-8");
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("state", "200");
-		params.put("error", "");
-		params.put("infos", "success");
-		JSONObject array = JSONObject.fromObject(params);
-		if (callback != null) {
-			try {
-				String result = callback + "(" + array.toString() + ")";
-				response.getWriter().write(result);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+//		System.out.println("submitTopic->userid="+userid+"-content="+content+"-timeing="+time+"-pics="+pics);
+//		UserCommonInfo userInfo = new UserCommonInfo();
+//		userInfo.setId(userid);
+//		Topic t = new Topic();
+//		t.setContent(content);
+//		t.setPics(pics);
+////		t.setTime(time);
+//		t.setUserCommonInfo(userInfo);
+//		service.publishTopic(t);
+//		HttpServletResponse response = ServletActionContext.getResponse();
+//		response.setContentType("application/text;charset=utf-8");
+//		Map<String, Object> params = new HashMap<String, Object>();
+//		params.put("state", "200");
+//		params.put("error", "");
+//		params.put("infos", "success");
+//		JSONObject array = JSONObject.fromObject(params);
+//		if (callback != null) {
+//			try {
+//				String result = callback + "(" + array.toString() + ")";
+//				response.getWriter().write(result);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 		return null;
 	}
 
 	public String getTopic() {
-		HttpServletResponse response = ServletActionContext.getResponse();
-		response.setContentType("application/text;charset=UTF-8");
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("state", "200");
-		params.put("error", "");
-		params.put("infos", service.getTopicById(topicId));
-		JSONObject array = JSONObject.fromObject(params);
-		if (callback != null) {
-			try {
-				String result = callback + "(" + array.toString() + ")";
-				response.getWriter().write(result);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+//		HttpServletResponse response = ServletActionContext.getResponse();
+//		response.setContentType("application/text;charset=UTF-8");
+//		Map<String, Object> params = new HashMap<String, Object>();
+//		params.put("state", "200");
+//		params.put("error", "");
+//		params.put("infos", service.getTopicById(topicId));
+//		JSONObject array = JSONObject.fromObject(params);
+//		if (callback != null) {
+//			try {
+//				String result = callback + "(" + array.toString() + ")";
+//				response.getWriter().write(result);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 		return null;
 	}
 
 	public String list() {
-		System.out.println("list->start=" + start);
-		HttpServletResponse response = ServletActionContext.getResponse();
-		response.setContentType("application/text;charset=UTF-8");
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("state", "200");
-		params.put("error", "");
-		params.put("infos", service.getTopics(start));
-		// 声明JSONArray对象并输入JSON字符串
-		JSONObject array = JSONObject.fromObject(params);
-		if (callback != null) {
-			try {
-				String result = callback + "(" + array.toString() + ")";
-				response.getWriter().write(result);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+//		System.out.println("list->start=" + start);
+//		HttpServletResponse response = ServletActionContext.getResponse();
+//		response.setContentType("application/text;charset=UTF-8");
+//		Map<String, Object> params = new HashMap<String, Object>();
+//		params.put("state", "200");
+//		params.put("error", "");
+//		params.put("infos", service.getTopics(start));
+//		// 声明JSONArray对象并输入JSON字符串
+//		JSONObject array = JSONObject.fromObject(params);
+//		if (callback != null) {
+//			try {
+//				String result = callback + "(" + array.toString() + ")";
+//				response.getWriter().write(result);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 		return null;
 	}
 

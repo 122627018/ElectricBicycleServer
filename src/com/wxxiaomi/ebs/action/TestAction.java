@@ -3,7 +3,6 @@ package com.wxxiaomi.ebs.action;
 
 import org.springframework.stereotype.Controller;
 
-import com.wxxiaomi.ebs.bean.Topic;
 
 @Controller
 public class TestAction {

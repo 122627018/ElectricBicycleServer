@@ -2,8 +2,9 @@ package com.wxxiaomi.ebs.service;
 
 import java.util.List;
 
-import com.wxxiaomi.ebs.bean.Option;
-import com.wxxiaomi.ebs.bean.Option2;
+import com.wxxiaomi.ebs.dao.bean.Option;
+import com.wxxiaomi.ebs.dao.bean.Option2;
+
 
 public interface OptionService {
 

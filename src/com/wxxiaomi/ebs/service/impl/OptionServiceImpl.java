@@ -9,13 +9,27 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.wxxiaomi.ebs.bean.Option;
-import com.wxxiaomi.ebs.bean.Option2;
+import com.wxxiaomi.ebs.dao.bean.Option;
+import com.wxxiaomi.ebs.dao.bean.Option2;
 import com.wxxiaomi.ebs.service.OptionService;
 
 @Service
 @Transactional
 public class OptionServiceImpl implements OptionService {
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@Resource
 	SessionFactory factory;

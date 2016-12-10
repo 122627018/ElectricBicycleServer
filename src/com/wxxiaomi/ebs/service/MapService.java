@@ -2,7 +2,8 @@ package com.wxxiaomi.ebs.service;
 
 import java.util.List;
 
-import com.wxxiaomi.ebs.bean.Locat;
+import com.wxxiaomi.ebs.dao.bean.Locat;
+
 
 public interface MapService {
 

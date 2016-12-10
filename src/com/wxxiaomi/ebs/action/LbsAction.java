@@ -7,8 +7,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 
-import com.wxxiaomi.ebs.bean.Locat;
-import com.wxxiaomi.ebs.bean.format.NearByPerson;
+import com.wxxiaomi.ebs.dao.bean.Locat;
+import com.wxxiaomi.ebs.dao.bean.format.NearByPerson;
 import com.wxxiaomi.ebs.service.MapService;
 import com.wxxiaomi.ebs.util.GeoHashUtil;
 
