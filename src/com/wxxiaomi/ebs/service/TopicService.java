@@ -1,10 +1,7 @@
 package com.wxxiaomi.ebs.service;
 
-import java.util.List;
 import java.util.Set;
 
-import com.wxxiaomi.ebs.dao.bean.Comment;
-import com.wxxiaomi.ebs.dao.bean.Topic;
 import com.wxxiaomi.ebs.dao.bean.constant.Result;
 
 

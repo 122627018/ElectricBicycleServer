@@ -1,5 +1,6 @@
 package com.wxxiaomi.ebs.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -8,16 +9,27 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.wxxiaomi.ebs.dao.bean.Comment;
+import com.wxxiaomi.ebs.dao.bean.Option;
 import com.wxxiaomi.ebs.dao.bean.Topic;
+import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
+import com.wxxiaomi.ebs.dao.bean.constant.OptionType;
 import com.wxxiaomi.ebs.dao.bean.constant.Result;
+import com.wxxiaomi.ebs.dao.inter.CommentDao;
+import com.wxxiaomi.ebs.dao.inter.OptionDao;
 import com.wxxiaomi.ebs.dao.inter.TopicDao;
 import com.wxxiaomi.ebs.service.TopicService;
+import com.wxxiaomi.ebs.util.GeoHashUtil;
 
 @Service
 public class TopicServiceImpl implements TopicService {
 
 	@Resource
 	TopicDao topicDao;
+	@Resource
+	OptionDao optionDao;
+	@Resource
+	CommentDao commentDao;
+	
 	@Override
 	public Result getTopics(int start) {
 		List<Topic> topics = topicDao.getTopics(start);
@@ -28,45 +40,45 @@ public class TopicServiceImpl implements TopicService {
 
 	@Override
 	public Result getTopicByUserid(int userid) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Topic> topics = topicDao.getTopicsByUid(userid);
+		return new Result(200,"",topics);
 	}
 
 	@Override
 	public Result getTopicById(int topicId) {
-		// TODO Auto-generated method stub
-		return null;
+		Topic topic = topicDao.getTopicById(topicId);
+		return new Result(200,"",topic);
 	}
 
 	@Override
 	public Result getTopicComent(int topicId) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Comment> topicComments = commentDao.getTopicComments(topicId);
+		return new Result(200,"",topicComments);
 	}
 
 
 	@Override
 	public Result getUserReply(int userid) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Comment> topicComments = commentDao.getSomeOneReplys(userid);
+		return new Result(200,"",topicComments);
 	}
 
 	@Override
 	public Result getUserTopicComment(int userid) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Comment> topicComments = commentDao.getUserTopicComments(userid);
+		return new Result(200,"",topicComments);
 	}
 
 	@Override
 	public Result getUserDoReply(int useid) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Comment> topicComments = commentDao.getUserDoReplys(useid);
+		return new Result(200,"",topicComments);
 	}
 
 	@Override
 	public Result getCommentById(int comment_id) {
-		// TODO Auto-generated method stub
-		return null;
+		Comment comment = commentDao.getCommentById(comment_id);
+		return new Result(200,"",comment);
 	}
 
 	@Override
@@ -85,16 +97,39 @@ public class TopicServiceImpl implements TopicService {
 	@Override
 	public Result publishTopic(int userid, String content, String pics,
 			String[] locat_points, String locat_tag) {
-		// TODO Auto-generated method stub
-		return null;
+		UserCommonInfo userInfo = new UserCommonInfo();
+		userInfo.setId(userid);
+		Topic t = new Topic();
+		t.setContent(content);
+		System.out.println("pics:"+pics);
+		t.setPics(pics);
+		t.setTime(new Date());
+		t.setCcount(0);
+		String encode = GeoHashUtil.encode(Double.valueOf(locat_points[0]), Double.valueOf(locat_points[1]));
+		t.setLocat(encode);
+		t.setLocat_tag(locat_tag);
+		t.setHot(0);
+		t.setUserCommonInfo(userInfo);
+		t.setTitle("");
+		topicDao.InsetTopic(t);
+		
+		
+		//记得记录
+		Option o = new Option();
+		o.setObj_type(OptionType.TOPIC_PUBLISH);
+		o.setObj_id(t.getId());
+		o.setUser_id(userid);
+		o.setCreate_time(new Date());
+		optionDao.insertOption(o);
+		return new Result(200,"","success");
 	}
 
 
 
 	@Override
 	public Result deleteTopic(int topicId) {
-		// TODO Auto-generated method stub
-		return null;
+		topicDao.deleteTopic(topicId);
+		return new Result(200,"","success");
 	}
 
 
@@ -102,16 +137,27 @@ public class TopicServiceImpl implements TopicService {
 	@Override
 	public Result publishComment(int topicId, String content1, int from_uid,
 			String from_nick, String from_head, int to_uid, String to_unick) {
-		// TODO Auto-generated method stub
-		return null;
+		Comment comment = new Comment(0, topicId, content1, from_uid,
+				from_nick, from_head, to_uid, to_unick);
+		commentDao.InsetComment(comment);
+		
+		Option o = new Option();
+		o.setUser_id(from_uid);
+		o.setObj_id(comment.getId());
+		o.setParent_id(topicId);
+		o.setCreate_time(new Date());
+		o.setObj_type(OptionType.TOPIC_COMMENT);
+		optionDao.insertOption(o);
+		
+		return new Result(200,"","success");
 	}
 
 
 
 	@Override
 	public Result deleteComment(int userid, int comment_id) {
-		// TODO Auto-generated method stub
-		return null;
+		commentDao.deleteComment(comment_id, userid);
+		return new Result(200,"","success");
 	}
 
 

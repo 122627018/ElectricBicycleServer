@@ -15,4 +15,5 @@ public interface TopicDao {
 	List<Topic> getTopicsByUid(int userid);
 	
 	Topic getTopicById(int topicId);
+	
 }

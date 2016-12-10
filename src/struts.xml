@@ -31,7 +31,7 @@
 
 	<package name="android" namespace="/android" extends="json-default">
 		<interceptors>
-			<interceptor name="tokenInteceptor" class="com.wxxiaomi.ebs.util.TokenFilter" />
+			<interceptor name="tokenInteceptor" class="com.wxxiaomi.ebs.filter.TokenFilter" />
 
 			<interceptor-stack name="tokenInteceptorStack">
 				<interceptor-ref name="tokenInteceptor">

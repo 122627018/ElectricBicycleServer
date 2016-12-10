@@ -2,42 +2,24 @@ package com.wxxiaomi.ebs.action;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
 
-import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.wxxiaomi.ebs.action.base.BaseAction;
-import com.wxxiaomi.ebs.dao.bean.Comment;
-import com.wxxiaomi.ebs.dao.bean.Option;
 import com.wxxiaomi.ebs.dao.bean.Photo;
-import com.wxxiaomi.ebs.dao.bean.Topic;
-import com.wxxiaomi.ebs.dao.bean.User;
-import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
-import com.wxxiaomi.ebs.dao.bean.constant.OptionType;
 import com.wxxiaomi.ebs.dao.bean.constant.Result;
-import com.wxxiaomi.ebs.dao.bean.format.Format_InitUserData;
-import com.wxxiaomi.ebs.dao.bean.format.Format_Login;
-import com.wxxiaomi.ebs.service.OptionService;
 import com.wxxiaomi.ebs.service.TopicService;
 import com.wxxiaomi.ebs.service.UserService;
-import com.wxxiaomi.ebs.util.JsonDateValueProcessor;
-import com.wxxiaomi.ebs.util.jwt.Jwt;
 
 @Controller
 public class UserAction extends BaseAction{
 
 	@Resource UserService service;
 	@Resource TopicService topicService;
-	@Resource OptionService optionService;
 	
 	public String username;
 	public String password;
@@ -130,7 +112,7 @@ public class UserAction extends BaseAction{
 	}
 	
 	public String optionlog(){
-		long startTime=System.currentTimeMillis();
+//		long startTime=System.currentTimeMillis();
 //		System.out.println("optionlog");
 //		List<OptionLogs> userLogs = optService.getUserLogs(userid);
 //		infos = userLogs;
@@ -185,6 +167,7 @@ public class UserAction extends BaseAction{
 //		long endTime=System.currentTimeMillis();
 //		 float excTime=(float)(endTime-startTime)/1000;
 //	       System.out.println("获取用户动态所耗费的执行时间："+excTime+"s");
+		adapterResult(service.UserOptionLog(userid));
 		return "optionlog";
 	}
 	

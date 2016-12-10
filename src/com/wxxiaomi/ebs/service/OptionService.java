@@ -1,16 +1,18 @@
-package com.wxxiaomi.ebs.service;
-
-import java.util.List;
-
-import com.wxxiaomi.ebs.dao.bean.Option;
-import com.wxxiaomi.ebs.dao.bean.Option2;
-
-
-public interface OptionService {
-
-	boolean insertOption(Option option);
-	
-	List<Option> getUserOptions(int userid);
-	
-	List<Option2> getUserOptions2(int userid);
-}
+//package com.wxxiaomi.ebs.service;
+//
+//
+//import com.wxxiaomi.ebs.dao.bean.constant.Result;
+//
+//
+//public interface OptionService {
+//
+////	Result insertOption(Option option);
+//	
+//	Result getUserOptions(int userid);
+//	
+//	Result getUserOptions2(int userid);
+//
+//	void logComment(int userid, int topicId, int comment_id);
+//
+//	void logTopic(int userid, int topicid);
+//}

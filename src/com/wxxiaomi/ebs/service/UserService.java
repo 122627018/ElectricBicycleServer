@@ -16,6 +16,8 @@ public interface UserService {
 	
 	Result getUserInfosByName(String name);
 	
+	Result UserOptionLog(int userid);
+	
 //	List<UserCommonInfo> getUserListByEMUsername(List<String> list);
 //	
 //	boolean checkPhoneExists(String phone);

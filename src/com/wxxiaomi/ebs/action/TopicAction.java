@@ -1,30 +1,18 @@
 package com.wxxiaomi.ebs.action;
 
-import java.util.Date;
-import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 
 import com.wxxiaomi.ebs.action.base.BaseAction;
-import com.wxxiaomi.ebs.dao.bean.Comment;
-import com.wxxiaomi.ebs.dao.bean.Option;
-import com.wxxiaomi.ebs.dao.bean.Topic;
-import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
-import com.wxxiaomi.ebs.dao.bean.constant.OptionType;
-import com.wxxiaomi.ebs.service.OptionService;
 import com.wxxiaomi.ebs.service.TopicService;
-import com.wxxiaomi.ebs.util.GeoHashUtil;
 
 @Controller
 public class TopicAction extends BaseAction{
 
 	@Resource
 	TopicService service;
-	
-	@Resource
-	OptionService optionService;
 	private int start = 0;
 
 	// 以下参数是提交topic的
@@ -101,15 +89,17 @@ public class TopicAction extends BaseAction{
 		return "publishComment";
 	}
 
-	private void LogCommentPublish(int userid,int topicId,int comment_id) {
-		Option o = new Option();
-		o.setUser_id(userid);
-		o.setObj_id(comment_id);
-		o.setParent_id(topicId);
-		o.setCreate_time(new Date());
-		o.setObj_type(OptionType.TOPIC_COMMENT);
-		optionService.insertOption(o);
-	}
+//	private void LogCommentPublish(int userid,int topicId,int comment_id) {
+//		Option o = new Option();
+//		o.setUser_id(userid);
+//		o.setObj_id(comment_id);
+//		o.setParent_id(topicId);
+//		o.setCreate_time(new Date());
+//		o.setObj_type(OptionType.TOPIC_COMMENT);
+//		optionService.logComment(userid,topicId,comment_id);
+//	}
+	
+	
 
 	public String list() {
 //		state = "200";
@@ -161,7 +151,7 @@ public class TopicAction extends BaseAction{
 		return "submitTopic";
 	}
 
-	private void LogTopicPublic(int userid,int topicid) {
+//	private void LogTopicPublic(int userid,int topicid) {
 //		OptionLogs log = new OptionLogs();
 //		log.setContent(t.getContent());
 //		log.setCreate_time(t.getTime());
@@ -174,20 +164,22 @@ public class TopicAction extends BaseAction{
 //		log.setUserid(t.getUserCommonInfo().id);
 //		log.setFoor_note("");
 //		logService.insertOption(log);
-		try{
-		System.out.println("LogTopicPublic,userid:"+userid+",topicid:"+topicid);
-		Option o = new Option();
-		o.setObj_type(OptionType.TOPIC_PUBLISH);
-		o.setObj_id(topicid);
-		o.setUser_id(userid);
-		o.setCreate_time(new Date());
-		optionService.insertOption(o);
 		
-		}catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-	}
+//		try{
+//		System.out.println("LogTopicPublic,userid:"+userid+",topicid:"+topicid);
+//		Option o = new Option();
+//		o.setObj_type(OptionType.TOPIC_PUBLISH);
+//		o.setObj_id(topicid);
+//		o.setUser_id(userid);
+//		o.setCreate_time(new Date());
+//		optionService.insertOption(o);
+//		
+//		}catch (Exception e) {
+//			// TODO: handle exception
+//			e.printStackTrace();
+//		}
+//		optionService.logTopic(userid,topicid);
+//	}
 
 
 

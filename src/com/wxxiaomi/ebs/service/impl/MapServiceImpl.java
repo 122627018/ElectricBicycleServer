@@ -1,29 +1,25 @@
 package com.wxxiaomi.ebs.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.wxxiaomi.ebs.dao.bean.Locat;
-import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
+import com.wxxiaomi.ebs.dao.bean.constant.Result;
+import com.wxxiaomi.ebs.dao.inter.LocatDao;
 import com.wxxiaomi.ebs.service.MapService;
 import com.wxxiaomi.ebs.service.UserService;
 import com.wxxiaomi.ebs.util.GeoHashUtil;
 
 @Service
-@Transactional
 public class MapServiceImpl implements MapService {
 
 	@Resource
 	UserService userService;
 	@Resource
-	SessionFactory factory;
+	LocatDao locatDao;
 
 	/**
 	 * 取出附近的人
@@ -32,24 +28,32 @@ public class MapServiceImpl implements MapService {
 	 * @param geo
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<Locat> getNearByPerson(int userid, String geo) {
-		geo = geo.substring(0, 5);
-		String queryString = "from Locat l where l.userCommonInfo.id!=? and geo LIKE ?";
-		Query queryObject = factory.getCurrentSession()
-				.createQuery(queryString);
-		queryObject.setParameter(0, userid);
-		queryObject.setParameter(1, "%" + geo + "%");
-		if (queryObject.list().size() > 0) {
-			return queryObject.list();
-		} else {
-			return null;
+	public Result getNearByPerson(int userid, String geo) {
+//		geo = geo.substring(0, 5);
+//		String queryString = "from Locat l where l.userCommonInfo.id!=? and geo LIKE ?";
+//		Query queryObject = factory.getCurrentSession()
+//				.createQuery(queryString);
+//		queryObject.setParameter(0, userid);
+//		queryObject.setParameter(1, "%" + geo + "%");
+//		if (queryObject.list().size() > 0) {
+//			return queryObject.list();
+//		} else {
+//			return null;
+//		}
+		List<Locat> near = locatDao.getNear(userid, geo);
+		if (near != null) {
+			for (Locat item : near) {
+				String geoo = item.getGeo();
+				double[] decode = GeoHashUtil.decode(geoo);
+				item.setPoint(decode);
+			}
 		}
+		return new Result(200,"",near);
 	}
 
 	@Override
-	public boolean savaLocation(int userid, String geo) {
+	public Result savaLocation(int userid, String geo) {
 		
 //		String queryString1 = "from Locat l  where l.userCommonInfo.id=?";
 //		Query query = factory.getCurrentSession()
@@ -69,12 +73,18 @@ public class MapServiceImpl implements MapService {
 //			factory.getCurrentSession().save(locat);
 //			
 //		}
-		
-		return true;
+		int flag = locatDao.savaLocation(userid, geo);
+		if(flag==0){
+//			Locat locat = new Locat();
+//			locat.setGeo(geo);
+//			locat.setUserCommonInfo(userService.getUserCommonInfoById(userid));
+//			factory.getCurrentSession().save(locat);
+		}
+		return new Result(200,"","success");
 	}
 
-	@Override
-	public List<Locat> createNearByPeople(double latitude, double longitude) {
+//	@Override
+//	public List<Locat> createNearByPeople(double latitude, double longitude) {
 //		List<Locat> result = new ArrayList<Locat>();
 //		try {
 //			int[] list = { 20, 21, 22, 23, 24 };
@@ -95,7 +105,7 @@ public class MapServiceImpl implements MapService {
 //		}
 
 //		return result;
-		return null;
+//		return null;
 
-	};
+//	};
 }

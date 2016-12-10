@@ -7,20 +7,37 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+
 import org.springframework.stereotype.Service;
 
+import com.wxxiaomi.ebs.dao.bean.Comment;
+import com.wxxiaomi.ebs.dao.bean.Option;
+import com.wxxiaomi.ebs.dao.bean.Topic;
 import com.wxxiaomi.ebs.dao.bean.User;
 import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
+import com.wxxiaomi.ebs.dao.bean.constant.OptionType;
 import com.wxxiaomi.ebs.dao.bean.constant.Result;
+import com.wxxiaomi.ebs.dao.inter.CommentDao;
+import com.wxxiaomi.ebs.dao.inter.OptionDao;
+import com.wxxiaomi.ebs.dao.inter.TopicDao;
 import com.wxxiaomi.ebs.dao.inter.UserDao;
+import com.wxxiaomi.ebs.module.jwt.Jwt;
 import com.wxxiaomi.ebs.service.UserService;
-import com.wxxiaomi.ebs.util.jwt.Jwt;
+import com.wxxiaomi.ebs.util.JsonDateValueProcessor;
 
 @Service
 public class UserServiceImpl implements UserService {
 
 	@Resource
 	UserDao userDao;
+	@Resource
+	OptionDao optionDao;
+	@Resource
+	TopicDao topicDao;
+	@Resource
+	CommentDao commentDao;
 	
 	@Override
 	public Result Login(String username, String password) {
@@ -29,7 +46,7 @@ public class UserServiceImpl implements UserService {
 		if(user!=null){
 			Map<String, Object> payload = new HashMap<String, Object>();
 			Date date = new Date();
-			payload.put("uid", user.getUserCommonInfo().id);// 用户id
+			payload.put("uid", user.getUserCommonInfo().id+"");// 用户id
 			payload.put("iat", date.getTime());// 生成时间:当前
 			payload.put("ext", date.getTime() + 2000 * 60 * 60);// 过期时间2小时
 			String token = Jwt.createToken(payload);
@@ -62,6 +79,37 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Result getUserInfosByName(String name) {
 		return new Result(200, "", userDao.getUserInfosByNames(name));
+	}
+
+
+	@Override
+	public Result UserOptionLog(int userid) {
+		List<Option> options = optionDao.getUserOptions(userid);
+		for(Option option : options){
+			JsonConfig jsonConfig = new JsonConfig();  
+			jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());  
+			int type = option.getObj_type();
+			switch (type) {
+			case OptionType.FOOT_PRINT:
+				break;
+			case OptionType.PHOTO_PUBLISH: //更新相册
+				break;
+			case OptionType.TOPIC_COMMENT://话题评论
+				//取出评论
+				Comment comment = commentDao.getCommentById(option.getObj_id());
+				//取出话题
+				Topic topic = topicDao.getTopicById(option.getParent_id());
+				System.out.println(topic.toString());
+				option.setJson_obj(JSONObject.fromObject(comment,jsonConfig).toString());
+				option.setJson_parent(JSONObject.fromObject(topic,jsonConfig).toString());
+				break;
+			case OptionType.TOPIC_PUBLISH://话题发布
+				Topic t = topicDao.getTopicById(option.getObj_id());
+				option.setJson_obj(JSONObject.fromObject(t,jsonConfig).toString());
+				break;
+			}
+		}
+		return new Result(200, "", options);
 	}
 	
 	
