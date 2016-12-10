@@ -14,7 +14,7 @@ import com.wxxiaomi.ebs.util.GeoHashUtil;
 
 @Controller
 public class LbsAction {
-
+   
 	@Resource
 	MapService mapService;
 
@@ -33,6 +33,8 @@ public class LbsAction {
 	 */
 	public String near() {
 		try {
+			
+			
 			List<Locat> result = new ArrayList<Locat>();
 			System.out.println("getnear request-->latitude=" + latitude
 					+ ",longitude=" + longitude + ",userid=" + userid);
