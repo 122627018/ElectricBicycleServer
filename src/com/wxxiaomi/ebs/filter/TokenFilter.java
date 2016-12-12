@@ -31,7 +31,7 @@ public class TokenFilter extends MethodFilterInterceptor {
 			String token = request.getHeader("token");
 			if (token != null) {
 				Map<String, Object> resultMap = Jwt.validToken(token);
-				System.out.println("校验结果是:"
+				System.out.println("token:"+token+"\n校验结果是:"
 						+ getResult((String) resultMap.get("state")));
 				System.out.println(TokenState.getTokenState((String) resultMap
 						.get("state")));

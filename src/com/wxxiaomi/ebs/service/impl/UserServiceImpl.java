@@ -24,6 +24,7 @@ import com.wxxiaomi.ebs.dao.inter.OptionDao;
 import com.wxxiaomi.ebs.dao.inter.TopicDao;
 import com.wxxiaomi.ebs.dao.inter.UserDao;
 import com.wxxiaomi.ebs.module.jwt.Jwt;
+import com.wxxiaomi.ebs.module.jwt.TokenState;
 import com.wxxiaomi.ebs.service.UserService;
 import com.wxxiaomi.ebs.util.JsonDateValueProcessor;
 
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
 	CommentDao commentDao;
 	
 	@Override
-	public Result Login(String username, String password) {
+	public Result Login(String username, String password,String uniqueNum) {
 		User user = userDao.getUser(username, password);
 		Result result;
 		if(user!=null){
@@ -48,11 +49,18 @@ public class UserServiceImpl implements UserService {
 			Date date = new Date();
 			payload.put("uid", user.getUserCommonInfo().id+"");// 用户id
 			payload.put("iat", date.getTime());// 生成时间:当前
-			payload.put("ext", date.getTime() + 2000 * 60 * 60);// 过期时间2小时
+			payload.put("ext", date.getTime() +  60 * 60);// 过期时间2小时(60*60*2000 2小时)
 			String token = Jwt.createToken(payload);
+			Map<String, Object> longMap = new HashMap<String, Object>();
+			longMap.put("uid", user.getUserCommonInfo().id+"");// 用户id
+			longMap.put("iat", date.getTime());// 生成时间:当前
+			longMap.put("ext", date.getTime() + 1000 * 60 * 60 * 24 * 15);// 过期时间15天
+			longMap.put("phoneNum", uniqueNum);
+			String long_token = Jwt.createToken(longMap);
+			
 			result = new Result(200,"",user);
 			result.putHeader("token", token);
-			result.putHeader("long_token", "asdsadasd");
+			result.putHeader("long_token", long_token);
 		}else{
 			result = new Result(300, "账号或者密码错误", "");
 		}
@@ -110,6 +118,54 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		return new Result(200, "", options);
+	}
+
+
+	@Override
+	public Result LongToken(String ltoken, String phoneId) {
+		System.out.println("LongToken,ltoken:"+ltoken);
+		Result result = null;
+		//先验证longToken的正确性，再返回短token
+		Map<String, Object> resultMap = Jwt.validToken(ltoken);
+		TokenState tokenState = TokenState.getTokenState((String) resultMap.get("state"));
+		switch (tokenState) {
+		case VALID:
+			//通过
+			@SuppressWarnings("unchecked")
+			HashMap<String, String> dataobj = ((HashMap<String, String>) resultMap
+					.get("data"));
+			System.out.println(dataobj);
+			String userid = dataobj.get("uid");
+			
+			Map<String, Object> payload = new HashMap<String, Object>();
+			Date date = new Date();
+			payload.put("uid",userid);// 用户id
+			payload.put("iat", date.getTime());// 生成时间:当前
+			payload.put("ext", date.getTime() + 2000 * 60 * 60);// 过期时间2小时
+			String stoken = Jwt.createToken(payload);
+			
+			Map<String, Object> longMap = new HashMap<String, Object>();
+			longMap.put("uid", userid);// 用户id
+			longMap.put("iat", date.getTime());// 生成时间:当前
+			longMap.put("ext", date.getTime() + 1000 * 60 * 60 * 24 * 15);// 过期时间15小时
+			longMap.put("phoneNum", dataobj.get("phoneNum"));
+			String long_token = Jwt.createToken(longMap);
+			
+			result = new Result(200,"",userid);
+			result.putHeader("long_token", long_token);
+			result.putHeader("token", stoken);
+			break;
+		case EXPIRED:
+			//无效
+		case INVALID:
+			//过期
+			result = new Result(402,"登陆凭证过期，请重新登陆","");
+			break;
+
+		default:
+			break;
+		}
+		return result;
 	}
 	
 	

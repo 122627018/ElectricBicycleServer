@@ -7,7 +7,7 @@ import com.wxxiaomi.ebs.dao.bean.constant.Result;
 
 public interface UserService {
 
-	Result Login(String username,String password);
+	Result Login(String username,String password,String uniqueNum);
 	
 	Result Register(String username,String passwrod);
 	
@@ -17,6 +17,8 @@ public interface UserService {
 	Result getUserInfosByName(String name);
 	
 	Result UserOptionLog(int userid);
+	
+	Result LongToken(String ltoken,String pboneId);
 	
 //	List<UserCommonInfo> getUserListByEMUsername(List<String> list);
 //	

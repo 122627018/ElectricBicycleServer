@@ -35,7 +35,7 @@
 
 			<interceptor-stack name="tokenInteceptorStack">
 				<interceptor-ref name="tokenInteceptor">
-					<param name="excludeMethods">login</param>
+					<param name="excludeMethods">login,longToken</param>
 				</interceptor-ref>
 				<interceptor-ref name="defaultStack"></interceptor-ref>
 			</interceptor-stack>
@@ -55,6 +55,11 @@
 			<interceptor-ref name="tokenInteceptorStack" />
 		
 			<result name="login" type="json">
+				<param name="contentType">text/html</param>
+					<param name="ignoreHierarchy">false</param>
+			</result>
+			
+			<result name="longToken" type="json">
 				<param name="contentType">text/html</param>
 					<param name="ignoreHierarchy">false</param>
 			</result>

@@ -33,6 +33,14 @@ public class UserAction extends BaseAction{
 	public int album_id;
 	public String imgs;
 	
+	public String long_token;
+	public String phoneId;
+	
+	public String longToken(){
+		adapterResult(service.LongToken(long_token, phoneId));
+		return "longToken";
+	}
+	
 
 
 
@@ -50,7 +58,7 @@ public class UserAction extends BaseAction{
 	}
 	
 	
-
+	public String uniqueNum;
 	public String login(){	
 		/**
 		 * 登陆操作：
@@ -58,7 +66,7 @@ public class UserAction extends BaseAction{
 		 * 生成Token，放在header
 		 * 返回
 		 */
-		Result login = service.Login(username, password);
+		Result login = service.Login(username, password,uniqueNum);
 		adapterResult(login);
 		return "login";
 	}

@@ -16,7 +16,7 @@
 
 <filter>
 		<filter-name>encodeFilter</filter-name>
-		<filter-class>com.wxxiaomi.ebs.util.CharacterSetFilter</filter-class>
+		<filter-class>com.wxxiaomi.ebs.filter.CharacterSetFilter</filter-class>
 		<init-param>
 			<param-name>encoding</param-name>
 			<param-value>UTF-8</param-value>
