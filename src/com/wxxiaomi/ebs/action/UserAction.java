@@ -26,8 +26,8 @@ public class UserAction extends BaseAction{
 	public String name;
 	
 	public String emnamelist;
-	private String description;
-	private String emname;
+	public String description;
+	public String emname;
 	public int userid;
 	
 	public int album_id;
@@ -35,6 +35,22 @@ public class UserAction extends BaseAction{
 	
 	public String long_token;
 	public String phoneId;
+	
+	public String head = null;
+	
+	
+	
+	
+	public String updateuserinfo(){
+		System.out.println("updateuserinfo");
+		System.out.println("name:"+name);
+		System.out.println("description:"+description);
+		System.out.println("head:"+head);
+		state = 200;
+		infos = "success";
+		error = "";
+		return "updateuserinfo";
+	}
 	
 	public String longToken(){
 		adapterResult(service.LongToken(long_token, phoneId));
