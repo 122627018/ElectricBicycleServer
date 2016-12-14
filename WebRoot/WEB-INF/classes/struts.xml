@@ -34,10 +34,11 @@
 			<interceptor name="tokenInteceptor" class="com.wxxiaomi.ebs.filter.TokenFilter" />
 
 			<interceptor-stack name="tokenInteceptorStack">
+				<interceptor-ref name="defaultStack"/>
 				<interceptor-ref name="tokenInteceptor">
 					<param name="excludeMethods">login,longToken</param>
 				</interceptor-ref>
-				<interceptor-ref name="defaultStack"></interceptor-ref>
+			
 			</interceptor-stack>
 		</interceptors>
 
@@ -51,7 +52,7 @@
 		</global-results>
 
 
-		<action name="user_*" class="userAction" method="{1}">
+		<action name="user_*" class="userAction" method="{1}" >
 			<interceptor-ref name="tokenInteceptorStack" />
 		
 			<result name="login" type="json">

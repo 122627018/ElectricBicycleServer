@@ -10,6 +10,8 @@ import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
+import com.opensymphony.xwork2.ognl.OgnlValueStack;
+import com.opensymphony.xwork2.util.ValueStack;
 import com.wxxiaomi.ebs.ConstantValue;
 import com.wxxiaomi.ebs.module.jwt.Jwt;
 import com.wxxiaomi.ebs.module.jwt.TokenState;
@@ -46,10 +48,29 @@ public class TokenFilter extends MethodFilterInterceptor {
 					if (uid == null) {
 						System.out.println("token中取不到uid");
 						return "demo";
+					}else{
+						System.out.println("从token中取出的uid是：" + uid);
+//						String fuid = request.getParameter("userid");
+//						request.getParameterMap().remove("userid");
+//						request.setAttribute("userid_demo", 20);
+//						System.out.println("从request域里面取出的userid:"+fuid);
+//						String finduid = invoker.getStack().findString("userid");
+//						System.out.println("从invoker.getStack()取得userid："+finduid);
+						invoker.getStack().setValue("userid", uid);
+//						invoker.getStack().set("userid", 20);
+//						String finduid2 = invoker.getStack().findString("userid");
+//						System.out.println("finduid:"+finduid+",finduid2:"+finduid2);
+//						
+//						invoker.getStack().set("userid_demo", uid);
+//						ValueStack valueStack = ActionContext.getContext().getValueStack(); 
+//						valueStack.set("userid_demo", uid);
+					
+//						OgnlValueStack stack=(OgnlValueStack)request.getAttribute("struts.valueStack");
+////						stack.push(o)
+//						stack.set("userid_demo", uid);
+						return invoker.invoke();
 					}
-					System.out.println("从token中取出的uid是：" + uid);
-					request.setAttribute("userid", uid);
-					return invoker.invoke();
+				
 				}
 
 			}

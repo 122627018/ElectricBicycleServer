@@ -5,17 +5,23 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 
+import org.apache.struts2.ServletActionContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.wxxiaomi.ebs.action.base.BaseAction;
 import com.wxxiaomi.ebs.dao.bean.Photo;
+import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
 import com.wxxiaomi.ebs.dao.bean.constant.Result;
 import com.wxxiaomi.ebs.service.TopicService;
 import com.wxxiaomi.ebs.service.UserService;
 
 @Controller
+@Scope("prototype")
 public class UserAction extends BaseAction{
 
 	@Resource UserService service;
@@ -36,19 +42,33 @@ public class UserAction extends BaseAction{
 	public String long_token;
 	public String phoneId;
 	
-	public String head = null;
+	public String head;
 	
 	
 	
+	public String userinfo;
+	
+	public String userid_demo;
 	
 	public String updateuserinfo(){
+//		HttpServletRequest request = (HttpServletRequest) ActionContext
+//				.getContext().get(ServletActionContext.HTTP_REQUEST);
+//		String demo = request.getParameter("userinfo");
+//		System.out.println("demo:"+demo);
+//		System.out.println("userinfo:"+userinfo);
+		System.out.println("userid:"+userid);
 		System.out.println("updateuserinfo");
 		System.out.println("name:"+name);
-		System.out.println("description:"+description);
+		System.out.println("emname:"+emname);
 		System.out.println("head:"+head);
-		state = 200;
-		infos = "success";
-		error = "";
+//		if(userinfo!=null){
+//			System.out.println("info:"+userinfo.toString());
+//		}
+		
+//		state = 200;
+//		infos = "success";
+//		error = "";
+		adapterResult(service.updateUserInfo(Integer.valueOf(userid),name, head, emname));
 		return "updateuserinfo";
 	}
 	
@@ -191,7 +211,9 @@ public class UserAction extends BaseAction{
 //		long endTime=System.currentTimeMillis();
 //		 float excTime=(float)(endTime-startTime)/1000;
 //	       System.out.println("获取用户动态所耗费的执行时间："+excTime+"s");
-		adapterResult(service.UserOptionLog(userid));
+		System.out.println("userid_demo:"+userid_demo);
+		System.out.println("userid:"+userid);
+		adapterResult(service.UserOptionLog(Integer.valueOf(userid)));
 		return "optionlog";
 	}
 	

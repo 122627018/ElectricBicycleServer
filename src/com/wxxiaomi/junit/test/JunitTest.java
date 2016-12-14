@@ -8,7 +8,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.wxxiaomi.ebs.dao.bean.Comment;
+import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
 import com.wxxiaomi.ebs.dao.inter.CommentDao;
+import com.wxxiaomi.ebs.dao.inter.UserDao;
 import com.wxxiaomi.ebs.dao.inter.impl.CommentDaoImpl;
 
 
@@ -22,6 +24,7 @@ public class JunitTest {
 //	static OptionService optionService;
 	
 	static CommentDao commentDao;
+	static UserDao userDao;
 	@BeforeClass
 	public static void setUp() {
 		try {
@@ -33,10 +36,21 @@ public class JunitTest {
 //			upLoadService = (UpLoadService) act.getBean("upLoadServiceImpl");
 //			optionService = (OptionService)act.getBean("optionServiceImpl");
 			commentDao = (CommentDao)act.getBean("commentDaoImpl");
+			userDao = (UserDao)act.getBean("userDaoImpl");
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void testUpdateUserInfo(){
+		UserCommonInfo info = new UserCommonInfo();
+		info.name = "demo";
+		info.head = "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1821181857,3823959247&fm=111&gp=0.jpg";
+		info.id = 1;
+		info.emname = "201610281024";
+		userDao.updateUser(info);
 	}
 	
 	@Test

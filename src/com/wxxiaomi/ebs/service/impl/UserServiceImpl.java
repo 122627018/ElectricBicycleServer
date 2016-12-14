@@ -167,6 +167,25 @@ public class UserServiceImpl implements UserService {
 		}
 		return result;
 	}
+
+
+	@Override
+	public Result updateUserInfo(int id,String name, String head,
+			String emname) {
+		try{
+		UserCommonInfo info = new UserCommonInfo();
+		info.name = name;
+		info.head = head;
+		info.id = id;
+		info.emname = emname;
+		userDao.updateUser(info);
+		return new Result(200,"","success");
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	return new Result(404,"出错","success");
+	}
 	
 	
 	

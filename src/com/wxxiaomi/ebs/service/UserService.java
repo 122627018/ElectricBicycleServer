@@ -20,6 +20,8 @@ public interface UserService {
 	
 	Result LongToken(String ltoken,String pboneId);
 	
+	Result updateUserInfo(int id,String name,String head,String emname);
+	
 //	List<UserCommonInfo> getUserListByEMUsername(List<String> list);
 //	
 //	boolean checkPhoneExists(String phone);
