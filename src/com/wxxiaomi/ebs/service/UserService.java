@@ -1,5 +1,6 @@
 package com.wxxiaomi.ebs.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.wxxiaomi.ebs.dao.bean.constant.Result;
@@ -20,7 +21,9 @@ public interface UserService {
 	
 	Result LongToken(String ltoken,String pboneId);
 	
-	Result updateUserInfo(int id,String name,String head,String emname);
+	Result updateUserInfo(int id,String nickname,String avatar,String emname,String description,String city,String cover,int sex,String create_time);
+	
+	Result updateUserFriends(List<String> emnames,List<Date> times);
 	
 //	List<UserCommonInfo> getUserListByEMUsername(List<String> list);
 //	

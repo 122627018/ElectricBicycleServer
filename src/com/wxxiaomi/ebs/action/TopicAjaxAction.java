@@ -1,20 +1,10 @@
 package com.wxxiaomi.ebs.action;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
-
-import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
-import com.wxxiaomi.ebs.dao.bean.Comment;
-import com.wxxiaomi.ebs.dao.bean.Topic;
-import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
 import com.wxxiaomi.ebs.service.TopicService;
 
 @Controller

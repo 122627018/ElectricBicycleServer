@@ -27,6 +27,7 @@ import com.wxxiaomi.ebs.module.jwt.Jwt;
 import com.wxxiaomi.ebs.module.jwt.TokenState;
 import com.wxxiaomi.ebs.service.UserService;
 import com.wxxiaomi.ebs.util.JsonDateValueProcessor;
+import com.wxxiaomi.ebs.util.MyUtils;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -47,12 +48,12 @@ public class UserServiceImpl implements UserService {
 		if(user!=null){
 			Map<String, Object> payload = new HashMap<String, Object>();
 			Date date = new Date();
-			payload.put("uid", user.getUserCommonInfo().id+"");// 用户id
+			payload.put("uid", user.getUserCommonInfo().getId());// 用户id
 			payload.put("iat", date.getTime());// 生成时间:当前
 			payload.put("ext", date.getTime() +  60 * 60);// 过期时间2小时(60*60*2000 2小时)
 			String token = Jwt.createToken(payload);
 			Map<String, Object> longMap = new HashMap<String, Object>();
-			longMap.put("uid", user.getUserCommonInfo().id+"");// 用户id
+			longMap.put("uid", user.getUserCommonInfo().getId());// 用户id
 			longMap.put("iat", date.getTime());// 生成时间:当前
 			longMap.put("ext", date.getTime() + 1000 * 60 * 60 * 24 * 15);// 过期时间15天
 			longMap.put("phoneNum", uniqueNum);
@@ -170,14 +171,11 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public Result updateUserInfo(int id,String name, String head,
-			String emname) {
+	public Result updateUserInfo(int userid,String nickname,String avatar,String emname,String description,String city,String cover,int sex,String create_time) {
 		try{
-		UserCommonInfo info = new UserCommonInfo();
-		info.name = name;
-		info.head = head;
-		info.id = id;
-		info.emname = emname;
+			
+		UserCommonInfo info = new UserCommonInfo(userid,nickname,avatar,emname,new Date()
+		,MyUtils.StrToDate(create_time),description,city,sex,cover);
 		userDao.updateUser(info);
 		return new Result(200,"","success");
 		}catch (Exception e) {
@@ -185,6 +183,14 @@ public class UserServiceImpl implements UserService {
 			e.printStackTrace();
 		}
 	return new Result(404,"出错","success");
+	}
+
+
+	@Override
+	public Result updateUserFriends(List<String> emnames, List<Date> times) {
+		// TODO Auto-generated method stub
+		List<UserCommonInfo> updateUserFriends = userDao.updateUserFriends(emnames, times);
+		return new Result(200,"",updateUserFriends);
 	}
 	
 	

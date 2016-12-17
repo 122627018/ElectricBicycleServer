@@ -1,24 +1,19 @@
 package com.wxxiaomi.ebs.action;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-
-import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.wxxiaomi.ebs.action.base.BaseAction;
 import com.wxxiaomi.ebs.dao.bean.Photo;
-import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
 import com.wxxiaomi.ebs.dao.bean.constant.Result;
 import com.wxxiaomi.ebs.service.TopicService;
 import com.wxxiaomi.ebs.service.UserService;
+import com.wxxiaomi.ebs.util.MyUtils;
 
 @Controller
 @Scope("prototype")
@@ -27,13 +22,9 @@ public class UserAction extends BaseAction{
 	@Resource UserService service;
 	@Resource TopicService topicService;
 	
-	public String username;
-	public String password;
-	public String name;
+
 	
 	public String emnamelist;
-	public String description;
-	public String emname;
 	public int userid;
 	
 	public int album_id;
@@ -42,33 +33,50 @@ public class UserAction extends BaseAction{
 	public String long_token;
 	public String phoneId;
 	
-	public String head;
 	
 	
 	
 	public String userinfo;
 	
-	public String userid_demo;
+	
+	
+	public String friends;
+	public String updateuserfriends(){
+		try{
+		System.out.println("updateuserfriends");
+		System.out.println("freinds:"+friends);
+		List<String> emnames = new ArrayList<String>();
+		List<Date> times = new ArrayList<Date>();
+		if(friends!=null){
+			String[] split = friends.split("#");
+			for(String itme : split){
+				String[] split2 = itme.split("=");
+				emnames.add(split2[0]);
+				if(split2.length>1){
+					times.add(MyUtils.StrToDate(split2[1]));
+				}
+				
+			}
+		}
+		adapterResult(service.updateUserFriends(emnames, times));
+		}catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		return "updateuserfriends";
+	}
+	
+	public String nickname;
+	public String description;
+	public String emname;
+	public String city = "";
+	public String cover = "";
+	public String avatar;
+	public int sex = 1;
+	public String create_time;
 	
 	public String updateuserinfo(){
-//		HttpServletRequest request = (HttpServletRequest) ActionContext
-//				.getContext().get(ServletActionContext.HTTP_REQUEST);
-//		String demo = request.getParameter("userinfo");
-//		System.out.println("demo:"+demo);
-//		System.out.println("userinfo:"+userinfo);
-		System.out.println("userid:"+userid);
-		System.out.println("updateuserinfo");
-		System.out.println("name:"+name);
-		System.out.println("emname:"+emname);
-		System.out.println("head:"+head);
-//		if(userinfo!=null){
-//			System.out.println("info:"+userinfo.toString());
-//		}
-		
-//		state = 200;
-//		infos = "success";
-//		error = "";
-		adapterResult(service.updateUserInfo(Integer.valueOf(userid),name, head, emname));
+		adapterResult(service.updateUserInfo(userid,nickname,avatar,emname,description,city,cover,sex,create_time));
 		return "updateuserinfo";
 	}
 	
@@ -76,8 +84,6 @@ public class UserAction extends BaseAction{
 		adapterResult(service.LongToken(long_token, phoneId));
 		return "longToken";
 	}
-	
-
 
 
 	public String insertUserPhoto(){
@@ -93,7 +99,8 @@ public class UserAction extends BaseAction{
 		return "insertUserPhoto";
 	}
 	
-	
+	public String username;
+	public String password;
 	public String uniqueNum;
 	public String login(){	
 		/**
@@ -108,114 +115,31 @@ public class UserAction extends BaseAction{
 	}
 	
 	public String register(){
-//		System.out.println("register");
-//		User user = service.registerUser(username, password);
-//		if(user!=null){
-//			infos = new Format_Login(user);
-//			state = 200;
-//		}else{
-//			System.out.println("用户已存在");
-//			state = 5000;
-//			error = "用户已存在";
-//		}
-//		System.out.println(infos.toString());
-		
 		Result resgiter = service.Register(username, password);
 		adapterResult(resgiter);
 		return "register";
-	}
-	
-	public String improveuserinfo(){
-		System.out.println("improveuserinfo");
-//		service.improveUserInfo(username, password);
-//		boolean result = service.improveUserInfo(userid, emname, name, description);
-//		infos = result;
-		return "inituserinfo";
 	}
 	
 	public String infosbyems(){
 		System.out.println("getinfosbyems");
 		String[] split = emnamelist.split("<>");
 		List<String> asList = Arrays.asList(split);
-//		List<UserCommonInfo> users = service.getUserListByEMUsername(asList);
-//		infos = new Format_InitUserData(users);
-//		state = 200;
 		adapterResult(service.getUserInfosByEms(asList));
 		return "infosbyems";
 	}
 	
+	public String name;
 	public String userinfobyname(){
-//		System.out.println("getuserinfobyname");
-//		List<UserCommonInfo> users = service.getUserInfoByName(name);
-//		System.out.println("users.size():"+users.size());
-//		state=200;
-//		error = "";
-//		infos = new Format_InitUserData(users);
 		adapterResult(service.getUserInfosByName(name));
 		return "userinfobyname";
 	}
 	
 	public String optionlog(){
-//		long startTime=System.currentTimeMillis();
-//		System.out.println("optionlog");
-//		List<OptionLogs> userLogs = optService.getUserLogs(userid);
-//		infos = userLogs;
-//		System.out.println(userLogs.size());
-//		state = "200";
-//		return "optionlog";
-//		Map<Integer,Option> commentMap = new HashMap<Integer,Option>();
-//		Map<Integer,Option> topicMap = new HashMap<Integer,Option>();
-//		List<Option> options = optionService.getUserOptions(userid);
-//		
-//		for(Option option : options){
-//			JsonConfig jsonConfig = new JsonConfig();  
-//			jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());  
-//			int type = option.getObj_type();
-//			switch (type) {
-//			case OptionType.FOOT_PRINT:
-//				break;
-//			case OptionType.PHOTO_PUBLISH: //更新相册
-//				break;
-//			case OptionType.TOPIC_COMMENT://话题评论
-//				//map.put(option.getParent_id(), option);
-//				//取出评论
-//				Comment comment = topicService.getCommentById(option.getObj_id());
-//				//取出话题
-//				Topic topic = topicService.getTopicById(option.getParent_id());
-//				System.out.println(topic.toString());
-//				option.setJson_obj(JSONObject.fromObject(comment,jsonConfig).toString());
-//				option.setJson_parent(JSONObject.fromObject(topic,jsonConfig).toString());
-//				
-////				commentMap.put(option.getObj_id(), option);
-////				topicMap.put(option.getParent_id(), option);
-//				break;
-//			case OptionType.TOPIC_PUBLISH://话题发布
-//				Topic t = topicService.getTopicById(option.getObj_id());
-//				option.setJson_obj(JSONObject.fromObject(t,jsonConfig).toString());
-////				topicMap.put(option.getObj_id(), option);
-//				break;
-//			}
-//		}
-////		Set<Integer> commentKeySet = commentMap.keySet();
-////		Set<Integer> topicKeySet = topicMap.keySet();
-////		List<Topic> topics = topicService.getTopics(topicKeySet);
-////		List<Comment> comments = topicService.getComments(commentKeySet);
-////		for(Topic t: topics){
-////			commentMap.get(t.getId());
-////		}
-////		for(Comment c:comments){
-////			
-////		}
-//		state = 200;
-//		infos = options;
-//		long endTime=System.currentTimeMillis();
-//		 float excTime=(float)(endTime-startTime)/1000;
-//	       System.out.println("获取用户动态所耗费的执行时间："+excTime+"s");
-		System.out.println("userid_demo:"+userid_demo);
 		System.out.println("userid:"+userid);
 		adapterResult(service.UserOptionLog(Integer.valueOf(userid)));
 		return "optionlog";
 	}
+
 	
 
 

@@ -6,8 +6,18 @@
   <id length="11" name="id">
    <generator class="native"/>
   </id>
-  <property generated="never" lazy="false" length="20" name="name" not-null="true"/>
-  <property generated="never" lazy="false" length="240" name="head"/>
-  <property generated="never" lazy="false" length="30" name="emname" not-null="true"/>
+  <property name="nickname" generated="never" lazy="false" />
+  <property name="avatar" generated="never" lazy="false"  />
+  <property name="emname" generated="never" lazy="false"  />
+  <property name="album_id" generated="never" lazy="false"  />
+    <property column="update_time" generated="never" lazy="false" length="19"
+   name="update_time" type="timestamp"/>
+    <property column="create_time" generated="never" lazy="false" length="19"
+   name="create_time" type="timestamp"/>
+  <property name="description" generated="never" lazy="false"  />
+  <property name="city" generated="never" lazy="false"  />
+  <property name="sex" generated="never" lazy="false"  />
+  <property name="cover" generated="never" lazy="false"  />
+  
  </class>
 </hibernate-mapping>

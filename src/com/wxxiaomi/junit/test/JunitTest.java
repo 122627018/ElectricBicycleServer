@@ -2,23 +2,28 @@ package com.wxxiaomi.junit.test;
 
 
 
+
+import java.sql.Timestamp;
+import java.util.Date;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.wxxiaomi.ebs.dao.bean.Comment;
+import com.wxxiaomi.ebs.dao.bean.Topic;
 import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
 import com.wxxiaomi.ebs.dao.inter.CommentDao;
+import com.wxxiaomi.ebs.dao.inter.TopicDao;
 import com.wxxiaomi.ebs.dao.inter.UserDao;
-import com.wxxiaomi.ebs.dao.inter.impl.CommentDaoImpl;
 
 
 public class JunitTest {
 
 //	static UserService service;
 //	static MapService mapService;
-//	static TopicService topicService;
+	static TopicDao topicDaoImpl;
 //	static UpLoadService upLoadService;
 //
 //	static OptionService optionService;
@@ -32,7 +37,7 @@ public class JunitTest {
 					"beans.xml");
 //			service = (UserService) act.getBean("userServiceImpl");
 //			mapService = (MapService) act.getBean("mapServiceImpl");
-//			topicService = (TopicService) act.getBean("topicServiceImpl");
+			topicDaoImpl = (TopicDao) act.getBean("topicDaoImpl");
 //			upLoadService = (UpLoadService) act.getBean("upLoadServiceImpl");
 //			optionService = (OptionService)act.getBean("optionServiceImpl");
 			commentDao = (CommentDao)act.getBean("commentDaoImpl");
@@ -43,15 +48,15 @@ public class JunitTest {
 		}
 	}
 	
-	@Test
-	public void testUpdateUserInfo(){
-		UserCommonInfo info = new UserCommonInfo();
-		info.name = "demo";
-		info.head = "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1821181857,3823959247&fm=111&gp=0.jpg";
-		info.id = 1;
-		info.emname = "201610281024";
-		userDao.updateUser(info);
-	}
+//	@Test
+//	public void testUpdateUserInfo(){
+//		UserCommonInfo info = new UserCommonInfo();
+//		info.name = "demo";
+//		info.head = "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1821181857,3823959247&fm=111&gp=0.jpg";
+//		info.id = 1;
+//		info.emname = "201610281024";
+//		userDao.updateUser(info);
+//	}
 	
 	@Test
 	public void testGetComment(){
@@ -152,6 +157,7 @@ public class JunitTest {
 //	
 //	@Test
 //	public void testPublishTopic2() {
+//		
 //			UserCommonInfo userInfo = new UserCommonInfo();
 //			userInfo.setId(25);
 //			Topic t = new Topic();
@@ -164,7 +170,7 @@ public class JunitTest {
 //			t.setHot(0);
 //			t.setUserCommonInfo(userInfo);
 //			t.setTitle("");
-//			topicService.publishTopic(t);
+//			topicDaoImpl.InsetTopic(t);
 //	}
 //
 //	@Test

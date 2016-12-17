@@ -1,5 +1,6 @@
 package com.wxxiaomi.ebs.dao.inter.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -96,6 +97,27 @@ public class UserDaoImpl implements UserDao{
 			e.printStackTrace();
 			return 0;
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserCommonInfo> updateUserFriends(List<String> emnames,
+			List<Date> times) {
+		if(times.size()>0){
+			String queryString = "from UserCommonInfo u where u.emname in(:list) and u.update_time not in(:list2)";
+			Query queryObject = factory.getCurrentSession()
+					.createQuery(queryString);
+			queryObject.setParameterList("list", emnames);
+			queryObject.setParameterList("list2", times);
+			return (List<UserCommonInfo>) queryObject.list();
+		}else{
+			String queryString = "from UserCommonInfo u where u.emname in(:list)";
+			Query queryObject = factory.getCurrentSession()
+					.createQuery(queryString);
+			queryObject.setParameterList("list", emnames);
+			return (List<UserCommonInfo>) queryObject.list();
+		}
+		
 	}
 
 }

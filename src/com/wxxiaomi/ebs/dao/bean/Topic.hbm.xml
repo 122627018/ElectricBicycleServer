@@ -12,6 +12,7 @@
    name="time" type="timestamp"/>
   <property generated="never" lazy="false" name="content" not-null="true"/>
   <property generated="never" lazy="false" name="pics"/>
+  
   <property generated="never" lazy="false" name="hot"/>
   <property generated="never" lazy="false" name="ccount"/>
   <property generated="never" lazy="false" name="locat"/>

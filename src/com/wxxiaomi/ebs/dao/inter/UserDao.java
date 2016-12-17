@@ -1,5 +1,6 @@
 package com.wxxiaomi.ebs.dao.inter;
 
+import java.util.Date;
 import java.util.List;
 
 import com.wxxiaomi.ebs.dao.bean.User;
@@ -24,4 +25,6 @@ public interface UserDao {
 	int updateUserHead(int userid,String imgPath);
 
 	List<UserCommonInfo> getUserInfosByNames(String name);
+	
+	List<UserCommonInfo> updateUserFriends(List<String> emnames,List<Date> times);
 }

@@ -1,5 +1,7 @@
 package com.wxxiaomi.ebs.filter;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,16 +26,28 @@ public class TokenFilter extends MethodFilterInterceptor {
 
 	@Override
 	protected String doIntercept(ActionInvocation invoker) throws Exception {
-		if(!ConstantValue.isTokenOpen){
+		HttpServletRequest request = (HttpServletRequest) ActionContext
+				.getContext().get(ServletActionContext.HTTP_REQUEST);
+		if(request.getMethod().equals("POST")){
+			InputStreamReader inputReader = new InputStreamReader(
+					request.getInputStream(), "UTF-8");
+			BufferedReader bufferReader = new BufferedReader(inputReader);
+			StringBuilder sb = new StringBuilder();
+			String line = null;
+			while ((line = bufferReader.readLine()) != null) {
+				sb.append(line);
+			}
+			invoker.getStack().setValue("body", sb);
+		}
+		if (!ConstantValue.isTokenOpen) {
 			return invoker.invoke();
 		}
 		try {
-			HttpServletRequest request = (HttpServletRequest) ActionContext
-					.getContext().get(ServletActionContext.HTTP_REQUEST);
+
 			String token = request.getHeader("token");
 			if (token != null) {
 				Map<String, Object> resultMap = Jwt.validToken(token);
-				System.out.println("token:"+token+"\n校验结果是:"
+				System.out.println("token:" + token + "\n校验结果是:"
 						+ getResult((String) resultMap.get("state")));
 				System.out.println(TokenState.getTokenState((String) resultMap
 						.get("state")));
@@ -48,29 +62,33 @@ public class TokenFilter extends MethodFilterInterceptor {
 					if (uid == null) {
 						System.out.println("token中取不到uid");
 						return "demo";
-					}else{
+					} else {
 						System.out.println("从token中取出的uid是：" + uid);
-//						String fuid = request.getParameter("userid");
-//						request.getParameterMap().remove("userid");
-//						request.setAttribute("userid_demo", 20);
-//						System.out.println("从request域里面取出的userid:"+fuid);
-//						String finduid = invoker.getStack().findString("userid");
-//						System.out.println("从invoker.getStack()取得userid："+finduid);
+						// String fuid = request.getParameter("userid");
+						// request.getParameterMap().remove("userid");
+						// request.setAttribute("userid_demo", 20);
+						// System.out.println("从request域里面取出的userid:"+fuid);
+						// String finduid =
+						// invoker.getStack().findString("userid");
+						// System.out.println("从invoker.getStack()取得userid："+finduid);
 						invoker.getStack().setValue("userid", uid);
-//						invoker.getStack().set("userid", 20);
-//						String finduid2 = invoker.getStack().findString("userid");
-//						System.out.println("finduid:"+finduid+",finduid2:"+finduid2);
-//						
-//						invoker.getStack().set("userid_demo", uid);
-//						ValueStack valueStack = ActionContext.getContext().getValueStack(); 
-//						valueStack.set("userid_demo", uid);
-					
-//						OgnlValueStack stack=(OgnlValueStack)request.getAttribute("struts.valueStack");
-////						stack.push(o)
-//						stack.set("userid_demo", uid);
+						// invoker.getStack().set("userid", 20);
+						// String finduid2 =
+						// invoker.getStack().findString("userid");
+						// System.out.println("finduid:"+finduid+",finduid2:"+finduid2);
+						//
+						// invoker.getStack().set("userid_demo", uid);
+						// ValueStack valueStack =
+						// ActionContext.getContext().getValueStack();
+						// valueStack.set("userid_demo", uid);
+
+						// OgnlValueStack
+						// stack=(OgnlValueStack)request.getAttribute("struts.valueStack");
+						// // stack.push(o)
+						// stack.set("userid_demo", uid);
 						return invoker.invoke();
 					}
-				
+
 				}
 
 			}
