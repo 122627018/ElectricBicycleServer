@@ -79,7 +79,29 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public int updateUser(UserCommonInfo userInfo) {
-		factory.getCurrentSession().update(userInfo);
+		UserCommonInfo info = (UserCommonInfo) factory.getCurrentSession().get(UserCommonInfo.class, userInfo.getId());
+		if(userInfo.getNickname()!=null){
+			info.setNickname(userInfo.getNickname());
+		}
+		if(userInfo.getAvatar()!=null){
+			info.setAvatar(userInfo.getAvatar());
+		}
+		if(userInfo.getCity()!=null){
+			info.setCity(userInfo.getCity());
+		}
+		if(userInfo.getCover()!=null){
+			info.setCover(userInfo.getCover());
+		}
+		if(userInfo.getDescription()!=null){
+			info.setDescription(userInfo.getDescription());
+		}
+		if(userInfo.getSex()!=0){
+			info.setSex(userInfo.getSex());
+		}
+		info.setUpdate_time(new Date());
+		factory.getCurrentSession().update(info);
+		
+//		factory.getCurrentSession().merge(userInfo);
 		return 1;
 	}
 

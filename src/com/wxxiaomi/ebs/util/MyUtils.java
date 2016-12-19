@@ -22,7 +22,7 @@ public class MyUtils {
 	*/
 	public static Date StrToDate(String str) {
 	  
-	   SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	   SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	   Date date = null;
 	   try {
 	    date = format.parse(str);

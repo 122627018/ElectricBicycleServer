@@ -28,7 +28,7 @@ public class TokenFilter extends MethodFilterInterceptor {
 	protected String doIntercept(ActionInvocation invoker) throws Exception {
 		HttpServletRequest request = (HttpServletRequest) ActionContext
 				.getContext().get(ServletActionContext.HTTP_REQUEST);
-		if(request.getMethod().equals("POST")){
+		if (request.getMethod().equals("POST")) {
 			InputStreamReader inputReader = new InputStreamReader(
 					request.getInputStream(), "UTF-8");
 			BufferedReader bufferReader = new BufferedReader(inputReader);
@@ -43,7 +43,6 @@ public class TokenFilter extends MethodFilterInterceptor {
 			return invoker.invoke();
 		}
 		try {
-
 			String token = request.getHeader("token");
 			if (token != null) {
 				Map<String, Object> resultMap = Jwt.validToken(token);
@@ -58,7 +57,7 @@ public class TokenFilter extends MethodFilterInterceptor {
 					HashMap<String, String> dataobj = ((HashMap<String, String>) resultMap
 							.get("data"));
 					System.out.println(dataobj);
-					String uid = dataobj.get("uid");
+					String uid = String.valueOf(dataobj.get("uid"));
 					if (uid == null) {
 						System.out.println("token中取不到uid");
 						return "demo";

@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
                                    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.wxxiaomi.ebs.dao.bean">
- <class name="UserCommonInfo" table="bicycle_user_common">
+ <class name="UserCommonInfo" table="bicycle_user_common" dynamic-update="true">
   <id length="11" name="id">
    <generator class="native"/>
   </id>

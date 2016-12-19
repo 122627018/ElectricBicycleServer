@@ -136,7 +136,7 @@ public class UserServiceImpl implements UserService {
 			HashMap<String, String> dataobj = ((HashMap<String, String>) resultMap
 					.get("data"));
 			System.out.println(dataobj);
-			String userid = dataobj.get("uid");
+			String userid = String.valueOf(dataobj.get("uid"));
 			
 			Map<String, Object> payload = new HashMap<String, Object>();
 			Date date = new Date();

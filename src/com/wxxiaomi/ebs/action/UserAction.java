@@ -81,7 +81,12 @@ public class UserAction extends BaseAction{
 	}
 	
 	public String longToken(){
+		try{
 		adapterResult(service.LongToken(long_token, phoneId));
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 		return "longToken";
 	}
 

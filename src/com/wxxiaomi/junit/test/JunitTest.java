@@ -35,14 +35,27 @@ public class JunitTest {
 		try {
 			ApplicationContext act = new ClassPathXmlApplicationContext(
 					"beans.xml");
+			userDao = (UserDao)act.getBean("userDaoImpl");
 //			service = (UserService) act.getBean("userServiceImpl");
 //			mapService = (MapService) act.getBean("mapServiceImpl");
 			topicDaoImpl = (TopicDao) act.getBean("topicDaoImpl");
 //			upLoadService = (UpLoadService) act.getBean("upLoadServiceImpl");
 //			optionService = (OptionService)act.getBean("optionServiceImpl");
 			commentDao = (CommentDao)act.getBean("commentDaoImpl");
-			userDao = (UserDao)act.getBean("userDaoImpl");
+			
 		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	@Test
+	public void testUpdateUserInfo(){
+		try{
+		UserCommonInfo info = new UserCommonInfo();
+		info.setId(26);
+		info.setNickname("啦啦啦啦");
+		userDao.updateUser(info);
+		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
