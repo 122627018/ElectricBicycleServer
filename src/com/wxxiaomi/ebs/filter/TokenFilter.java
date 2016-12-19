@@ -28,17 +28,6 @@ public class TokenFilter extends MethodFilterInterceptor {
 	protected String doIntercept(ActionInvocation invoker) throws Exception {
 		HttpServletRequest request = (HttpServletRequest) ActionContext
 				.getContext().get(ServletActionContext.HTTP_REQUEST);
-		if (request.getMethod().equals("POST")) {
-			InputStreamReader inputReader = new InputStreamReader(
-					request.getInputStream(), "UTF-8");
-			BufferedReader bufferReader = new BufferedReader(inputReader);
-			StringBuilder sb = new StringBuilder();
-			String line = null;
-			while ((line = bufferReader.readLine()) != null) {
-				sb.append(line);
-			}
-			invoker.getStack().setValue("body", sb);
-		}
 		if (!ConstantValue.isTokenOpen) {
 			return invoker.invoke();
 		}

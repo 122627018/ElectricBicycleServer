@@ -175,7 +175,7 @@ public class UserServiceImpl implements UserService {
 		try{
 			
 		UserCommonInfo info = new UserCommonInfo(userid,nickname,avatar,emname,new Date()
-		,MyUtils.StrToDate(create_time),description,city,sex,cover);
+		,create_time!=null?MyUtils.StrToDate(create_time):null,description,city,sex,cover);
 		userDao.updateUser(info);
 		return new Result(200,"","success");
 		}catch (Exception e) {

@@ -69,8 +69,8 @@ public class UserAction extends BaseAction{
 	public String nickname;
 	public String description;
 	public String emname;
-	public String city = "";
-	public String cover = "";
+	public String city;
+	public String cover;
 	public String avatar;
 	public int sex = 1;
 	public String create_time;
