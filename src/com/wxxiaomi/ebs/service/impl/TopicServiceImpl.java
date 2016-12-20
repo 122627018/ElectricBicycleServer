@@ -149,7 +149,7 @@ public class TopicServiceImpl implements TopicService {
 		o.setObj_type(OptionType.TOPIC_COMMENT);
 		optionDao.insertOption(o);
 		
-		return new Result(200,"","success");
+		return new Result(200,"",comment);
 	}
 
 

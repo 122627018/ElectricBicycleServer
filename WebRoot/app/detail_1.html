@@ -20,8 +20,8 @@
 			<div class="card-header no-border">
 				<div class="facebook-avatar" >
 					<img
-						src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg"
-						width="34" height="34">
+						id="info_avatvr"
+						width="40" height="40">
 				</div>
 				<div class="facebook-name" id="info_user_name"></div>
 				<div class="facebook-date" id="info_user_description"></div>
@@ -49,7 +49,7 @@
 
 			</div>
 			<div class="card-footer">
-				<a href="#" class="link" id="info_locat_tag">揭阳科技馆</a>
+				<a href="#" class="link" id="info_locat_tag"></a>
 
 			</div>
 		</div>
@@ -141,12 +141,14 @@
 		//将从网络获取过来的detail适配到ui里面
 		function adapterTopicDetail(infos) {
 			//$("#info_head_parent").attr("data-me", JSON.stringify(infos.userCommonInfo));
+			$("#info_user_description").html(infos.userCommonInfo.description);
 			$("#info_user_name").html(infos.userCommonInfo.name);
-			$("#info_user_description").html("假装是个人签名");
+			
 			$("#info_content").html(infos.content);
 			$("#info_time").html(infos.time);
 			$("#info_locat_tag").html(infos.locat_tag);
-			
+			showLog("infos.userCommonInfo.avatar:"+infos.userCommonInfo.avatar);
+			$("#info_avatvr").attr("src",infos.userCommonInfo.avatar+'?'+new Date().getTime());
 			if (infos.pics != "") {
 				showLog("infos.pics !=null");
 				//$("#info_img_content").attr("display","block");
