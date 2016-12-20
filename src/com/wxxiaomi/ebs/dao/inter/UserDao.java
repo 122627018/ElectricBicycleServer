@@ -27,4 +27,6 @@ public interface UserDao {
 	List<UserCommonInfo> getUserInfosByNames(String name);
 	
 	List<UserCommonInfo> updateUserFriends(List<String> emnames,List<Date> times);
+
+	int updateUserCover(int userid, String coverPath);
 }

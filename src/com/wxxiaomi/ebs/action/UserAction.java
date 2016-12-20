@@ -66,6 +66,14 @@ public class UserAction extends BaseAction{
 		return "updateuserfriends";
 	}
 	
+	public String coverPath;
+	public String upLoadCover(){
+		System.out.println("upLoadCover,coverPath:"+coverPath);
+		adapterResult(service.updateUserCover(userid,coverPath));
+		return "upLoadCover";
+	}
+	
+	
 	public String nickname;
 	public String description;
 	public String emname;

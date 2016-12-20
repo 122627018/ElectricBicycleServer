@@ -142,4 +142,20 @@ public class UserDaoImpl implements UserDao{
 		
 	}
 
+	@Override
+	public int updateUserCover(int userid, String coverPath) {
+		try {
+			String queryString = "update UserCommonInfo u set u.cover=? where u.id=?";
+			Query queryObject = factory.getCurrentSession().createQuery(
+					queryString);
+			queryObject.setParameter(0, coverPath);
+			queryObject.setParameter(1, userid);
+			queryObject.executeUpdate();
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
 }

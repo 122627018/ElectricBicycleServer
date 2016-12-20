@@ -24,6 +24,8 @@ public interface UserService {
 	Result updateUserInfo(int id,String nickname,String avatar,String emname,String description,String city,String cover,int sex,String create_time);
 	
 	Result updateUserFriends(List<String> emnames,List<Date> times);
+
+	Result updateUserCover(int userid, String coverPath);
 	
 //	List<UserCommonInfo> getUserListByEMUsername(List<String> list);
 //	

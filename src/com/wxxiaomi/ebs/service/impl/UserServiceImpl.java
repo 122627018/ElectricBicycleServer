@@ -192,6 +192,14 @@ public class UserServiceImpl implements UserService {
 		List<UserCommonInfo> updateUserFriends = userDao.updateUserFriends(emnames, times);
 		return new Result(200,"",updateUserFriends);
 	}
+
+
+	@Override
+	public Result updateUserCover(int userid, String coverPath) {
+		// TODO Auto-generated method stub
+		userDao.updateUserCover(userid,coverPath);
+		return new Result(200,"",coverPath);
+	}
 	
 	
 	
