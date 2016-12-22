@@ -1,6 +1,9 @@
 package com.wxxiaomi.ebs.dao.inter.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -9,7 +12,9 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.wxxiaomi.ebs.dao.bean.Option;
 import com.wxxiaomi.ebs.dao.bean.Topic;
+import com.wxxiaomi.ebs.dao.bean.format.OptionDetail;
 import com.wxxiaomi.ebs.dao.inter.TopicDao;
 
 @Repository
@@ -72,6 +77,43 @@ public class TopicDaoImpl implements TopicDao {
 	@Override
 	public Topic getTopicById(int topicId) {
 		return (Topic) factory.getCurrentSession().get(Topic.class, topicId);
+	}
+
+	@Override
+	public List<OptionDetail> getOptionDetail(List<Option> topicOption) {
+//		List<Integer> ids = new ArrayList<Integer>();
+		List<OptionDetail> results = new ArrayList<OptionDetail>();
+//		Map<Integer,Option> temp = new HashMap<Integer,Option>();
+		Map<Integer,List<Option>> demo = new HashMap<Integer, List<Option>>();
+		for(Option item : topicOption){
+//			temp.put(item.getParent_id(), item);
+//			ids.add(item.getParent_id());
+			if(demo.containsKey(item.getParent_id())){
+				demo.get(item.getParent_id()).add(item);
+			}else{
+				List<Option> list = new ArrayList<Option>();
+				list.add(item);
+				demo.put(item.getParent_id(), list);
+			}
+		}
+		String queryString = "from Topic t where t.id in(:list)";
+		Query queryObject = factory.getCurrentSession()
+				.createQuery(queryString);
+		queryObject.setParameterList("list", demo.keySet());
+		@SuppressWarnings("unchecked")
+		List<Topic> topics = queryObject.list();
+		for(Topic item : topics){
+//			Option option = demo.get(item.getId());
+			List<Option> list = demo.get(item.getId());
+			for(Option option: list){
+				OptionDetail o = new OptionDetail(option.getId(), option.getUser_id()
+						, option.getCreate_time(),  item.getPicss()[0], item.getContent()
+						, item.getCcount(), item.getHot(), item.getLocat_tag(),item.getId()
+						,option.getObj_id(),option.getType());
+				results.add(o);
+			}
+		}
+		return results;
 	}
 
 }

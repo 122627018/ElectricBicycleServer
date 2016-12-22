@@ -26,6 +26,8 @@ public interface UserService {
 	Result updateUserFriends(List<String> emnames,List<Date> times);
 
 	Result updateUserCover(int userid, String coverPath);
+
+	Result getUserInfoById(int taget_userid);
 	
 //	List<UserCommonInfo> getUserListByEMUsername(List<String> list);
 //	

@@ -1,7 +1,10 @@
 package com.wxxiaomi.ebs.dao.inter.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -12,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.wxxiaomi.ebs.dao.bean.User;
 import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
+import com.wxxiaomi.ebs.dao.bean.format.OptionDetail;
 import com.wxxiaomi.ebs.dao.inter.UserDao;
 
 @Repository
@@ -156,6 +160,34 @@ public class UserDaoImpl implements UserDao{
 			e.printStackTrace();
 			return 0;
 		}
+	}
+
+	@Override
+	public List<OptionDetail> getOptionDetail(List<OptionDetail> optionDetail) {
+		Map<Integer,List<OptionDetail>> demo = new HashMap<Integer, List<OptionDetail>>();
+		for(OptionDetail item : optionDetail){
+			if(demo.containsKey(item.getUserid())){
+				demo.get(item.getUserid()).add(item);
+			}else{
+				List<OptionDetail> list = new ArrayList<OptionDetail>();
+				list.add(item);
+				demo.put(item.getUserid(), list);
+			}
+		}
+		String queryString = "from UserCommonInfo u where u.id in(:list)";
+		Query queryObject = factory.getCurrentSession()
+				.createQuery(queryString);
+		queryObject.setParameterList("list", demo.keySet());
+		@SuppressWarnings("unchecked")
+		List<UserCommonInfo> users = queryObject.list();
+		for(UserCommonInfo user : users){
+			List<OptionDetail> list = demo.get(user.getId());
+			for(OptionDetail o:list){
+				o.setNickname(user.getNickname());
+				o.setAvatar(user.getAvatar());
+			}
+		}
+		return optionDetail;
 	}
 
 }

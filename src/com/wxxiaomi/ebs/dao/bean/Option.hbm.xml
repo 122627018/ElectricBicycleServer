@@ -11,6 +11,8 @@
   <property generated="never" lazy="false" name="obj_id"/>
   <property generated="never" lazy="false" name="parent_type"/>
   <property generated="never" lazy="false" name="parent_id"/>
+  <property generated="never" lazy="false" name="attch"/>
+  <property generated="never" lazy="false" name="type"/>
   <property generated="never" lazy="false" length="19"
    name="create_time" type="timestamp"/>
  </class>

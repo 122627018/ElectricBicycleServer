@@ -116,8 +116,8 @@ public class TopicServiceImpl implements TopicService {
 		
 		//记得记录
 		Option o = new Option();
-		o.setObj_type(OptionType.TOPIC_PUBLISH);
-		o.setObj_id(t.getId());
+		o.setType(OptionType.TOPIC_PUBLISH);
+		o.setParent_id(t.getId());
 		o.setUser_id(userid);
 		o.setCreate_time(new Date());
 		optionDao.insertOption(o);
@@ -146,7 +146,7 @@ public class TopicServiceImpl implements TopicService {
 		o.setObj_id(comment.getId());
 		o.setParent_id(topicId);
 		o.setCreate_time(new Date());
-		o.setObj_type(OptionType.TOPIC_COMMENT);
+		o.setType(OptionType.TOPIC_COMMENT);
 		optionDao.insertOption(o);
 		
 		return new Result(200,"",comment);

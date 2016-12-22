@@ -1,6 +1,9 @@
 package com.wxxiaomi.ebs.dao.inter.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wxxiaomi.ebs.dao.bean.Comment;
+import com.wxxiaomi.ebs.dao.bean.format.OptionDetail;
 import com.wxxiaomi.ebs.dao.inter.CommentDao;
 
 @Repository
@@ -91,6 +95,44 @@ public class CommentDaoImpl implements CommentDao{
 				.createQuery(queryString);
 		queryObject.setParameter(0, userid);
 		return queryObject.list();
+	}
+
+	@Override
+	public List<OptionDetail> getOptionDetail(List<OptionDetail> options) {
+		Map<Integer,List<OptionDetail>> demo = new HashMap<Integer, List<OptionDetail>>();
+//		List<Integer> ids = new ArrayList<Integer>();
+//		Map<Integer,OptionDetail> temp = new HashMap<Integer,OptionDetail>();
+		for(OptionDetail item : options){
+//			System.out.println("item.getObj_id:"+item.getObj_id());
+			if(item.getObj_id()!=0){
+				
+				if(demo.containsKey(item.getObj_id())){
+					demo.get(item.getObj_id()).add(item);
+				}else{
+					List<OptionDetail> list = new ArrayList<OptionDetail>();
+					list.add(item);
+					demo.put(item.getObj_id(), list);
+				}
+			}
+		
+		}
+		if(demo.size()!=0){
+			String queryString = "from Comment c where c.id in(:list)";
+			Query queryObject = factory.getCurrentSession()
+					.createQuery(queryString);
+			queryObject.setParameterList("list", demo.keySet());
+			@SuppressWarnings("unchecked")
+			List<Comment> comments = queryObject.list();
+			for(Comment item : comments){
+				List<OptionDetail> list = demo.get(item.getId());
+				for(OptionDetail o:list){
+					o.setReply(item.getContent());
+				}
+			}
+		}
+		
+		return options;
+		
 	}
 
 }

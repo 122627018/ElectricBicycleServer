@@ -10,10 +10,18 @@ public class Option {
 	private int obj_id;
 	private int parent_type;
 	private int parent_id;
+	private int type;
 	private Date create_time;
+	private String attch;
 	
-	private String json_obj;
-	private String json_parent;
+	
+	
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
 	public int getId() {
 		return id;
 	}
@@ -56,20 +64,14 @@ public class Option {
 	public void setCreate_time(Date create_time) {
 		this.create_time = create_time;
 	}
+	public String getAttch() {
+		return attch;
+	}
+	public void setAttch(String attch) {
+		this.attch = attch;
+	}
 	
 	
-	public String getJson_obj() {
-		return json_obj;
-	}
-	public void setJson_obj(String json_obj) {
-		this.json_obj = json_obj;
-	}
-	public String getJson_parent() {
-		return json_parent;
-	}
-	public void setJson_parent(String json_parent) {
-		this.json_parent = json_parent;
-	}
 	
 	
 	

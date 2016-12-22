@@ -34,7 +34,7 @@ public class Result {
 	@Override
 	public String toString() {
 		return "Result [state=" + state + ", error=" + error + ", infos="
-				+ infos + ", headers=" + headers + "]";
+				+ infos.toString() + ", headers=" + headers + "]";
 	}
 	
 	

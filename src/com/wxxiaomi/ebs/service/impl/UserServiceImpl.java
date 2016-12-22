@@ -1,5 +1,6 @@
 package com.wxxiaomi.ebs.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -7,18 +8,15 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
 
 import org.springframework.stereotype.Service;
 
-import com.wxxiaomi.ebs.dao.bean.Comment;
 import com.wxxiaomi.ebs.dao.bean.Option;
-import com.wxxiaomi.ebs.dao.bean.Topic;
 import com.wxxiaomi.ebs.dao.bean.User;
 import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
 import com.wxxiaomi.ebs.dao.bean.constant.OptionType;
 import com.wxxiaomi.ebs.dao.bean.constant.Result;
+import com.wxxiaomi.ebs.dao.bean.format.OptionDetail;
 import com.wxxiaomi.ebs.dao.inter.CommentDao;
 import com.wxxiaomi.ebs.dao.inter.OptionDao;
 import com.wxxiaomi.ebs.dao.inter.TopicDao;
@@ -26,7 +24,6 @@ import com.wxxiaomi.ebs.dao.inter.UserDao;
 import com.wxxiaomi.ebs.module.jwt.Jwt;
 import com.wxxiaomi.ebs.module.jwt.TokenState;
 import com.wxxiaomi.ebs.service.UserService;
-import com.wxxiaomi.ebs.util.JsonDateValueProcessor;
 import com.wxxiaomi.ebs.util.MyUtils;
 
 @Service
@@ -93,32 +90,29 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Result UserOptionLog(int userid) {
+		System.out.println("UserOptionLog");
 		List<Option> options = optionDao.getUserOptions(userid);
+//		List<Option> commentOption = new ArrayList<Option>();
+		List<Option> topicOption = new ArrayList<Option>();
 		for(Option option : options){
-			JsonConfig jsonConfig = new JsonConfig();  
-			jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());  
-			int type = option.getObj_type();
+			int type = option.getType();
 			switch (type) {
 			case OptionType.FOOT_PRINT:
 				break;
 			case OptionType.PHOTO_PUBLISH: //更新相册
 				break;
 			case OptionType.TOPIC_COMMENT://话题评论
-				//取出评论
-				Comment comment = commentDao.getCommentById(option.getObj_id());
-				//取出话题
-				Topic topic = topicDao.getTopicById(option.getParent_id());
-				System.out.println(topic.toString());
-				option.setJson_obj(JSONObject.fromObject(comment,jsonConfig).toString());
-				option.setJson_parent(JSONObject.fromObject(topic,jsonConfig).toString());
-				break;
 			case OptionType.TOPIC_PUBLISH://话题发布
-				Topic t = topicDao.getTopicById(option.getObj_id());
-				option.setJson_obj(JSONObject.fromObject(t,jsonConfig).toString());
+				topicOption.add(option);
 				break;
 			}
 		}
-		return new Result(200, "", options);
+		List<OptionDetail> optionDetail = topicDao.getOptionDetail(topicOption);
+		//再经过commentdao的洗礼
+		optionDetail = commentDao.getOptionDetail(optionDetail);
+		optionDetail = userDao.getOptionDetail(optionDetail);
+		
+		return new Result(200, "", optionDetail);
 	}
 
 
@@ -199,6 +193,13 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		userDao.updateUserCover(userid,coverPath);
 		return new Result(200,"",coverPath);
+	}
+
+
+	@Override
+	public Result getUserInfoById(int taget_userid) {
+		UserCommonInfo userInfoById = userDao.getUserInfoById(taget_userid);
+		return new Result(200,"",userInfoById);
 	}
 	
 	

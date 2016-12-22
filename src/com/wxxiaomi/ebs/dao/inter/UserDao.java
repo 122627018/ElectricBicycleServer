@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.wxxiaomi.ebs.dao.bean.User;
 import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
+import com.wxxiaomi.ebs.dao.bean.format.OptionDetail;
 
 public interface UserDao {
 
@@ -29,4 +30,6 @@ public interface UserDao {
 	List<UserCommonInfo> updateUserFriends(List<String> emnames,List<Date> times);
 
 	int updateUserCover(int userid, String coverPath);
+
+	List<OptionDetail> getOptionDetail(List<OptionDetail> optionDetail);
 }

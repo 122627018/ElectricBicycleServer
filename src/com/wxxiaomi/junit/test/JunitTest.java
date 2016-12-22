@@ -5,6 +5,7 @@ package com.wxxiaomi.junit.test;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -14,9 +15,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.wxxiaomi.ebs.dao.bean.Comment;
 import com.wxxiaomi.ebs.dao.bean.Topic;
 import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
+import com.wxxiaomi.ebs.dao.bean.constant.Result;
+import com.wxxiaomi.ebs.dao.bean.format.OptionDetail;
 import com.wxxiaomi.ebs.dao.inter.CommentDao;
 import com.wxxiaomi.ebs.dao.inter.TopicDao;
 import com.wxxiaomi.ebs.dao.inter.UserDao;
+import com.wxxiaomi.ebs.service.UserService;
 
 
 public class JunitTest {
@@ -27,6 +31,7 @@ public class JunitTest {
 //	static UpLoadService upLoadService;
 //
 //	static OptionService optionService;
+	static UserService userService;
 	
 	static CommentDao commentDao;
 	static UserDao userDao;
@@ -42,7 +47,7 @@ public class JunitTest {
 //			upLoadService = (UpLoadService) act.getBean("upLoadServiceImpl");
 //			optionService = (OptionService)act.getBean("optionServiceImpl");
 			commentDao = (CommentDao)act.getBean("commentDaoImpl");
-			
+			userService = (UserService)act.getBean("userServiceImpl");
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -70,6 +75,16 @@ public class JunitTest {
 //		info.emname = "201610281024";
 //		userDao.updateUser(info);
 //	}
+	
+	@Test
+	public void testGetUserOption(){
+		Result userOptionLog = userService.UserOptionLog(25);
+		List<OptionDetail> options = (List<OptionDetail>) userOptionLog.infos;
+		for(OptionDetail item : options){
+			System.out.println(item.toString());
+		}
+		
+	}
 	
 	@Test
 	public void testGetComment(){
