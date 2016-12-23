@@ -174,19 +174,22 @@ public class UserDaoImpl implements UserDao{
 				demo.put(item.getUserid(), list);
 			}
 		}
-		String queryString = "from UserCommonInfo u where u.id in(:list)";
-		Query queryObject = factory.getCurrentSession()
-				.createQuery(queryString);
-		queryObject.setParameterList("list", demo.keySet());
-		@SuppressWarnings("unchecked")
-		List<UserCommonInfo> users = queryObject.list();
-		for(UserCommonInfo user : users){
-			List<OptionDetail> list = demo.get(user.getId());
-			for(OptionDetail o:list){
-				o.setNickname(user.getNickname());
-				o.setAvatar(user.getAvatar());
+		if(demo.keySet().size()!=0){
+			String queryString = "from UserCommonInfo u where u.id in(:list)";
+			Query queryObject = factory.getCurrentSession()
+					.createQuery(queryString);
+			queryObject.setParameterList("list", demo.keySet());
+			@SuppressWarnings("unchecked")
+			List<UserCommonInfo> users = queryObject.list();
+			for(UserCommonInfo user : users){
+				List<OptionDetail> list = demo.get(user.getId());
+				for(OptionDetail o:list){
+					o.setNickname(user.getNickname());
+					o.setAvatar(user.getAvatar());
+				}
 			}
 		}
+		
 		return optionDetail;
 	}
 

@@ -39,12 +39,17 @@ public class UserAction extends BaseAction{
 	public String userinfo;
 	
 	public int taget_userid;
-	public String getuserinfobyid(){
+	public String userinfobyid(){
 		System.out.println("getuserinfobyid,target_id:"+taget_userid);
 		adapterResult(service.getUserInfoById(taget_userid));
-		return "getuserinfobyid";
+		return "userinfobyid";
 	}
 	
+	
+	public String userinfoandoptions(){
+		adapterResult(service.getUserInfoAndOptionById(taget_userid));
+		return "userinfoandoptions";
+	}
 	
 	
 	public String friends;

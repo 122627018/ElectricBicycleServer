@@ -8,5 +8,6 @@ public interface LocatDao {
 
 	List<Locat> getNear(int userid, String geo);
 	int savaLocation(int userid, String geo);
+	int collectLocat(int userid, String geo,String locat_tag);
 	
 }

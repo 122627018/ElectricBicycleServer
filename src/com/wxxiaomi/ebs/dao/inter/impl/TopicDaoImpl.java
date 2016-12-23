@@ -81,14 +81,11 @@ public class TopicDaoImpl implements TopicDao {
 
 	@Override
 	public List<OptionDetail> getOptionDetail(List<Option> topicOption) {
-//		List<Integer> ids = new ArrayList<Integer>();
 		List<OptionDetail> results = new ArrayList<OptionDetail>();
-//		Map<Integer,Option> temp = new HashMap<Integer,Option>();
 		Map<Integer,List<Option>> demo = new HashMap<Integer, List<Option>>();
 		for(Option item : topicOption){
-//			temp.put(item.getParent_id(), item);
-//			ids.add(item.getParent_id());
 			if(demo.containsKey(item.getParent_id())){
+				System.out.println("需要查询的topicid:"+item.getParent_id());
 				demo.get(item.getParent_id()).add(item);
 			}else{
 				List<Option> list = new ArrayList<Option>();
@@ -96,21 +93,24 @@ public class TopicDaoImpl implements TopicDao {
 				demo.put(item.getParent_id(), list);
 			}
 		}
-		String queryString = "from Topic t where t.id in(:list)";
-		Query queryObject = factory.getCurrentSession()
-				.createQuery(queryString);
-		queryObject.setParameterList("list", demo.keySet());
-		@SuppressWarnings("unchecked")
-		List<Topic> topics = queryObject.list();
-		for(Topic item : topics){
-//			Option option = demo.get(item.getId());
-			List<Option> list = demo.get(item.getId());
-			for(Option option: list){
-				OptionDetail o = new OptionDetail(option.getId(), option.getUser_id()
-						, option.getCreate_time(),  item.getPicss()[0], item.getContent()
-						, item.getCcount(), item.getHot(), item.getLocat_tag(),item.getId()
-						,option.getObj_id(),option.getType());
-				results.add(o);
+		System.out.println("demo.keySet().size:"+demo.keySet().size());
+		if(demo.keySet().size()!=0){
+			String queryString = "from Topic t where t.id in(:list)";
+			Query queryObject = factory.getCurrentSession()
+					.createQuery(queryString);
+			queryObject.setParameterList("list", demo.keySet());
+			@SuppressWarnings("unchecked")
+			List<Topic> topics = queryObject.list();
+			for(Topic item : topics){
+//				Option option = demo.get(item.getId());
+				List<Option> list = demo.get(item.getId());
+				for(Option option: list){
+					OptionDetail o = new OptionDetail(option.getId(), option.getUser_id()
+							, option.getCreate_time(),  item.getPicss()[0], item.getContent()
+							, item.getCcount(), item.getHot(), item.getLocat_tag(),item.getId()
+							,option.getObj_id(),option.getType());
+					results.add(o);
+				}
 			}
 		}
 		return results;

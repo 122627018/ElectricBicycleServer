@@ -81,7 +81,6 @@ public class TokenFilter extends MethodFilterInterceptor {
 
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 		return "demo";

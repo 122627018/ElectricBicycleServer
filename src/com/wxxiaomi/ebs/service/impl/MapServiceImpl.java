@@ -30,17 +30,7 @@ public class MapServiceImpl implements MapService {
 	 */
 	@Override
 	public Result getNearByPerson(int userid, String geo) {
-//		geo = geo.substring(0, 5);
-//		String queryString = "from Locat l where l.userCommonInfo.id!=? and geo LIKE ?";
-//		Query queryObject = factory.getCurrentSession()
-//				.createQuery(queryString);
-//		queryObject.setParameter(0, userid);
-//		queryObject.setParameter(1, "%" + geo + "%");
-//		if (queryObject.list().size() > 0) {
-//			return queryObject.list();
-//		} else {
-//			return null;
-//		}
+		locatDao.savaLocation(userid, geo);
 		List<Locat> near = locatDao.getNear(userid, geo);
 		if (near != null) {
 			for (Locat item : near) {
@@ -49,63 +39,30 @@ public class MapServiceImpl implements MapService {
 				item.setPoint(decode);
 			}
 		}
-		return new Result(200,"",near);
+		return new Result(200, "", near);
 	}
 
 	@Override
 	public Result savaLocation(int userid, String geo) {
-		
-//		String queryString1 = "from Locat l  where l.userCommonInfo.id=?";
-//		Query query = factory.getCurrentSession()
-//				.createQuery(queryString1);
-//		query.setParameter(0, userid);
-//		if(query.list().size()!=0){
-//			String queryString = "update Locat l set geo=? where l.userCommonInfo.id=?";
-//			Query queryObject = factory.getCurrentSession()
-//					.createQuery(queryString);
-//			queryObject.setParameter(0, geo);
-//			queryObject.setParameter(1, userid);
-//			queryObject.executeUpdate();
-//		}else{
-//			Locat locat = new Locat();
-//			locat.setGeo(geo);
-//			locat.setUserCommonInfo(userService.getUserCommonInfoById(userid));
-//			factory.getCurrentSession().save(locat);
-//			
-//		}
+
 		int flag = locatDao.savaLocation(userid, geo);
-		if(flag==0){
-//			Locat locat = new Locat();
-//			locat.setGeo(geo);
-//			locat.setUserCommonInfo(userService.getUserCommonInfoById(userid));
-//			factory.getCurrentSession().save(locat);
+		if (flag == 0) {
 		}
-		return new Result(200,"","success");
+		return new Result(200, "", "success");
 	}
 
-//	@Override
-//	public List<Locat> createNearByPeople(double latitude, double longitude) {
-//		List<Locat> result = new ArrayList<Locat>();
-//		try {
-//			int[] list = { 20, 21, 22, 23, 24 };
-//			for (int i = 0; i < list.length; i++) {
-//				latitude += 0.0005;
-//				longitude += 0.0005;
-//				String encode = GeoHashUtil.encode(latitude, longitude);
-//				UserCommonInfo userCommonInfoById = userService
-//						.getUserCommonInfoById(list[i]);
-//				double[] locate = { latitude, longitude };
-//				boolean savaLocation = savaLocation(list[i], encode);
-//				if (savaLocation) {
-//					result.add(new Locat(userCommonInfoById, locate));
-//				}
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+	@Override
+	public Result collectLocat(int userid, String geo, String locat_tag) {
+		// 在某个范围之内，用户在N天之内不能重复记录这个区域
+		// 2公里-1个月
+		// 20公里-10天
+		// 100公里-5天
+		// 500公里-1天
+		// 在N(1)个小时之内只能记录一次(客户端判断,服务器也需要判断)
 
-//		return result;
-//		return null;
+		// 先从数据库取出最近一次地点记录(地点和时间)
+		//进行规则比较,如果不通过,返回错误码
+		return null;
+	}
 
-//	};
 }

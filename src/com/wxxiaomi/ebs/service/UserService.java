@@ -28,6 +28,8 @@ public interface UserService {
 	Result updateUserCover(int userid, String coverPath);
 
 	Result getUserInfoById(int taget_userid);
+
+	Result getUserInfoAndOptionById(int taget_userid);
 	
 //	List<UserCommonInfo> getUserListByEMUsername(List<String> list);
 //	

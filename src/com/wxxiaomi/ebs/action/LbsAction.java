@@ -26,30 +26,7 @@ public class LbsAction extends BaseAction{
 	 * @return
 	 */
 	public String near() {
-//		try {
-//			
-//			
-//			List<Locat> result = new ArrayList<Locat>();
-//			System.out.println("getnear request-->latitude=" + latitude
-//					+ ",longitude=" + longitude + ",userid=" + userid);
-//			String geoResult = GeoHashUtil.encode(latitude, longitude);
-//			mapService.savaLocation(userid, geoResult);
-//			List<Locat> newList = mapService.getNearByPerson(userid, geoResult);
-//			if (newList != null) {
-//				result.addAll(newList);
-//				for (Locat item : result) {
-//					String geo = item.getGeo();
-//					double[] decode = GeoHashUtil.decode(geo);
-//					item.setPoint(decode);
-//
-//				}
-//			}
-//			infos = new NearByPerson(result);
-//			state = "200";
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//			e.printStackTrace();
-//		}
+		System.out.println("near(),userid:"+userid);
 		String geoResult = GeoHashUtil.encode(latitude, longitude);
 		adapterResult(mapService.getNearByPerson(userid, geoResult));
 		return "near";

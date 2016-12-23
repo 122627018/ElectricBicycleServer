@@ -13,14 +13,17 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.wxxiaomi.ebs.dao.bean.Comment;
+import com.wxxiaomi.ebs.dao.bean.Locat;
 import com.wxxiaomi.ebs.dao.bean.Topic;
 import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
 import com.wxxiaomi.ebs.dao.bean.constant.Result;
 import com.wxxiaomi.ebs.dao.bean.format.OptionDetail;
 import com.wxxiaomi.ebs.dao.inter.CommentDao;
+import com.wxxiaomi.ebs.dao.inter.LocatDao;
 import com.wxxiaomi.ebs.dao.inter.TopicDao;
 import com.wxxiaomi.ebs.dao.inter.UserDao;
 import com.wxxiaomi.ebs.service.UserService;
+import com.wxxiaomi.ebs.util.GeoHashUtil;
 
 
 public class JunitTest {
@@ -35,6 +38,7 @@ public class JunitTest {
 	
 	static CommentDao commentDao;
 	static UserDao userDao;
+	static LocatDao locatDao;
 	@BeforeClass
 	public static void setUp() {
 		try {
@@ -48,11 +52,28 @@ public class JunitTest {
 //			optionService = (OptionService)act.getBean("optionServiceImpl");
 			commentDao = (CommentDao)act.getBean("commentDaoImpl");
 			userService = (UserService)act.getBean("userServiceImpl");
+			locatDao = (LocatDao)act.getBean("locatDaoImpl");
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void testGetDis(){
+		double distanceOfTwoGeo = GeoHashUtil.demo("ws4wpf4wk6ce", "ws4wpf4x53c8");
+		System.out.println(distanceOfTwoGeo);
+	}
+	
+	
+	@Test
+	public void testGetNear(){
+		List<Locat> near = locatDao.getNear(25, "ws4wpf4x5");
+		for(Locat item : near){
+			System.out.println("item:"+item.toString());
+		}
+	}
+	
 	@Test
 	public void testUpdateUserInfo(){
 		try{
