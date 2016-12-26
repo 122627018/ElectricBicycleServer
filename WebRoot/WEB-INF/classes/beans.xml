@@ -43,6 +43,7 @@
 			      <value>com/wxxiaomi/ebs/dao/bean/Photo.hbm.xml</value>
 			      <value>com/wxxiaomi/ebs/dao/bean/Album.hbm.xml</value>
 			      <value>com/wxxiaomi/ebs/dao/bean/Option.hbm.xml</value>
+			      <value>com/wxxiaomi/ebs/dao/bean/FootPrint.hbm.xml</value>
 			    </list>
 		</property>
 		 <property name="hibernateProperties">

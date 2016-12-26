@@ -1,11 +1,12 @@
 package com.wxxiaomi.ebs.dao.bean;
 
 import java.util.Arrays;
+import java.util.Date;
 
 public class Locat {
 	
 	private int id;
-	private String time = "2016.1.1";
+	private Date time;
 	private UserCommonInfo userCommonInfo;
 	private double[] point;
 	private String geo;
@@ -13,10 +14,10 @@ public class Locat {
 	
 	
 	
-	public String getTime() {
+	public Date getTime() {
 		return time;
 	}
-	public void setTime(String time) {
+	public void setTime(Date time) {
 		this.time = time;
 	}
 	public UserCommonInfo getUserCommonInfo() {

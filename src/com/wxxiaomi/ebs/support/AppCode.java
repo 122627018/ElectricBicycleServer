@@ -1,5 +1,5 @@
 package com.wxxiaomi.ebs.support;
 
-public class AppCode {
-
+public interface AppCode {
+	int ERROR_LBS_PUBLIC_REPLY = 1;
 }

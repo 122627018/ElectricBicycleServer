@@ -3,8 +3,6 @@ package com.wxxiaomi.junit.test;
 
 
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.BeforeClass;
@@ -13,15 +11,17 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.wxxiaomi.ebs.dao.bean.Comment;
+import com.wxxiaomi.ebs.dao.bean.FootPrint;
 import com.wxxiaomi.ebs.dao.bean.Locat;
-import com.wxxiaomi.ebs.dao.bean.Topic;
 import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
 import com.wxxiaomi.ebs.dao.bean.constant.Result;
+import com.wxxiaomi.ebs.dao.bean.format.FootPrintDetail;
 import com.wxxiaomi.ebs.dao.bean.format.OptionDetail;
 import com.wxxiaomi.ebs.dao.inter.CommentDao;
 import com.wxxiaomi.ebs.dao.inter.LocatDao;
 import com.wxxiaomi.ebs.dao.inter.TopicDao;
 import com.wxxiaomi.ebs.dao.inter.UserDao;
+import com.wxxiaomi.ebs.service.MapService;
 import com.wxxiaomi.ebs.service.UserService;
 import com.wxxiaomi.ebs.util.GeoHashUtil;
 
@@ -29,7 +29,7 @@ import com.wxxiaomi.ebs.util.GeoHashUtil;
 public class JunitTest {
 
 //	static UserService service;
-//	static MapService mapService;
+	static MapService mapService;
 	static TopicDao topicDaoImpl;
 //	static UpLoadService upLoadService;
 //
@@ -39,6 +39,7 @@ public class JunitTest {
 	static CommentDao commentDao;
 	static UserDao userDao;
 	static LocatDao locatDao;
+	
 	@BeforeClass
 	public static void setUp() {
 		try {
@@ -53,6 +54,7 @@ public class JunitTest {
 			commentDao = (CommentDao)act.getBean("commentDaoImpl");
 			userService = (UserService)act.getBean("userServiceImpl");
 			locatDao = (LocatDao)act.getBean("locatDaoImpl");
+			mapService = (MapService)act.getBean("mapServiceImpl");
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -60,8 +62,26 @@ public class JunitTest {
 	}
 	
 	@Test
+	public void testPublishFootPrint(){
+		//116.379022,23.555756市政府
+		//116.231233,24.35743  梅州
+		//113.28804,23.141157广州
+		String encode = GeoHashUtil.encode(23.141157,113.28804);
+		String picture = "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=214931719,1608091472&fm=116&gp=0.jpg";
+		mapService.collectLocat(25, encode, "揭阳市政府", "我发布的第一条", picture);
+	}
+	
+	@Test
+	public void testgetFootPrint(){
+		List<FootPrintDetail> footPrintList = locatDao.footPrintList(25);
+		for(FootPrintDetail f : footPrintList){
+			System.out.println("footPrint:"+f.toString());
+		}
+	}
+	
+	@Test
 	public void testGetDis(){
-		double distanceOfTwoGeo = GeoHashUtil.demo("ws4wpf4wk6ce", "ws4wpf4x53c8");
+		double distanceOfTwoGeo = GeoHashUtil.demo("ws4wps4wk82s", "ws4wpf4x53c8");
 		System.out.println(distanceOfTwoGeo);
 	}
 	
@@ -96,6 +116,8 @@ public class JunitTest {
 //		info.emname = "201610281024";
 //		userDao.updateUser(info);
 //	}
+	
+	
 	
 	@Test
 	public void testGetUserOption(){

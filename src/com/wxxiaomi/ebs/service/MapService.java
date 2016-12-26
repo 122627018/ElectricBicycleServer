@@ -10,8 +10,10 @@ public interface MapService {
 	
 	Result savaLocation(int userid, String geo);
 	
-	Result collectLocat(int userid,String geo,String locat_tag);
+	Result collectLocat(int userid,String geo,String locat_tag,String content,String picture);
 	
 //	List<Locat> createNearByPeople(double latitude,
 //			double longitude);
+	
+	Result listFootPrint(int target_id);
 }

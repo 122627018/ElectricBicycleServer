@@ -19,6 +19,8 @@ public class LbsAction extends BaseAction{
 	public int userid;
 	public double latitude;
 	public double longitude;
+	
+	
 
 	/**
 	 * 获取附近的人
@@ -31,6 +33,26 @@ public class LbsAction extends BaseAction{
 		adapterResult(mapService.getNearByPerson(userid, geoResult));
 		return "near";
 	}
+	
+	public int target_id;
+	public String listfootprint(){
+		System.out.println("listfootprint(),userid:"+userid);
+		adapterResult(mapService.listFootPrint(target_id));
+		return "listfootprint";
+	}
 
+	
+	public String content;
+	public String picture;
+//	public String geo;
+	public double lat;
+	public double lng;
+	public String locat_tag;
+	public String publishfootprint(){
+		System.out.println("publishfootprint");
+		String geo = GeoHashUtil.encode(lat, lng);
+		adapterResult(mapService.collectLocat(userid, geo, locat_tag, content, picture));
+		return "publishfootprint";
+	}
 
 }

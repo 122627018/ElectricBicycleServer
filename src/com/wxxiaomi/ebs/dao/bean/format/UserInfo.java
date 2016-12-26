@@ -1,9 +1,8 @@
-package com.wxxiaomi.ebs.dao.bean.constant;
+package com.wxxiaomi.ebs.dao.bean.format;
 
 import java.util.List;
 
 import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
-import com.wxxiaomi.ebs.dao.bean.format.OptionDetail;
 
 public class UserInfo  {
 

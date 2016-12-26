@@ -4,7 +4,6 @@ package com.wxxiaomi.ebs.util;
 import java.util.BitSet;
 import java.util.HashMap;
 
-import org.springframework.beans.factory.parsing.Location;
 
 /**
  * geohash算法工具类
