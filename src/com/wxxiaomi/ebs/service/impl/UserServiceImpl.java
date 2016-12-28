@@ -88,8 +88,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Result getUserInfosByName(String name) {
-		return new Result(200, "", userDao.getUserInfosByNames(name));
+	public Result getUserInfosByName(int userid,String name) {
+		List<UserCommonInfo> userInfosByNames = userDao.getUserInfosByNames(userid,name);
+		System.out.println("size:"+userInfosByNames.size());
+		return new Result(200, "", userInfosByNames);
 	}
 
 	@Override

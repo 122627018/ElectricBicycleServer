@@ -155,7 +155,8 @@ public class UserAction extends BaseAction{
 	
 	public String name;
 	public String userinfobyname(){
-		adapterResult(service.getUserInfosByName(name));
+		System.out.println("userinfobyname,name:"+name);
+		adapterResult(service.getUserInfosByName(userid,name));
 		return "userinfobyname";
 	}
 	

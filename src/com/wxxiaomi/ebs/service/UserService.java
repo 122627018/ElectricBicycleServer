@@ -15,7 +15,7 @@ public interface UserService {
 	
 	Result getUserInfosByEms(List<String> ems);
 	
-	Result getUserInfosByName(String name);
+	Result getUserInfosByName(int userid,String name);
 	
 	Result UserOptionLog(int userid);
 	

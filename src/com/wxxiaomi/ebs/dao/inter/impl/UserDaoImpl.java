@@ -73,12 +73,15 @@ public class UserDaoImpl implements UserDao{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<UserCommonInfo> getUserInfosByNames(String name) {
-		String queryString = "from UserCommonInfo u where u.name=?";
+	public List<UserCommonInfo> getUserInfosByNames(int userid,String nickname) {
+		List<UserCommonInfo> result = new ArrayList<UserCommonInfo>();
+		String queryString = "from UserCommonInfo u where u.id!=? and u.nickname LIKE ?";
 		Query queryObject = factory.getCurrentSession()
 				.createQuery(queryString);
-		queryObject.setParameter(0, name);
-		return queryObject.list();
+		queryObject.setParameter(0, userid);
+		queryObject.setParameter(1, nickname+"%");
+		result.addAll(queryObject.list());
+		return result;
 	}
 
 	@Override

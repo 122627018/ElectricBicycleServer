@@ -62,6 +62,14 @@ public class JunitTest {
 	}
 	
 	@Test
+	public void testFindUser(){
+		List<UserCommonInfo> infos = userDao.getUserInfosByNames(25, "尼");
+		for(UserCommonInfo info : infos){
+			System.out.println("info:"+info.toString());
+		}
+	}
+	
+	@Test
 	public void testPublishFootPrint(){
 		//116.379022,23.555756市政府
 		//116.231233,24.35743  梅州

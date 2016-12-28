@@ -103,6 +103,14 @@ public class UserCommonInfo {
 		this.sex = sex;
 		this.cover = cover;
 	}
+	@Override
+	public String toString() {
+		return "UserCommonInfo [id=" + id + ", nickname=" + nickname
+				+ ", avatar=" + avatar + ", emname=" + emname + ", album_id="
+				+ album_id + ", update_time=" + update_time + ", create_time="
+				+ create_time + ", description=" + description + ", city="
+				+ city + ", sex=" + sex + ", cover=" + cover + "]";
+	}
 	
 	
 	
