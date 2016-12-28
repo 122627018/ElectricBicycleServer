@@ -1,5 +1,6 @@
 package com.wxxiaomi.ebs.dao.inter.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -24,6 +25,7 @@ public class LocatDaoImpl implements LocatDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Locat> getNear(int userid, String geo) {
+		List<Locat> result = new ArrayList<Locat>();
 		geo = geo.substring(0, 5);
 		//一个用户获取一条
 		String queryString = "from Locat l where l.userCommonInfo.id!=? and geo LIKE ? "
@@ -32,11 +34,13 @@ public class LocatDaoImpl implements LocatDao {
 				.createQuery(queryString);
 		queryObject.setParameter(0, userid);
 		queryObject.setParameter(1, "%" + geo + "%");
-		if (queryObject.list().size() > 0) {
-			return queryObject.list();
-		} else {
-			return null;
-		}
+		result.addAll(queryObject.list());
+//		if (queryObject.list().size() > 0) {
+//			return queryObject.list();
+//		} else {
+//			return null;
+//		}
+		return result;
 	}
 
 //	@Override
