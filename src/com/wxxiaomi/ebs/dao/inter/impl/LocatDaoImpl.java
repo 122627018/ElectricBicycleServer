@@ -35,11 +35,6 @@ public class LocatDaoImpl implements LocatDao {
 		queryObject.setParameter(0, userid);
 		queryObject.setParameter(1, "%" + geo + "%");
 		result.addAll(queryObject.list());
-//		if (queryObject.list().size() > 0) {
-//			return queryObject.list();
-//		} else {
-//			return null;
-//		}
 		return result;
 	}
 
