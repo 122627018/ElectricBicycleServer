@@ -133,6 +133,7 @@ public class UserServiceImpl implements UserService {
 	public List<OptionDetail> getOptionDetail(int userid) {
 		List<Option> options = optionDao.getUserOptions(userid);
 		List<Option> topicOption = new ArrayList<Option>();
+		List<Option> locatOption = new ArrayList<Option>();
 		for (Option option : options) {
 			int type = option.getType();
 			switch (type) {
@@ -146,10 +147,18 @@ public class UserServiceImpl implements UserService {
 				break;
 			}
 		}
+//		if(locatOption.size()!=0){
+//			List<OptionDetail> os = new  ArrayList<OptionDetail>();
+//			OptionDetail o= new OptionDetail();
+//		}
 		List<OptionDetail> optionDetail = topicDao.getOptionDetail(topicOption);
 		// 再经过commentdao的洗礼
 		optionDetail = commentDao.getOptionDetail(optionDetail);
 		optionDetail = userDao.getOptionDetail(optionDetail);
+//		optionDetail.get(1).setType(OptionType.FOOT_PRINT);
+//		optionDetail.get(2).setType(OptionType.FOOT_PRINT);
+//		optionDetail.get(3).setType(OptionType.FOOT_PRINT);
+//		optionDetail.get(4).setType(OptionType.FOOT_PRINT);
 		return optionDetail;
 	}
 
