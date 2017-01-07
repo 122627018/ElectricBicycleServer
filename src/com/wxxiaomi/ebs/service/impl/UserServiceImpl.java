@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
 				result.putHeader("token", token);
 				result.putHeader("long_token", long_token);
 			} else {
-				result = new Result(300, "账号或者密码错误", "");
+				result = new Result(300, "账号或者密码错误", null);
 
 			}
 		} catch (Exception e) {
