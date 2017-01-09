@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.wxxiaomi.ebs.dao.bean">
+ <class name="UserCommonInfo" table="bicycle_user_common" dynamic-update="true">
+  <id length="11" name="id">
+   <generator class="native"/>
+  </id>
+  <property name="nickname" generated="never" lazy="false" />
+  <property name="avatar" generated="never" lazy="false"  />
+  <property name="emname" generated="never" lazy="false"  />
+  <property name="album_id" generated="never" lazy="false"  />
+    <property column="update_time" generated="never" lazy="false" length="19"
+   name="update_time" type="timestamp"/>
+    <property column="create_time" generated="never" lazy="false" length="19"
+   name="create_time" type="timestamp"/>
+  <property name="description" generated="never" lazy="false"  />
+  <property name="city" generated="never" lazy="false"  />
+  <property name="sex" generated="never" lazy="false"  />
+  <property name="cover" generated="never" lazy="false"  />
+  
+ </class>
+</hibernate-mapping>

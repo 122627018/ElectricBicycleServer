@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.wxxiaomi.ebs.dao.bean">
+ <class name="Topic" table="bicycle_topic">
+  <id length="11" name="id">
+   <generator class="native"/>
+  </id>
+  <many-to-one access="field" column="userid" lazy="false"
+   name="userCommonInfo" unique="true"/>
+  <property column="time" generated="never" lazy="false" length="19"
+   name="time" type="timestamp"/>
+  <property generated="never" lazy="false" name="content" not-null="true"/>
+  <property generated="never" lazy="false" name="pics"/>
+  
+  <property generated="never" lazy="false" name="hot"/>
+  <property generated="never" lazy="false" name="ccount"/>
+  <property generated="never" lazy="false" name="locat"/>
+  <property generated="never" lazy="false" name="locat_tag"/>
+  <property generated="never" lazy="false" name="title"/>
+ </class>
+</hibernate-mapping>
