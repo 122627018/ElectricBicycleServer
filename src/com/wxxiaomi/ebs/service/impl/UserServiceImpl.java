@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserService {
 	public List<OptionDetail> getOptionDetail(int userid) {
 		List<Option> options = optionDao.getUserOptions(userid);
 		List<Option> topicOption = new ArrayList<Option>();
-		List<Option> locatOption = new ArrayList<Option>();
+//		List<Option> locatOption = new ArrayList<Option>();
 		for (Option option : options) {
 			int type = option.getType();
 			switch (type) {
