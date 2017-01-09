@@ -22,6 +22,9 @@ import com.wxxiaomi.ebs.dao.inter.OptionDao;
 import com.wxxiaomi.ebs.dao.inter.TopicDao;
 import com.wxxiaomi.ebs.module.em.ImHelper;
 import com.wxxiaomi.ebs.module.em.Person;
+import com.wxxiaomi.ebs.module.em.api.SendMessageAPI;
+import com.wxxiaomi.ebs.module.em.comm.ClientContext;
+import com.wxxiaomi.ebs.module.em.comm.HyphenateRestAPIFactory;
 import com.wxxiaomi.ebs.module.em.comm.body.CommandMessageBody;
 import com.wxxiaomi.ebs.module.em.comm.body.IMUserBody;
 import com.wxxiaomi.ebs.module.em.comm.constant.MsgTargetType;
@@ -146,28 +149,40 @@ public class TopicServiceImpl implements TopicService {
 	@Override
 	public Result publishComment(int topicId, String content1, int from_uid,
 			String from_nick, String from_head, int to_uid, String to_unick) {
-//		Comment comment = new Comment(0, topicId, content1, from_uid,
-//				from_nick, from_head, to_uid, to_unick);
-//		commentDao.InsetComment(comment);
-//		
-//		Option o = new Option();
-//		o.setUser_id(from_uid);
-//		o.setObj_id(comment.getId());
-//		o.setParent_id(topicId);
-//		o.setCreate_time(new Date());
-//		o.setType(OptionType.TOPIC_COMMENT);
-//		optionDao.insertOption(o);
+		Comment comment = new Comment(0, topicId, content1, from_uid,
+				from_nick, from_head, to_uid, to_unick);
+		commentDao.InsetComment(comment);
+		
+		Option o = new Option();
+		o.setUser_id(from_uid);
+		o.setObj_id(comment.getId());
+		o.setParent_id(topicId);
+		o.setCreate_time(new Date());
+		o.setType(OptionType.TOPIC_COMMENT);
+		optionDao.insertOption(o);
 		System.out.println("1");
+		System.out.println("JsonNodeFactory.instance:"+JsonNodeFactory.instance);
+		System.out.println("2");
 //			System.out.println(Thread.currentThread().getName());
 //			Map<String,String> pars = new HashMap<String,String>();
 //			ImHelper.getInstance().demo();
-//			 CommandMessageBody cmdMsg = new CommandMessageBody(MsgTargetType.USERS, new String[]{"122627018"}, "admin", null, "I.m the command message from server");
-			System.out.println("JsonNodeFactory.instance:"+JsonNodeFactory.instance);
-			JsonNodeFactory instance = JsonNodeFactory.instance;
-			
-			System.out.println("2");
-			BodyWrapper userBody = new IMUserBody("User001", "123456", "HelloWorld");
-			System.out.println("3");
+		try{
+//		HyphenateRestAPIFactory factory = ClientContext.getInstance().init(ClientContext.INIT_FROM_PROPERTIES).getAPIFactory();
+//		System.out.println("3");
+//		SendMessageAPI message = (SendMessageAPI) factory.newInstance(HyphenateRestAPIFactory.SEND_MESSAGE_CLASS);
+		System.out.println("4");
+			 CommandMessageBody cmdMsg = new CommandMessageBody(MsgTargetType.USERS, new String[]{"122627018"}, "admin", null, "I.m the command message from server");
+			 ImHelper.getInstance().sendCommandMsg(cmdMsg);
+//			
+//			JsonNodeFactory instance = JsonNodeFactory.instance;
+//			
+//			System.out.println("2");
+//			BodyWrapper userBody = new IMUserBody("User001", "123456", "HelloWorld");
+			 System.out.println("5");
+		}catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
 //			Person p = new Person();
 		
 		

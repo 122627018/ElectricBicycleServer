@@ -12,7 +12,7 @@ import com.wxxiaomi.ebs.module.em.comm.utils.ResponseUtils;
 import com.wxxiaomi.ebs.module.em.comm.wrapper.ResponseWrapper;
 
 public class ImHelper {
-	private static boolean isInit = false;
+	private boolean isInit = false;
 	static ImHelper INSTANCE;
 	HyphenateRestAPIFactory factory;
 //	 IMUserAPI user = (IMUserAPI) factory.newInstance(HyphenateRestAPIFactory.USER_CLASS);
@@ -54,7 +54,8 @@ public class ImHelper {
      public boolean sendCommandMsg(CommandMessageBody cmdMsg){
     	 System.out.println("sendCommandMsg");
     	 try{
-    		 ResponseWrapper response = (ResponseWrapper) message.sendMessage(cmdMsg);
+    		 System.out.println(message==null);
+    		 ResponseWrapper response = (ResponseWrapper) INSTANCE.message.sendMessage(cmdMsg);
 			return response.getResponseStatus()==200;
     	 }catch (Exception e) {
 			// TODO: handle exception
