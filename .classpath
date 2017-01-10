@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="resources/|resources/cacert/" kind="src" path="src"/>
+	<classpathentry excluding="resources/|resources/cacert/|resources/|resources/cacert/" kind="src" path="src"/>
 	<classpathentry excluding="cacert/" kind="src" path="src/resources"/>
+	<classpathentry kind="src" path="src/resources/cacert"/>
 	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.j2eedt.core.MYECLIPSE_JAVAEE_5_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/httpclient-4.3.3.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/httpcore-4.3.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/httpmime-4.2.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/jackson-annotations-2.3.2.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/jackson-core-2.3.2.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/jackson-databind-2.3.2.jar" sourcepath="C:/Users/Administrator/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.3.2/jackson-databind-2.3.2-sources.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/jackson-jaxrs-base-2.3.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/jackson-jaxrs-json-provider-2.3.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/jackson-module-jaxb-annotations-2.3.2.jar"/>
@@ -48,6 +46,13 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ezmorph-1.0.3.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/json-lib-2.1-jdk15.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/commons-lang.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/jackson-annotations-2.8.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/jackson-core-2.8.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/jackson-databind-2.8.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/jackson-mapper-asl-1.9.13.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/jackson-core-asl-1.9.13.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/emlib/jackson-all-1.7.6.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.7.0_79"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v7.0"/>

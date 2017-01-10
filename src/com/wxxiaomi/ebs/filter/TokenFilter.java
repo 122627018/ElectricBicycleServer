@@ -1,7 +1,5 @@
 package com.wxxiaomi.ebs.filter;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,8 +10,6 @@ import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
-import com.opensymphony.xwork2.ognl.OgnlValueStack;
-import com.opensymphony.xwork2.util.ValueStack;
 import com.wxxiaomi.ebs.ConstantValue;
 import com.wxxiaomi.ebs.module.jwt.Jwt;
 import com.wxxiaomi.ebs.module.jwt.TokenState;
