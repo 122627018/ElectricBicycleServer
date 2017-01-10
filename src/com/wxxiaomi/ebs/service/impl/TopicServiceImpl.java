@@ -162,11 +162,16 @@ public class TopicServiceImpl implements TopicService {
 //			Map<String,String> pars = new HashMap<String,String>();
 //			ImHelper.getInstance().demo();
 //			 CommandMessageBody cmdMsg = new CommandMessageBody(MsgTargetType.USERS, new String[]{"122627018"}, "admin", null, "I.m the command message from server");
+		JsonNodeFactory factory = new JsonNodeFactory(false);  
+		System.out.println(factory);
+//		JsonNodeFactory.instance = factory;
+		System.out.println("json:"+JsonNodeFactory.class.getClass().getName());
 			System.out.println("JsonNodeFactory.instance:"+JsonNodeFactory.instance);
-			JsonNodeFactory instance = JsonNodeFactory.instance;
+			
 			
 			System.out.println("2");
-			BodyWrapper userBody = new IMUserBody("User001", "123456", "HelloWorld");
+			BodyWrapper 
+ = new IMUserBody("User001", "123456", "HelloWorld");
 			System.out.println("3");
 //			Person p = new Person();
 		
