@@ -196,4 +196,16 @@ public class UserDaoImpl implements UserDao{
 		return optionDetail;
 	}
 
+	@Override
+	public boolean checkExist(String username) {
+		String queryString = "from User u where u.username=?";
+		Query queryObject = factory.getCurrentSession()
+				.createQuery(queryString);
+		queryObject.setParameter(0, username);
+		if(queryObject.list().size()>0){
+			return true;
+		}
+		return false;
+	}
+
 }

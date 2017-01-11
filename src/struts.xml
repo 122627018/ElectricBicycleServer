@@ -36,7 +36,7 @@
 			<interceptor-stack name="tokenInteceptorStack">
 				<interceptor-ref name="defaultStack"/>
 				<interceptor-ref name="tokenInteceptor">
-					<param name="excludeMethods">login,longToken</param>
+					<param name="excludeMethods">login,longToken,register</param>
 				</interceptor-ref>
 			
 			</interceptor-stack>

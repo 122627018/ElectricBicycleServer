@@ -3,6 +3,7 @@ package com.wxxiaomi.junit.test;
 
 
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.BeforeClass;
@@ -13,6 +14,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.wxxiaomi.ebs.dao.bean.Comment;
 import com.wxxiaomi.ebs.dao.bean.FootPrint;
 import com.wxxiaomi.ebs.dao.bean.Locat;
+import com.wxxiaomi.ebs.dao.bean.User;
 import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
 import com.wxxiaomi.ebs.dao.bean.constant.Result;
 import com.wxxiaomi.ebs.dao.bean.format.FootPrintDetail;
@@ -59,6 +61,28 @@ public class JunitTest {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+	}
+	@Test
+	public void testCheckUserExist(){
+		System.out.println(userDao.checkExist("2017011110321"));
+	}
+	@Test
+	public void testInsertUser(){
+		String username = "201701111032";
+		String password = "987987987";
+//		User user = new User();
+//		user.setUsername(username);
+//		user.setPassword(password);
+//		
+//		UserCommonInfo info = new UserCommonInfo();
+//		info.setNickname(username);
+//		info.setCreate_time(new Date());
+//		info.setUpdate_time(new Date());
+//		info.setEmname(username);
+////		userDao.insertUser(user);
+//		user.setUserCommonInfo(info);
+//		userDao.insertUser(user);
+//		userDao.insertUser(user);
 	}
 	
 	@Test

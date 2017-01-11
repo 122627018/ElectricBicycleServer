@@ -140,7 +140,7 @@ public class UserAction extends BaseAction{
 	}
 	
 	public String register(){
-		Result resgiter = service.Register(username, password);
+		Result resgiter = service.Register(username, password,uniqueNum);
 		adapterResult(resgiter);
 		return "register";
 	}
@@ -166,7 +166,6 @@ public class UserAction extends BaseAction{
 		return "optionlog";
 	}
 
-	
 
 
 

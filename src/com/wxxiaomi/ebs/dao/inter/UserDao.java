@@ -32,4 +32,6 @@ public interface UserDao {
 	int updateUserCover(int userid, String coverPath);
 
 	List<OptionDetail> getOptionDetail(List<OptionDetail> optionDetail);
+	
+	boolean checkExist(String username);
 }

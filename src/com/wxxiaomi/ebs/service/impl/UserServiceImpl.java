@@ -21,6 +21,8 @@ import com.wxxiaomi.ebs.dao.inter.CommentDao;
 import com.wxxiaomi.ebs.dao.inter.OptionDao;
 import com.wxxiaomi.ebs.dao.inter.TopicDao;
 import com.wxxiaomi.ebs.dao.inter.UserDao;
+import com.wxxiaomi.ebs.module.em.ImHelper;
+import com.wxxiaomi.ebs.module.em.comm.body.IMUserBody;
 import com.wxxiaomi.ebs.module.jwt.Jwt;
 import com.wxxiaomi.ebs.module.jwt.TokenState;
 import com.wxxiaomi.ebs.service.UserService;
@@ -76,9 +78,54 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Result Register(String username, String passwrod) {
-		// userDao.insertUser(user)
-		return null;
+	public Result Register(String username, String passwrod, String uniqueNum) {
+		try {
+			if (!userDao.checkExist(username)) {
+				IMUserBody imUserBody = new IMUserBody(username, passwrod,
+						username);
+				boolean flag = ImHelper.getInstance().registerUser(imUserBody);
+				System.out.println("asdsad");
+				if (flag) {
+					User user = new User();
+					user.setUsername(username);
+					user.setPassword(passwrod);
+
+					UserCommonInfo info = new UserCommonInfo();
+					info.setNickname(username);
+					info.setCreate_time(new Date());
+					info.setUpdate_time(new Date());
+					info.setEmname(username);
+					user.setUserCommonInfo(info);
+					userDao.insertUser(user);
+
+					Map<String, Object> payload = new HashMap<String, Object>();
+					Date date = new Date();
+					payload.put("uid", user.getUserCommonInfo().getId());// 用户id
+					payload.put("iat", date.getTime());// 生成时间:当前
+					payload.put("ext", date.getTime() + 60 * 60);// 过期时间2小时(60*60*2000
+																	// 2小时)
+					String token = Jwt.createToken(payload);
+					Map<String, Object> longMap = new HashMap<String, Object>();
+					longMap.put("uid", user.getUserCommonInfo().getId());// 用户id
+					longMap.put("iat", date.getTime());// 生成时间:当前
+					longMap.put("ext", date.getTime() + 1000 * 60 * 60 * 24
+							* 15);// 过期时间15天
+					longMap.put("phoneNum", uniqueNum);
+					String long_token = Jwt.createToken(longMap);
+					System.out.println("user:" + user.toString());
+					Result result = new Result(200, "", user);
+					result.putHeader("token", token);
+					result.putHeader("long_token", long_token);
+
+					return result;
+				}
+			}
+			return new Result(300, "用户名已被注册", null);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return new Result(404, "服务器发生异常错误", null);
 	}
 
 	@Override
@@ -88,9 +135,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Result getUserInfosByName(int userid,String name) {
-		List<UserCommonInfo> userInfosByNames = userDao.getUserInfosByNames(userid,name);
-		System.out.println("size:"+userInfosByNames.size());
+	public Result getUserInfosByName(int userid, String name) {
+		List<UserCommonInfo> userInfosByNames = userDao.getUserInfosByNames(
+				userid, name);
+		System.out.println("size:" + userInfosByNames.size());
 		return new Result(200, "", userInfosByNames);
 	}
 
@@ -133,7 +181,7 @@ public class UserServiceImpl implements UserService {
 	public List<OptionDetail> getOptionDetail(int userid) {
 		List<Option> options = optionDao.getUserOptions(userid);
 		List<Option> topicOption = new ArrayList<Option>();
-//		List<Option> locatOption = new ArrayList<Option>();
+		// List<Option> locatOption = new ArrayList<Option>();
 		for (Option option : options) {
 			int type = option.getType();
 			switch (type) {
@@ -147,18 +195,18 @@ public class UserServiceImpl implements UserService {
 				break;
 			}
 		}
-//		if(locatOption.size()!=0){
-//			List<OptionDetail> os = new  ArrayList<OptionDetail>();
-//			OptionDetail o= new OptionDetail();
-//		}
+		// if(locatOption.size()!=0){
+		// List<OptionDetail> os = new ArrayList<OptionDetail>();
+		// OptionDetail o= new OptionDetail();
+		// }
 		List<OptionDetail> optionDetail = topicDao.getOptionDetail(topicOption);
 		// 再经过commentdao的洗礼
 		optionDetail = commentDao.getOptionDetail(optionDetail);
 		optionDetail = userDao.getOptionDetail(optionDetail);
-//		optionDetail.get(1).setType(OptionType.FOOT_PRINT);
-//		optionDetail.get(2).setType(OptionType.FOOT_PRINT);
-//		optionDetail.get(3).setType(OptionType.FOOT_PRINT);
-//		optionDetail.get(4).setType(OptionType.FOOT_PRINT);
+		// optionDetail.get(1).setType(OptionType.FOOT_PRINT);
+		// optionDetail.get(2).setType(OptionType.FOOT_PRINT);
+		// optionDetail.get(3).setType(OptionType.FOOT_PRINT);
+		// optionDetail.get(4).setType(OptionType.FOOT_PRINT);
 		return optionDetail;
 	}
 
@@ -259,7 +307,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			System.out.println("taget_userid:" + taget_userid);
 			UserCommonInfo userInfoById = userDao.getUserInfoById(taget_userid);
-			System.out.println("UserCommonInfo:"+userInfoById.toString());
+			System.out.println("UserCommonInfo:" + userInfoById.toString());
 			List<OptionDetail> optionDetail = getOptionDetail(taget_userid);
 			UserInfo userInfo = new UserInfo(userInfoById, optionDetail);
 			System.out.println("userInfo:" + userInfo.toString());

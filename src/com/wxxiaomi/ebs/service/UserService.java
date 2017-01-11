@@ -10,7 +10,7 @@ public interface UserService {
 
 	Result Login(String username,String password,String uniqueNum);
 	
-	Result Register(String username,String passwrod);
+	Result Register(String username,String passwrod,String uniqueNum);
 	
 	
 	Result getUserInfosByEms(List<String> ems);
