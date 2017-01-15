@@ -263,16 +263,22 @@ public class UserServiceImpl implements UserService {
 			String emname, String description, String city, String cover,
 			int sex, String create_time) {
 		try {
-
-			UserCommonInfo info = new UserCommonInfo(
-					userid,
-					nickname,
-					avatar,
-					emname,
-					new Date(),
-					create_time != null ? MyUtils.StrToDate(create_time) : null,
-					description, city, sex, cover);
-			userDao.updateUser(info);
+			UserCommonInfo user = userDao.getUserInfoById(userid);
+			user.setNickname(nickname);
+			user.setAvatar(avatar);
+			user.setUpdate_time(new Date());
+			user.setSex(sex);
+			user.setCity(city);
+			user.setDescription(description);
+//			UserCommonInfo info = new UserCommonInfo(
+//					userid,
+//					nickname,
+//					avatar,
+//					emname,
+//					new Date(),
+//					create_time != null ? MyUtils.StrToDate(create_time) : null,
+//					description, city, sex, cover);
+			userDao.updateUser(user);
 			return new Result(200, "", "success");
 		} catch (Exception e) {
 			// TODO: handle exception

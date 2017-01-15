@@ -10,9 +10,9 @@
   <property name="avatar" generated="never" lazy="false"  />
   <property name="emname" generated="never" lazy="false"  />
   <property name="album_id" generated="never" lazy="false"  />
-    <property column="update_time" generated="never" lazy="false" length="19"
+    <property column="update_time" generated="never" lazy="false"
    name="update_time" type="timestamp"/>
-    <property column="create_time" generated="never" lazy="false" length="19"
+    <property column="create_time" generated="never" lazy="false" 
    name="create_time" type="timestamp"/>
   <property name="description" generated="never" lazy="false"  />
   <property name="city" generated="never" lazy="false"  />
