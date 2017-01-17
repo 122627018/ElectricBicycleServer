@@ -63,26 +63,33 @@ public class JunitTest {
 		}
 	}
 	@Test
+	public void testUpdateUserInfo1(){
+		UserCommonInfo user = userDao.getUserInfoById(26);
+		user.setNickname("试试改名字");
+		user.setUpdate_time(new Date());
+		userDao.updateUser(user);
+	}
+	@Test
 	public void testCheckUserExist(){
 		System.out.println(userDao.checkExist("2017011110321"));
 	}
 	@Test
 	public void testInsertUser(){
-		String username = "201701111032";
+		String username = "201701142313";
 		String password = "987987987";
-//		User user = new User();
-//		user.setUsername(username);
-//		user.setPassword(password);
-//		
-//		UserCommonInfo info = new UserCommonInfo();
-//		info.setNickname(username);
-//		info.setCreate_time(new Date());
-//		info.setUpdate_time(new Date());
-//		info.setEmname(username);
-////		userDao.insertUser(user);
-//		user.setUserCommonInfo(info);
+		User user = new User();
+		user.setUsername(username);
+		user.setPassword(password);
+		
+		UserCommonInfo info = new UserCommonInfo();
+		info.setNickname(username);
+		info.setCreate_time(new Date());
+		info.setUpdate_time(new Date());
+		info.setEmname(username);
 //		userDao.insertUser(user);
-//		userDao.insertUser(user);
+		user.setUserCommonInfo(info);
+		userDao.insertUser(user);
+		userDao.insertUser(user);
 	}
 	
 	@Test
