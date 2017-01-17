@@ -12,7 +12,7 @@ import com.wxxiaomi.ebs.module.em.comm.HyphenateRestAPIFactory;
 import com.wxxiaomi.ebs.module.em.comm.body.CommandMessageBody;
 import com.wxxiaomi.ebs.module.em.comm.constant.MsgTargetType;
 
-
+ 
 public class Main {
 
     public static void main(String[] args) throws Exception {
