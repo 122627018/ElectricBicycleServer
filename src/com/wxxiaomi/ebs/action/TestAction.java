@@ -58,8 +58,8 @@ public class TestAction {
 //		BodyWrapper userBody = new IMUserBody("User001", "123456", "HelloWorld");
 //		System.out.println("3");
 			
-			CommandMessageBody cmdMsg = new CommandMessageBody(MsgTargetType.USERS, new String[]{"122627018"}, "admin", null, "I.m the command message from server");
-			 ImHelper.getInstance().sendCommandMsg(cmdMsg);
+//			CommandMessageBody cmdMsg = new CommandMessageBody(MsgTargetType.USERS, new String[]{"122627018"}, "admin", null, "I.m the command message from server");
+//			 ImHelper.getInstance().sendCommandMsg(cmdMsg);
 		state = "401";
 		error = "token过期";
 		}catch (Exception e) {
