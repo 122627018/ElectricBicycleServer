@@ -36,8 +36,11 @@ public class TokenGenerator {
             AuthTokenAPI authService = (AuthTokenAPI) context.getAPIFactory().newInstance(HyphenateRestAPIFactory.TOKEN_CLASS);
             String clientId = ClientContext.getInstance().getClientId();
             String clientSecret = ClientContext.getInstance().getClientSecret();
+            System.out.println("clientId:"+clientId+",clientSecret:"+clientSecret);
             ResponseWrapper response = (ResponseWrapper) authService.getAuthToken(clientId, clientSecret);
-
+            System.out.println("response==null?"+response==null?"true":"false");
+            System.out.println("response.getResponseStatus()==null?"+response.getResponseStatus()==null?"true":"false");
+            System.out.println("response.getResponseStatus():"+response.getResponseStatus());
             if (null != response && 200 == response.getResponseStatus() && null != response.getResponseBody()) {
                 ObjectNode responseBody = (ObjectNode) response.getResponseBody();
                 String newToken = responseBody.get("access_token").asText();

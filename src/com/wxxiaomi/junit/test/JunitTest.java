@@ -23,6 +23,7 @@ import com.wxxiaomi.ebs.dao.inter.CommentDao;
 import com.wxxiaomi.ebs.dao.inter.LocatDao;
 import com.wxxiaomi.ebs.dao.inter.TopicDao;
 import com.wxxiaomi.ebs.dao.inter.UserDao;
+import com.wxxiaomi.ebs.module.em.engine.IMUserDao;
 import com.wxxiaomi.ebs.service.MapService;
 import com.wxxiaomi.ebs.service.UserService;
 import com.wxxiaomi.ebs.util.GeoHashUtil;
@@ -41,6 +42,7 @@ public class JunitTest {
 	static CommentDao commentDao;
 	static UserDao userDao;
 	static LocatDao locatDao;
+	static IMUserDao imUserDao;
 	
 	@BeforeClass
 	public static void setUp() {
@@ -57,15 +59,20 @@ public class JunitTest {
 			userService = (UserService)act.getBean("userServiceImpl");
 			locatDao = (LocatDao)act.getBean("locatDaoImpl");
 			mapService = (MapService)act.getBean("mapServiceImpl");
+			imUserDao = (IMUserDao)act.getBean("imUserDaoImpl");
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
 	@Test
 	public void testUpdateUserInfo1(){
-		UserCommonInfo user = userDao.getUserInfoById(26);
-		user.setNickname("试试改名字");
+		UserCommonInfo user = userDao.getUserInfoById(25);
+		user.setNickname("试试改名字111");
 		user.setUpdate_time(new Date());
 		userDao.updateUser(user);
 	}
@@ -120,8 +127,9 @@ public class JunitTest {
 	
 	@Test
 	public void testGetDis(){
-		double distanceOfTwoGeo = GeoHashUtil.demo("ws4wps4wk82s", "ws4wpf4x53c8");
-		System.out.println(distanceOfTwoGeo);
+		String encode = GeoHashUtil.encode(113.946201, 22.525996);
+//		double distanceOfTwoGeo = GeoHashUtil.demo("ws4wps4wk82s", "ws4wpf4x53c8");
+		System.out.println(encode);
 	}
 	
 	

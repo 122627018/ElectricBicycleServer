@@ -15,18 +15,19 @@ import com.wxxiaomi.ebs.dao.bean.User;
 import com.wxxiaomi.ebs.dao.bean.UserCommonInfo;
 import com.wxxiaomi.ebs.dao.bean.constant.OptionType;
 import com.wxxiaomi.ebs.dao.bean.constant.Result;
+import com.wxxiaomi.ebs.dao.bean.format.LoginResponseBean;
 import com.wxxiaomi.ebs.dao.bean.format.OptionDetail;
 import com.wxxiaomi.ebs.dao.bean.format.UserInfo;
 import com.wxxiaomi.ebs.dao.inter.CommentDao;
 import com.wxxiaomi.ebs.dao.inter.OptionDao;
 import com.wxxiaomi.ebs.dao.inter.TopicDao;
 import com.wxxiaomi.ebs.dao.inter.UserDao;
-import com.wxxiaomi.ebs.module.em.ImHelper;
-import com.wxxiaomi.ebs.module.em.comm.body.IMUserBody;
+import com.wxxiaomi.ebs.module.em.engine.IMUserDao;
+import com.wxxiaomi.ebs.module.em.engine.common.IMError;
+import com.wxxiaomi.ebs.module.em.engine.common.ImException;
 import com.wxxiaomi.ebs.module.jwt.Jwt;
 import com.wxxiaomi.ebs.module.jwt.TokenState;
 import com.wxxiaomi.ebs.service.UserService;
-import com.wxxiaomi.ebs.util.MyUtils;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -39,6 +40,8 @@ public class UserServiceImpl implements UserService {
 	TopicDao topicDao;
 	@Resource
 	CommentDao commentDao;
+	@Resource 
+	IMUserDao mIMUserDao;
 
 	@Override
 	public Result Login(String username, String password, String uniqueNum) {
@@ -47,11 +50,20 @@ public class UserServiceImpl implements UserService {
 			User user = userDao.getUser(username, password);
 			if (user != null) {
 				System.out.println("user!=null");
+				//获取用户好友，获取用户黑名单
+				
+//				String[] userBlackList = mIMUserDao.getUserBlackList(username);
+				
+				List<UserCommonInfo> blackList = userDao.getUserInfosByEms(mIMUserDao.getUserBlackList(username));
+				
+				List<UserCommonInfo> contacts = userDao.getUserInfosByEms(mIMUserDao.getUserContacts(username));
+				
+				LoginResponseBean response = new LoginResponseBean(user, contacts, blackList);
 				Map<String, Object> payload = new HashMap<String, Object>();
 				Date date = new Date();
 				payload.put("uid", user.getUserCommonInfo().getId());// 用户id
 				payload.put("iat", date.getTime());// 生成时间:当前
-				payload.put("ext", date.getTime() + 60 * 60);// 过期时间2小时(60*60*2000
+				payload.put("ext", date.getTime() + 60 * 60*2000);// 过期时间2小时(60*60*2000
 																// 2小时)
 				String token = Jwt.createToken(payload);
 				Map<String, Object> longMap = new HashMap<String, Object>();
@@ -60,8 +72,8 @@ public class UserServiceImpl implements UserService {
 				longMap.put("ext", date.getTime() + 1000 * 60 * 60 * 24 * 15);// 过期时间15天
 				longMap.put("phoneNum", uniqueNum);
 				String long_token = Jwt.createToken(longMap);
-				System.out.println("user:" + user.toString());
-				result = new Result(200, "", user);
+//				System.out.println("response:"+response.toString());
+				result = new Result(200, "", response);
 				result.putHeader("token", token);
 				result.putHeader("long_token", long_token);
 			} else {
@@ -79,13 +91,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Result Register(String username, String passwrod, String uniqueNum) {
+		System.out.println("Register,username:"+username+",passwrod:"+passwrod+",uniqueNum:"+uniqueNum);
 		try {
 			if (!userDao.checkExist(username)) {
-				IMUserBody imUserBody = new IMUserBody(username, passwrod,
-						username);
-				boolean flag = ImHelper.getInstance().registerUser(imUserBody);
-				System.out.println("asdsad");
-				if (flag) {
+				boolean createUser = mIMUserDao.createUser(username, passwrod);
+				if (createUser) {
 					User user = new User();
 					user.setUsername(username);
 					user.setPassword(passwrod);
@@ -97,7 +107,7 @@ public class UserServiceImpl implements UserService {
 					info.setEmname(username);
 					user.setUserCommonInfo(info);
 					userDao.insertUser(user);
-
+					//生成token
 					Map<String, Object> payload = new HashMap<String, Object>();
 					Date date = new Date();
 					payload.put("uid", user.getUserCommonInfo().getId());// 用户id
@@ -116,14 +126,17 @@ public class UserServiceImpl implements UserService {
 					Result result = new Result(200, "", user);
 					result.putHeader("token", token);
 					result.putHeader("long_token", long_token);
-
 					return result;
 				}
 			}
 			return new Result(300, "用户名已被注册", null);
-		} catch (Exception e) {
+		} catch (ImException e) {
 			// TODO: handle exception
-			e.printStackTrace();
+			if(e.getErrDetail().equals(IMError.DUPLICATE_UNIQUE_PROPERTY_EXISTS)){
+				return new Result(300, "用户名已被注册", null);
+			}else{
+				System.out.println("环信注册发生错误："+e.getDisplayErr());
+			}
 		}
 		return new Result(404, "服务器发生异常错误", null);
 	}

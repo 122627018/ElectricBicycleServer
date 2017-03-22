@@ -44,7 +44,6 @@ public class LbsAction extends BaseAction{
 	
 	public String content;
 	public String picture;
-//	public String geo;
 	public double lat;
 	public double lng;
 	public String locat_tag;

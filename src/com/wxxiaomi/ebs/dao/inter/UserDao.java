@@ -14,12 +14,11 @@ public interface UserDao {
 	int insertUser(User user);
 	
 	List<UserCommonInfo> getUserInfosByEms(List<String> names);
+	List<UserCommonInfo> getUserInfosByEms(String[] names);
 	
 	UserCommonInfo getUserInfoByEm(String emname);
 	
 	UserCommonInfo getUserInfoById(int userid);
-	
-//	UserCommonInfo getUserInfoByName(String name);
 	
 	int updateUser(UserCommonInfo userInfo);
 	

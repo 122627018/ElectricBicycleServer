@@ -11,6 +11,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
 import com.wxxiaomi.ebs.ConstantValue;
+import com.wxxiaomi.ebs.common.ErrorMsg;
 import com.wxxiaomi.ebs.module.jwt.Jwt;
 import com.wxxiaomi.ebs.module.jwt.TokenState;
 
@@ -24,6 +25,7 @@ public class TokenFilter extends MethodFilterInterceptor {
 	protected String doIntercept(ActionInvocation invoker) throws Exception {
 		HttpServletRequest request = (HttpServletRequest) ActionContext
 				.getContext().get(ServletActionContext.HTTP_REQUEST);
+		System.out.println("被token拦截器拦下了");
 		if (!ConstantValue.isTokenOpen) {
 			return invoker.invoke();
 		}
@@ -45,41 +47,38 @@ public class TokenFilter extends MethodFilterInterceptor {
 					String uid = String.valueOf(dataobj.get("uid"));
 					if (uid == null) {
 						System.out.println("token中取不到uid");
-						return "demo";
+						request.setAttribute("error_code", ErrorMsg.ERROR_TOKEN_PARSE);
+						return "error";
 					} else {
 						System.out.println("从token中取出的uid是：" + uid);
-						// String fuid = request.getParameter("userid");
-						// request.getParameterMap().remove("userid");
-						// request.setAttribute("userid_demo", 20);
-						// System.out.println("从request域里面取出的userid:"+fuid);
-						// String finduid =
-						// invoker.getStack().findString("userid");
-						// System.out.println("从invoker.getStack()取得userid："+finduid);
 						invoker.getStack().setValue("userid", uid);
-						// invoker.getStack().set("userid", 20);
-						// String finduid2 =
-						// invoker.getStack().findString("userid");
-						// System.out.println("finduid:"+finduid+",finduid2:"+finduid2);
-						//
-						// invoker.getStack().set("userid_demo", uid);
-						// ValueStack valueStack =
-						// ActionContext.getContext().getValueStack();
-						// valueStack.set("userid_demo", uid);
-
-						// OgnlValueStack
-						// stack=(OgnlValueStack)request.getAttribute("struts.valueStack");
-						// // stack.push(o)
-						// stack.set("userid_demo", uid);
 						return invoker.invoke();
 					}
 
+				}else if(TokenState.getTokenState((String) resultMap.get("state"))
+						.equals(TokenState.EXPIRED)){
+					//token过期
+					request.setAttribute("error_code", ErrorMsg.ERROR_TOKEN_EXPIRED);
+					return "error";
 				}
 
+			}else{
+//				request.setAttribute("error_code", CODEClient.ERROR_TOKEN_NULL);
+				request.setAttribute("error_code", ErrorMsg.ERROR_ILLICIT_CLIENT);
+				return "error";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			request.setAttribute("error_code", ErrorMsg.ERROR_TOKEN_PARSE);
+			return "error";
 		}
-		return "demo";
+//		System.out.println("asdasd");
+//		request.
+//		request.setAttribute("error_code", 30);
+//		request.se
+//		invoker.getStack().setValue("error_code", 20);
+		request.setAttribute("error_code", ErrorMsg.ERROR_UNKNOW);
+		return "error";
 	}
 
 	public String getResult(String state) {

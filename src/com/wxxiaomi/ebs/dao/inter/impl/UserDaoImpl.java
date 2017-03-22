@@ -1,6 +1,7 @@
 package com.wxxiaomi.ebs.dao.inter.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -206,6 +207,22 @@ public class UserDaoImpl implements UserDao{
 			return true;
 		}
 		return false;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserCommonInfo> getUserInfosByEms(String[] names) {
+//		List<String> names = ;
+		List<String> asList = Arrays.asList(names);
+		if(asList.size()>0){
+			String queryString = "from UserCommonInfo u where u.emname in(:list)";
+			Query queryObject = factory.getCurrentSession()
+					.createQuery(queryString);
+			queryObject.setParameterList("list", asList);
+			return (List<UserCommonInfo>) queryObject.list();	
+		}
+		return new ArrayList<UserCommonInfo>();
+		
 	}
 
 }

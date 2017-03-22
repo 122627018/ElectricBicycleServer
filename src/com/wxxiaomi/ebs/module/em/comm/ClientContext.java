@@ -153,7 +153,7 @@ public class ClientContext {
 
     private void initFromPropertiesFile() {
         Properties p = new Properties();
-
+//        ClientContext.class.getClassLoader().getResourc
         try {
             InputStream inputStream = ClientContext.class.getClassLoader().getResourceAsStream("config.properties");
             p.load(inputStream);
@@ -171,9 +171,10 @@ public class ClientContext {
         String impLib = p.getProperty(APP_IMP_LIB_KEY);
         String cacertFilePath = p.getProperty(CACERT_FILE_PATH_KEY);
         cacertFilePath = ClientContext.class.getClassLoader().getResource("mykeystore.jks").getPath();
-        System.out.println("cacertFilePath1:"+cacertFilePath);
+        cacertFilePath = cacertFilePath.substring(1, cacertFilePath.length());
+        System.out.println(cacertFilePath);
         String cacertFilePassword = p.getProperty(CACERT_FILE_PASSWORD_KEY);
-
+        System.out.println("cacertFilePassword:"+cacertFilePassword);
         if (StringUtils.isBlank(protocal) || StringUtils.isBlank(host) || StringUtils.isBlank(org) || StringUtils.isBlank(app) || StringUtils.isBlank(clientId) || StringUtils.isBlank(clientSecret) || StringUtils.isBlank(impLib)) {
             log.error(MessageTemplate.print(MessageTemplate.INVAILID_PROPERTIES_MSG, new String[]{"config.properties"}));
             return; // Context not initialized

@@ -21,8 +21,6 @@ public class TestAction {
 	private String error = "";
 	private Object infos;
 	
-	
-
 	public String getState() {
 		return state;
 	}
@@ -55,7 +53,8 @@ public class TestAction {
 //			 message.sendMessage(cmdMsg);
 //			 ImHelper.getInstance().sendCommandMsg(cmdMsg);
 //		System.out.println("2");
-//		BodyWrapper userBody = new IMUserBody("User001", "123456", "HelloWorld");
+//		BodyWrapper userBody = new IMUserBody("45646541sad", "123456", "HelloWorld");
+//		ImHelper.getInstance().registerUser((IMUserBody)userBody);
 //		System.out.println("3");
 			
 //			CommandMessageBody cmdMsg = new CommandMessageBody(MsgTargetType.USERS, new String[]{"122627018"}, "admin", null, "I.m the command message from server");

@@ -139,6 +139,7 @@ public class HttpClientRestAPIInvoker implements RestAPIInvoker {
         try {
             response = client.execute(request);
         } catch (IOException e) {
+        	System.out.println(e.getMessage());
             responseWrapper.addError(e.getMessage());
             return responseWrapper;
         }

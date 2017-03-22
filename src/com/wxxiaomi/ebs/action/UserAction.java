@@ -96,11 +96,13 @@ public class UserAction extends BaseAction{
 	public String create_time;
 	
 	public String updateuserinfo(){
+		System.out.println("nickname:"+nickname+",avatar:"+avatar);
 		adapterResult(service.updateUserInfo(userid,nickname,avatar,emname,description,city,cover,sex,create_time));
 		return "updateuserinfo";
 	}
 	
 	public String longToken(){
+		System.out.println("longToken");
 		try{
 		adapterResult(service.LongToken(long_token, phoneId));
 		}catch (Exception e) {
