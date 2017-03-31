@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.wxxiaomi.ebs.dao.bean">
+ <class name="OptionLogs" table="bicycle_opt_logs">
+  <id length="11" name="id">
+   <generator class="native"/>
+  </id>
+  <property generated="never" lazy="false" name="obj_type" not-null="true"/>
+  <property generated="never" lazy="false" name="obj_id" not-null="true"/>
+  <property generated="never" lazy="false" name="userid" not-null="true"/>
+  <property column="create_time" generated="never" lazy="false"
+   length="19" name="create_time" type="timestamp"/>
+  <property generated="never" lazy="false" name="content"/>
+  <property generated="never" lazy="false" name="pictures"/>
+  <property generated="never" lazy="false" name="title"/>
+  <property generated="never" lazy="false" name="foor_note"/>
+  <property generated="never" lazy="false" name="locat"/>
+  <property generated="never" lazy="false" name="locat_tag"/>
+  <property generated="never" lazy="false" name="start"/>
+ </class>
+</hibernate-mapping>

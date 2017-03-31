@@ -1,20 +1,15 @@
 package com.wxxiaomi.ebs.action;
 
-import java.util.Date;
-import java.util.List;
 
 import javax.annotation.Resource;
 
-
 import org.springframework.stereotype.Controller;
 
-import com.wxxiaomi.ebs.bean.Comment;
-import com.wxxiaomi.ebs.bean.Topic;
-import com.wxxiaomi.ebs.bean.UserCommonInfo;
+import com.wxxiaomi.ebs.action.base.BaseAction;
 import com.wxxiaomi.ebs.service.TopicService;
 
 @Controller
-public class TopicAction {
+public class TopicAction extends BaseAction{
 
 	@Resource
 	TopicService service;
@@ -36,31 +31,44 @@ public class TopicAction {
 	private String to_unick;
 	private int topicId;
 	
+	public String replyMeList(){
+		System.out.println("replyMeList,userid:"+userid);
+//		List<Comment> userReply = service.getUserReply(userid);
+//		state = "200";
+//		infos = userReply;
+		
+		adapterResult(service.getUserReply(userid));
+		return "replyMeList";
+	}
+	
 	public String one(){
-		System.out.println("getOneTopic->topicid:"+topicId);
-		Topic topic = service.getTopicById(topicId);
-		infos = topic;
-		state = "200";
+//		System.out.println("getOneTopic->topicid:"+topicId);
+//		Topic topic = service.getTopicById(topicId);
+//		infos = topic;
+//		state = "200";
+		adapterResult(service.getTopicById(topicId));
 		return "one";
 	}
 	
 	public String topicDelete(){
-		boolean deleteTopic = service.deleteTopic(topicId);
-		if(deleteTopic){
-			state = "200";
-			infos = "success";
-		}else{
-			state = "404";
-			System.out.println("删除失败");
-		}
+//		boolean deleteTopic = service.deleteTopic(topicId);
+//		if(deleteTopic){
+//			state = "200";
+//			infos = "success";
+//		}else{
+//			state = "404";
+//			System.out.println("删除失败");
+//		}
+		adapterResult(service.deleteTopic(topicId));
 		return "topicDelete";
 	}
 
 	public String commentList() {
 		System.out.println("getComment->topicId=" + topicId);
-		List<Comment> list = service.getTopicComent(topicId);
-		state = "200";
-		infos = list;
+//		List<Comment> list = service.getTopicComent(topicId);
+//		state = "200";
+//		infos = list;
+		adapterResult(service.getTopicComent(topicId));
 		return "commentList";
 	}
 
@@ -69,32 +77,50 @@ public class TopicAction {
 				+ topicId + ", content1=" + content1 + ", from_uid=" + from_uid
 				+ ", from_nick=" + from_nick + ", from_head=" + from_head
 				+ ", to_uid=" + to_uid + ", to_unick=" + to_unick + "]");
-		Comment comment = new Comment(0, topicId, content1, from_uid,
-				from_nick, from_head, to_uid, to_unick);
-		service.publishComment(comment);
-		state = "200";
-		infos = "success";
+//		Comment comment = new Comment(0, topicId, content1, from_uid,
+//				from_nick, from_head, to_uid, to_unick);
+//		int comment_id = service.publishComment(comment);
+//		
+//		LogCommentPublish(userid,topicId,comment_id);
+//		state = "200";
+//		infos = comment;
+		adapterResult(service.publishComment(topicId, content1, from_uid,
+				from_nick, from_head, to_uid, to_unick));
 		return "publishComment";
 	}
 
+//	private void LogCommentPublish(int userid,int topicId,int comment_id) {
+//		Option o = new Option();
+//		o.setUser_id(userid);
+//		o.setObj_id(comment_id);
+//		o.setParent_id(topicId);
+//		o.setCreate_time(new Date());
+//		o.setObj_type(OptionType.TOPIC_COMMENT);
+//		optionService.logComment(userid,topicId,comment_id);
+//	}
+	
+	
+
 	public String list() {
-		state = "200";
-		infos = service.getTopics(start);
+//		state = "200";
+//		infos = service.getTopics(start);
+		adapterResult(service.getTopics(start));
 		return "list";
 	}
 
 	public String myTopic() {
-		System.out.println(" myTopic()，userid:"+userid);
-		try{
-		List<Topic> list = service.getTopicByUserid(userid);
-		System.out.println("list==null?"+list==null);
-		//System.out.println(list.size());
-		state = "200";
-		infos = list;
-		}catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
+//		System.out.println(" myTopic()，userid:"+userid);
+//		try{
+//		List<Topic> list = service.getTopicByUserid(userid);
+//		System.out.println("list==null?"+list==null);
+//		//System.out.println(list.size());
+//		state = "200";
+//		infos = list;
+//		}catch (Exception e) {
+//			// TODO: handle exception
+//			e.printStackTrace();
+//		}
+		adapterResult(service.getTopicByUserid(userid));
 		return "getMyTopic";
 	}
 
@@ -103,39 +129,59 @@ public class TopicAction {
 //		JSONObject fromObject = JSONObject.fromObject(topic);
 //		Topic tt = (Topic)JSONObject.toBean(fromObject,Topic.class);
 //		System.out.println("tt:"+tt.toString());
-		UserCommonInfo userInfo = new UserCommonInfo();
-		userInfo.setId(userid);
-		Topic t = new Topic();
-		t.setContent(content);
-		System.out.println("pics:"+pics);
-		t.setPics(pics);
-		t.setTime(new Date());
-		t.setCcount(0);
-		t.setLocat(locat);
-		t.setLocat_tag(locat_tag);
-		t.setHot(0);
-		t.setUserCommonInfo(userInfo);
-		t.setTitle("");
-		service.publishTopic(t);
-		infos = "success";
+//		UserCommonInfo userInfo = new UserCommonInfo();
+//		userInfo.setId(userid);
+//		Topic t = new Topic();
+//		t.setContent(content);
+//		System.out.println("pics:"+pics);
+//		t.setPics(pics);
+//		t.setTime(new Date());
+//		t.setCcount(0);
+//		String[] split = locat.split("#");
+//		String encode = GeoHashUtil.encode(Double.valueOf(split[0]), Double.valueOf(split[1]));
+//		t.setLocat(encode);
+//		t.setLocat_tag(locat_tag);
+//		t.setHot(0);
+//		t.setUserCommonInfo(userInfo);
+//		t.setTitle("");
+//		int id = service.publishTopic(t);
+//		LogTopicPublic(userid,id);
+//		infos = "success";
+		adapterResult(service.publishTopic(userid, content, pics, locat.split("#"),locat_tag));
 		return "submitTopic";
 	}
 
-	private String state = "404";
-	private String error = "";
-	private Object infos;
+//	private void LogTopicPublic(int userid,int topicid) {
+//		OptionLogs log = new OptionLogs();
+//		log.setContent(t.getContent());
+//		log.setCreate_time(t.getTime());
+//		log.setLocat(t.getLocat());
+//		log.setLocat_tag(t.getLocat_tag());
+//		log.setObj_id(t.getId());
+//		log.setObj_type(OptionType.TOPIC_PUBLISH);
+//		log.setPictures(t.getPics());
+//		log.setTitle("发布了一条话题");
+//		log.setUserid(t.getUserCommonInfo().id);
+//		log.setFoor_note("");
+//		logService.insertOption(log);
+		
+//		try{
+//		System.out.println("LogTopicPublic,userid:"+userid+",topicid:"+topicid);
+//		Option o = new Option();
+//		o.setObj_type(OptionType.TOPIC_PUBLISH);
+//		o.setObj_id(topicid);
+//		o.setUser_id(userid);
+//		o.setCreate_time(new Date());
+//		optionService.insertOption(o);
+//		
+//		}catch (Exception e) {
+//			// TODO: handle exception
+//			e.printStackTrace();
+//		}
+//		optionService.logTopic(userid,topicid);
+//	}
 
-	public String getState() {
-		return state;
-	}
 
-	public String getError() {
-		return error;
-	}
-
-	public Object getInfos() {
-		return infos;
-	}
 
 	public void setStart(int start) {
 		this.start = start;

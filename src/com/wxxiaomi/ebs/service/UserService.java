@@ -1,28 +1,74 @@
 package com.wxxiaomi.ebs.service;
 
+import java.util.Date;
 import java.util.List;
 
-import com.wxxiaomi.ebs.bean.User;
-import com.wxxiaomi.ebs.bean.UserCommonInfo;
+import com.wxxiaomi.ebs.dao.bean.constant.Result;
+
 
 public interface UserService {
 
-	User Login(String username,String password);
+	Result Login(String username,String password,String uniqueNum);
 	
-	List<UserCommonInfo> getUserListByEMUsername(List<String> list);
+	Result Register(String username,String passwrod,String uniqueNum);
 	
-	boolean checkPhoneExists(String phone);
 	
-	User registerUser(String username, String password);
+	Result getUserInfosByEms(List<String> ems);
 	
-	 UserCommonInfo getUserCommonInfoById(int userid);
+	Result getUserInfosByName(int userid,String name);
+	
+	Result UserOptionLog(int userid);
+	
+	Result LongToken(String ltoken,String pboneId);
+	
+	Result updateUserInfo(int id,String nickname,String avatar,String emname,String description,String city,String cover,int sex,String create_time);
+	
+	Result updateUserFriends(List<String> emnames,List<Date> times);
+
+	Result updateUserCover(int userid, String coverPath);
+
+	Result getUserInfoById(int taget_userid);
+
+	Result getUserInfoAndOptionById(int taget_userid);
+	
+//	List<UserCommonInfo> getUserListByEMUsername(List<String> list);
+//	
+//	boolean checkPhoneExists(String phone);
+//	
+//	User registerUser(String username, String password);
+//	
+//	 UserCommonInfo getUserCommonInfoById(int userid);
+//	 
+//	 boolean improveUserInfo(int userid, String emname, String name,
+//				String description);
+//	 
+//	 List<UserCommonInfo> getUserInfoByName(String name);
+//	 
+//	 List<UserCommonInfo> getUserInfoByEmname(String emname);
+//	 
+//	 boolean updateUserHead(int userid,String path);
 	 
-	 boolean improveUserInfo(int userid, String emname, String name,
-				String description);
+//	 /**
+//	  * 客户端更新相册
+//	  * @param userid
+//	  * @param album_id
+//	  * @param imgUrl
+//	  * @param create_time
+//	  * @return
+//	  */
+//	 boolean insertUserPhoto(int userid,int album_id,String[] imgUrl,String create_time);
 	 
-	 List<UserCommonInfo> getUserInfoByName(String name);
+//	 boolean insertUserPhoto(List<Photo> photos);
 	 
-	 List<UserCommonInfo> getUserInfoByEmname(String emname);
+	 /**
+	  * 取得某个用户的照片
+	  * @param album_id
+	  * @param size
+	  * @return
+	  */
+//	 List<String> getUserPhoto(int album_id,int size);
 	 
-	 boolean updateUserHead(int userid,String path);
+	 
+	 
+	 
 }

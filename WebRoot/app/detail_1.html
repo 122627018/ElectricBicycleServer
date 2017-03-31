@@ -18,10 +18,10 @@
 
 		<div class="card facebook-card">
 			<div class="card-header no-border">
-				<div class="facebook-avatar">
+				<div class="facebook-avatar" >
 					<img
-						src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg"
-						width="34" height="34">
+						id="info_avatvr"
+						width="40" height="40">
 				</div>
 				<div class="facebook-name" id="info_user_name"></div>
 				<div class="facebook-date" id="info_user_description"></div>
@@ -35,9 +35,9 @@
 
 		<div class="card demo-card-header-pic">
 			<div valign="bottom"
-				class="card-header color-white no-border no-padding">
-				<img class='card-cover'
-					src="//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg"
+				class="card-header color-white no-border no-padding" id="info_big_content" style="display:none;">
+				<img class='card-cover' id="info_big_img"
+					style="width: 100%;height:220px"
 					alt="">
 			</div>
 			<div class="card-content">
@@ -49,19 +49,19 @@
 
 			</div>
 			<div class="card-footer">
-				<a href="#" class="link" id="info_locat_tag">揭阳科技馆</a>
+				<a href="#" class="link" id="info_locat_tag"></a>
 
 			</div>
 		</div>
 
-		<div class="card">
+		<div class="card" style="margin-bottom: 60px">
 			<div class="card-header">评论:</div>
 			<div class="card-content">
 				<div class="card-content-inner" id="info_no_comment">当前暂无人评论</div>
 				<div class="list-block media-list">
 					<ul id="info_comment">
-						
-					<!-- 这里放置评论 -->
+
+						<!-- 这里放置评论 -->
 					</ul>
 				</div>
 			</div>
@@ -70,7 +70,16 @@
 
 
 	</div>
-
+	<div class="bar" style="bottom:0">
+		<div class="searchbar">
+			<a class="searchbar-cancel" onclick="onCommentClick();">确定</a>
+			<div class="search-input">
+				<label class="icon icon-edit" for="search"></label> <input
+					type="search" id='search_content' placeholder='留言...'
+					onclick="event.cancelBubble=true;" />
+			</div>
+		</div>
+	</div>
 	</div>
 	<script type='text/javascript'
 		src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
@@ -93,7 +102,7 @@
 			topicid = message;
 			showLog("带过来的id是：" + message);
 			var data = {
-				"title" : "话题详情2",
+				"title" : "话题详情",
 				"right" : {
 					"icon" : "",
 					"description" : "描述",
@@ -132,50 +141,147 @@
 		//将从网络获取过来的detail适配到ui里面
 		function adapterTopicDetail(infos) {
 			//$("#info_head_parent").attr("data-me", JSON.stringify(infos.userCommonInfo));
+			$("#info_user_description").html(infos.userCommonInfo.description);
 			$("#info_user_name").html(infos.userCommonInfo.name);
-			$("#info_user_description").html("假装是个人签名");
+			
 			$("#info_content").html(infos.content);
 			$("#info_time").html(infos.time);
-			if(infos.picss!=null){
+			$("#info_locat_tag").html(infos.locat_tag);
+			showLog("infos.userCommonInfo.avatar:"+infos.userCommonInfo.avatar);
+			$("#info_avatvr").attr("src",infos.userCommonInfo.avatar+'?'+new Date().getTime());
+			if (infos.pics != "") {
+				showLog("infos.pics !=null");
+				//$("#info_img_content").attr("display","block");
+				//$("#info_big_img").show();
+				$("#info_big_content").css('display','block');
 				var html = '';
-				
-				for(var i=0;i<infos.picss.length;i++){
-					html+= '<img src="'+infos.picss[i]+'" height="60" width="60"> </span>';
-				}
+				for ( var i = 0; i < infos.picss.length; i++) {
+					if(i==0){
+						$("#info_big_img").attr("src",infos.picss[0]);
+					}else
+						html += '<img src="'+infos.picss[i]+'" height="60" width="60"> </span>';
+					}
 				$("#info_img_content").prepend(html);
+			}else{
 				
 			}
+			
+
 		}
 
-		//回复按钮被点击的时候
-		function onReplyClick() {
-			getUser(submitContent);
-		}
 		var last = 0;
 		//将评论适配到ui里面
 		function adapterComment(comments) {
 			var html = '';
 			var number = comments.length;
-			if(number!=0){
+			if (number != 0) {
 				$('#info_no_comment').hide();
 			}
 			for ( var i = 1 + last; i <= number + last; i++) {
-				html += '<li class="item-content"><div class="item-media">'
+				//showLog(i+":"+JSON.stringify(comments[i - last - 1]));
+				var item = comments[i - last - 1];
+				html += '<li class="item-content" onclick="onItemClick('
+						+ item.id
+						+ ','
+						+ item.from_uid
+						+ ','
+						+ item.from_nick
+						+ ');"><div class="item-media">'
 						+ '<img src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" width="44">'
-						+ '</div><div class="item-inner"><div class="item-title-row"><div class="item-title">'+comments[i-last-1].from_nick+'</div>'
-						+ '</div><div class="item-subtitle">'+getText(comments[i-last-1])+'</div></div></li>';
+						+ '</div><div class="item-inner"><div class="item-title-row"><div class="item-title">'
+						+ item.from_nick + '</div>'
+						+ '</div><div>' + getText(item)
+						+ '</div></div></li>';
 			}
 			$("#info_comment").append(html);
 		}
-		
-		function getText(item){
+
+		function addAComment(comment) {
+			$('#info_no_comment').hide();
+			var html = '<li class="item-content" onclick="onItemClick('
+					+ comment.id
+					+ ','
+					+ comment.from_uid
+					+ ','
+					+ comment.from_nick
+					+ ');"><div class="item-media">'
+					+ '<img src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" width="44">'
+					+ '</div><div class="item-inner"><div class="item-title-row"><div class="item-title">'
+					+ comment.from_nick + '</div>'
+					+ '</div><div>' + getText(comment)
+					+ '</div></div></li>';
+					
+			$("#info_comment").prepend(html);
+		}
+
+		function getText(item) {
 			var result = "";
-            if (item.to_uid != 0) {
-                result = "回复@" + item.to_unick + ":";
-            }
-            result += item.content;
-            //console.log(result);
-            return result;
+			if (item.to_uid != 0) {
+				result = "回复@" + item.to_unick + ":";
+			}
+			result += item.content;
+			//console.log(result);
+			return result;
+		}
+
+		var replyId = 0;
+		var reply_uid = 0;
+		var reply_nick = "";
+		function onCommentClick() {
+			getUser(submitComment);
+		}
+
+		function getUser(callback) {
+			window.WebViewJavascriptBridge.callHandler('getUser', "", function(
+					responseData) {
+				showLog("getUser->comeBackDta:" + responseData);
+				var result = eval("(" + responseData + ")");
+				callback(result);
+			});
+		}
+
+		function submitComment(user) {
+			var content = $("#search_content").val();
+			showLog("comment:" + content);
+			var topic_id = topicid;
+			var from_uid = user.id;
+			var from_nick = user.name;
+			var from_head = user.head;
+			var to_uid = 0;
+			var to_unick = "";
+			if (reply_uid != 0) {
+				to_uid = reply_uid;
+				to_unick = reply_nick;
+			}
+			var pars = 'url=android/topic_publishComment' + '&topic_id='
+					+ topic_id + '&content1=' + content + '&from_uid='
+					+ from_uid + '&from_nick=' + from_nick + '&from_head='
+					+ from_head + '&to_uid=' + to_uid + '&to_unick=' + to_unick;
+			showLog("发布评论的pars:" + pars);
+			sendGetRequest(pars, function(responseData) {
+				showLog("返回数据拉ssss:" + responseData);
+				$("#search_content").val("");
+				$("#search_content").attr("placeholder", "留言");
+				var comment = eval("(" + responseData + ")");
+				addAComment(comment.infos);
+			});
+		}
+
+		$("#search_content").blur(function() {
+			replyId = 0;
+			$("#search_content").attr("placeholder", "留言");
+			showLog("focus event");
+		});
+
+		function onItemClick(id, from_uid, from_nick) {
+			showLog(id + ",from_uid:" + from_uid + ",from_nick:" + from_nick);
+			//showLog(tag.from_nick);
+			replyId = id;
+			reply_uid = from_uid;
+			reply_nick = from_nick;
+			showLog("reply_uid:" + reply_uid);
+			$("#search_content").attr("placeholder", "回复" + from_nick + ":");
+			$("#search_content").focus();
 		}
 	</script>
 </body>

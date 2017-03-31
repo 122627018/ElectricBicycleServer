@@ -1,113 +1,177 @@
 package com.wxxiaomi.ebs.action;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
-
 import javax.annotation.Resource;
-
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.wxxiaomi.ebs.bean.User;
-import com.wxxiaomi.ebs.bean.UserCommonInfo;
-import com.wxxiaomi.ebs.bean.format.Format_InitUserData;
-import com.wxxiaomi.ebs.bean.format.Format_Login;
+import com.wxxiaomi.ebs.action.base.BaseAction;
+import com.wxxiaomi.ebs.dao.bean.Photo;
+import com.wxxiaomi.ebs.dao.bean.constant.Result;
+import com.wxxiaomi.ebs.service.TopicService;
 import com.wxxiaomi.ebs.service.UserService;
+import com.wxxiaomi.ebs.util.MyUtils;
 
 @Controller
-public class UserAction {
+@Scope("prototype")
+public class UserAction extends BaseAction{
 
 	@Resource UserService service;
+	@Resource TopicService topicService;
+	
+
+	
+	public String emnamelist;
+	public int userid;
+	
+	public int album_id;
+	public String imgs;
+	
+	public String long_token;
+	public String phoneId;
+	
+	
+	
+	
+	public String userinfo;
+	
+	public int taget_userid;
+	public String userinfobyid(){
+		System.out.println("getuserinfobyid,target_id:"+taget_userid);
+		adapterResult(service.getUserInfoById(taget_userid));
+		return "userinfobyid";
+	}
+	
+	
+	public String userinfoandoptions(){
+		adapterResult(service.getUserInfoAndOptionById(taget_userid));
+		return "userinfoandoptions";
+	}
+	
+	
+	public String friends;
+	public String updateuserfriends(){
+		try{
+		System.out.println("updateuserfriends");
+		System.out.println("freinds:"+friends);
+		List<String> emnames = new ArrayList<String>();
+		List<Date> times = new ArrayList<Date>();
+		if(friends!=null){
+			String[] split = friends.split("#");
+			for(String itme : split){
+				String[] split2 = itme.split("=");
+				emnames.add(split2[0]);
+				if(split2.length>1){
+					times.add(MyUtils.StrToDate(split2[1]));
+				}
+				
+			}
+		}
+		adapterResult(service.updateUserFriends(emnames, times));
+		}catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		return "updateuserfriends";
+	}
+	
+	public String coverPath;
+	public String upLoadCover(){
+		System.out.println("upLoadCover,coverPath:"+coverPath);
+		adapterResult(service.updateUserCover(userid,coverPath));
+		return "upLoadCover";
+	}
+	
+	
+	public String nickname;
+	public String description;
+	public String emname;
+	public String city;
+	public String cover;
+	public String avatar;
+	public int sex = 1;
+	public String create_time;
+	
+	public String updateuserinfo(){
+		System.out.println("nickname:"+nickname+",avatar:"+avatar);
+		adapterResult(service.updateUserInfo(userid,nickname,avatar,emname,description,city,cover,sex,create_time));
+		return "updateuserinfo";
+	}
+	
+	public String longToken(){
+		System.out.println("longToken");
+		try{
+		adapterResult(service.LongToken(long_token, phoneId));
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return "longToken";
+	}
+
+
+	public String insertUserPhoto(){
+		String[] split = imgs.split("#");
+		for(String img : split){
+			Photo photo = new Photo();
+			photo.setAlbum_id(album_id);
+			photo.setCreate_time(new Date());
+			photo.setUrl(img);
+		}
+		state = 200;
+		infos = "success";
+		return "insertUserPhoto";
+	}
 	
 	public String username;
 	public String password;
-	Object infos;
-	public String state;
-	public String error;
-	public String name;
-	
-	public String emnamelist;
-
-	private String description;
-
-	private String emname;
-
-	private int userid;
-	
-	
-	public String getState() {
-		return state;
-	}
-
-
-	public String getError() {
-		return error;
-	}
-
-
-	public Object getInfos() {
-		return infos;
-	}
-
+	public String uniqueNum;
 	public String login(){	
-		User user = service.Login(username, password);
-		if(user!=null){
-			System.out.println(user.toString());
-			state = "200";
-			infos = new Format_Login(user);
-		}else{
-			state = "5000";
-			error = "账号或者密码出错";
-		}
+		/**
+		 * 登陆操作：
+		 * 从数据库获取user
+		 * 生成Token，放在header
+		 * 返回
+		 */
+		Result login = service.Login(username, password,uniqueNum);
+		adapterResult(login);
 		return "login";
 	}
 	
 	public String register(){
-		System.out.println("register");
-		User user = service.registerUser(username, password);
-		if(user!=null){
-			infos = new Format_Login(user);
-			state = "200";
-		}else{
-			System.out.println("用户已存在");
-			state = "5000";
-			error = "用户已存在";
-		}
-		System.out.println(infos.toString());
+		Result resgiter = service.Register(username, password,uniqueNum);
+		adapterResult(resgiter);
 		return "register";
-	}
-	
-	public String improveuserinfo(){
-		System.out.println("improveuserinfo");
-//		service.improveUserInfo(username, password);
-		boolean result = service.improveUserInfo(userid, emname, name, description);
-		infos = result;
-		return "inituserinfo";
 	}
 	
 	public String infosbyems(){
 		System.out.println("getinfosbyems");
 		String[] split = emnamelist.split("<>");
 		List<String> asList = Arrays.asList(split);
-		List<UserCommonInfo> users = service.getUserListByEMUsername(asList);
-		infos = new Format_InitUserData(users);
-		state = "200";
+		adapterResult(service.getUserInfosByEms(asList));
 		return "infosbyems";
 	}
 	
+	public String name;
 	public String userinfobyname(){
-		System.out.println("getuserinfobyname");
-		List<UserCommonInfo> users = service.getUserInfoByName(name);
-		System.out.println("users.size():"+users.size());
-		state="200";
-		error = "";
-		infos = new Format_InitUserData(users);
+		System.out.println("userinfobyname,name:"+name);
+		adapterResult(service.getUserInfosByName(userid,name));
 		return "userinfobyname";
 	}
 	
-//	public String userinfobyemname(){
-//		System.out.println("getuserinfobyemname");
-//		List<UserCommonInfo> users = service.getUserInfoByEmname(emname);
-//		infos = new Format_InitUserData(users);
-//		return "getuserinfobyname";
-//	}
+	public String optionlog(){
+		System.out.println("userid:"+userid);
+		adapterResult(service.UserOptionLog(Integer.valueOf(userid)));
+		return "optionlog";
+	}
+
+
+
+
+
+
+
 }

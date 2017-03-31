@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.wxxiaomi.ebs.dao.bean">
+ <class name="Locat" table="bicycle_locat">
+  <id length="11" name="id">
+   <generator class="native"/>
+  </id>
+  <property generated="never" lazy="false" length="20" name="geo" not-null="true"/>
+  <property generated="never" lazy="false" length="40" name="time" not-null="true"/>
+  <many-to-one access="field"
+   class="com.wxxiaomi.ebs.dao.bean.UserCommonInfo" column="userid"
+   lazy="false" name="userCommonInfo" unique="true"/>
+ </class>
+</hibernate-mapping>

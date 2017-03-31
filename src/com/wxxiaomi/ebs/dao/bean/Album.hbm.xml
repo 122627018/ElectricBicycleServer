@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.wxxiaomi.ebs.dao.bean">
+	<class name="Album" table="bicycle_album">
+		<id name="id" length="11" >
+		<generator class="native" />
+		</id>
+		<property name="description"/>
+		<property name="cover"/>
+		<property name="create_time" type="timestamp" length="19"/> 
+	</class>
+</hibernate-mapping>

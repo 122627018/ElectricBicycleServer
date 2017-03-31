@@ -179,7 +179,7 @@
 			var topicid = ItemInfo.getAttribute("data-topicid");
 			//showLog("topicid=" + topicid);
 			toH5Page(
-					'http://192.168.1.46:8080/ElectricBicycleServer/app/detail_1.html',
+					'http://139.199.182.29/ElectricBicycleServer/app/detail_1.html',
 					topicid, "false", "");
 		}
 
@@ -190,15 +190,15 @@
 
 		function onEditClick() {
 			toH5Page(
-					'http://192.168.1.46:8080/ElectricBicycleServer/app/topic_publish2.html',
+					'http://139.199.182.29/ElectricBicycleServer/app/topic_publish2.html',
 					"", "true", "onEditCallback");
 		}
 
 		function onRightBtnClick() {
 			//showLog("右上角被点击拉");
 			var pages = [
-					'http://192.168.1.46:8080/ElectricBicycleServer/app/myTopic_1.html',
-					'http://192.168.1.46:8080/ElectricBicycleServer/app/reply_1.html'];
+					'http://139.199.182.29/ElectricBicycleServer/app/myTopic_1.html',
+					'http://139.199.182.29/ElectricBicycleServer/app/reply_1.html'];
 			var mmmData = [ 'asd', 'asd' ];
 			var title = '个人页面';
 			var tabs = [ '我的帖子', '我的消息' ];
@@ -226,7 +226,7 @@
 							+ datas.infos[i - 1 - last].content
 							+ '</p>'
 							+ '</div></div><div class="card-footer no-border">'
-							+ '<a href="#" class="link">揭阳科技馆</a></div></div>';
+							+ '<a href="#" class="link">'+datas.infos[i - 1 - last].locat_tag+'</a></div></div>';
 				} else {
 					html += '<div class="list-container" ><div  data-topicid='
 							+ datas.infos[i - 1 - last].id
@@ -239,7 +239,7 @@
 							+ '</p> <p>'
 							+ datas.infos[i - 1 - last].content
 							+ '</p>'
-							+ '</div></div><div class="card-footer no-border"><a href="#" class="link">揭阳科技馆</a></div></div></div>';
+							+ '</div></div><div class="card-footer no-border"><a href="#" class="link">'+datas.infos[i - 1 - last].locat_tag+'</a></div></div></div>';
 				}
 			}
 			last += number;

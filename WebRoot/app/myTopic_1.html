@@ -59,7 +59,13 @@
 		registerBridge(MyInit, register);
 		function MyInit(message, responseCallback) {
 			showLog("MyInit");
-
+			getPageData();
+				$.detachInfiniteScroll($('.infinite-scroll'));
+				$('.infinite-scroll-preloader').remove();
+				window.WebViewJavascriptBridge.callHandler('getUserId', "",
+						function(responseData) {
+							userid = responseData;
+						});
 			responseCallback("initSuccess");
 		}
 
@@ -74,13 +80,8 @@
 			bridge.registerHandler("bridgeInit", function(data,
 					responseCallback) {
 				//onEditClick();
-				getPageData();
-				$.detachInfiniteScroll($('.infinite-scroll'));
-				$('.infinite-scroll-preloader').remove();
-				window.WebViewJavascriptBridge.callHandler('getUserId', "",
-						function(responseData) {
-							userid = responseData;
-						});
+				showLog("myTopic->bridgeInit");
+				
 			});
 			bridge.registerHandler("onDeleteComfirm", function(data,
 					responseCallback) {
@@ -93,7 +94,7 @@
 			var pars = 'url=android/topic_myTopic&userid=25';
 			//showLog("pars:"+pars);
 			sendGetRequest(pars, function(responseData) {
-				// showLog("responseData:"+responseData);
+				 showLog("responseData:"+responseData);
 				var result = eval("(" + responseData + ")");
 				adapterPageUI(result);
 

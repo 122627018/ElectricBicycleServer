@@ -3,45 +3,68 @@ package com.wxxiaomi.ebs.action;
 
 import org.springframework.stereotype.Controller;
 
-import com.wxxiaomi.ebs.bean.Topic;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.wxxiaomi.ebs.module.em.ImHelper;
+import com.wxxiaomi.ebs.module.em.api.SendMessageAPI;
+import com.wxxiaomi.ebs.module.em.comm.ClientContext;
+import com.wxxiaomi.ebs.module.em.comm.HyphenateRestAPIFactory;
+import com.wxxiaomi.ebs.module.em.comm.body.CommandMessageBody;
+import com.wxxiaomi.ebs.module.em.comm.body.IMUserBody;
+import com.wxxiaomi.ebs.module.em.comm.constant.MsgTargetType;
+import com.wxxiaomi.ebs.module.em.comm.wrapper.BodyWrapper;
+
 
 @Controller
 public class TestAction {
 
+	private String state = "404";
+	private String error = "";
+	private Object infos;
 	
-	private String message;
-	private String par;
-	private Topic topic;
-	
-	
-	public String getMessage() {
-		return message;
+	public String getState() {
+		return state;
 	}
 
-
-	
-
-
-	public void setPar(String par) {
-		this.par = par;
+	public String getError() {
+		return error;
 	}
 
-
+	public Object getInfos() {
+		return infos;
+	}
 
 
 
 	public String msg(){
-		System.out.println("msg");
-//		System.out.println("par="+par);
-		try {
-			System.out.println("topic="+topic.toString());
-//			String string = new String(par.getBytes("ISO-8859-1"),"UTF-8");
-//			System.out.println("string="+par);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+//		System.out.println("msg");
+//		System.out.println("1");
+//		System.out.println(Thread.currentThread().getName());
+//		Map<String,String> pars = new HashMap<String,String>();
+//		ImHelper.getInstance().demo();
+//		 CommandMessageBody cmdMsg = new CommandMessageBody(MsgTargetType.USERS, new String[]{"122627018"}, "admin", null, "I.m the command message from server");
+		try{
+//		System.out.println("JsonNodeFactory.instance:"+JsonNodeFactory.instance);
+//		JsonNodeFactory instance = JsonNodeFactory.instance;
+//		HyphenateRestAPIFactory factory = ClientContext.getInstance().init(ClientContext.INIT_FROM_PROPERTIES).getAPIFactory();
+//		System.out.println("3");
+//		SendMessageAPI message = (SendMessageAPI) factory.newInstance(HyphenateRestAPIFactory.SEND_MESSAGE_CLASS);
+//		System.out.println("4");
+//			 CommandMessageBody cmdMsg = new CommandMessageBody(MsgTargetType.USERS, new String[]{"122627018"}, "admin", null, "I.m the command message from server");
+//			 message.sendMessage(cmdMsg);
+//			 ImHelper.getInstance().sendCommandMsg(cmdMsg);
+//		System.out.println("2");
+//		BodyWrapper userBody = new IMUserBody("45646541sad", "123456", "HelloWorld");
+//		ImHelper.getInstance().registerUser((IMUserBody)userBody);
+//		System.out.println("3");
+			
+//			CommandMessageBody cmdMsg = new CommandMessageBody(MsgTargetType.USERS, new String[]{"122627018"}, "admin", null, "I.m the command message from server");
+//			 ImHelper.getInstance().sendCommandMsg(cmdMsg);
+		state = "401";
+		error = "token过期";
+		}catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
 		}
-		message = "测试json";
 		return "result";
 	}
 
@@ -49,9 +72,6 @@ public class TestAction {
 
 
 
-	public void setTopic(Topic topic) {
-		this.topic = topic;
-	}
 	
 	
 }
