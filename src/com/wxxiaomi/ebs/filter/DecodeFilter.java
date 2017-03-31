@@ -10,17 +10,13 @@ import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
-import com.wxxiaomi.ebs.common.CODEClient;
 import com.wxxiaomi.ebs.common.ErrorMsg;
 import com.wxxiaomi.ebs.security.AESUtil;
 import com.wxxiaomi.ebs.security.RSAEncrypt;
 import com.wxxiaomi.ebs.security.RSAUtils;
 
 public class DecodeFilter extends MethodFilterInterceptor {
-//	String filepath = "G:/secuty";
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	@Override

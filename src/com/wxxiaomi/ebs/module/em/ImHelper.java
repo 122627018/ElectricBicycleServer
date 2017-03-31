@@ -1,16 +1,12 @@
 package com.wxxiaomi.ebs.module.em;
 
-import java.io.IOException;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.wxxiaomi.ebs.module.em.api.IMUserAPI;
 import com.wxxiaomi.ebs.module.em.api.SendMessageAPI;
 import com.wxxiaomi.ebs.module.em.comm.ClientContext;
 import com.wxxiaomi.ebs.module.em.comm.HyphenateRestAPIFactory;
 import com.wxxiaomi.ebs.module.em.comm.body.CommandMessageBody;
 import com.wxxiaomi.ebs.module.em.comm.body.IMUserBody;
-import com.wxxiaomi.ebs.module.em.comm.constant.MsgTargetType;
-import com.wxxiaomi.ebs.module.em.comm.utils.ResponseUtils;
 import com.wxxiaomi.ebs.module.em.comm.wrapper.ResponseWrapper;
 
 public class ImHelper {
