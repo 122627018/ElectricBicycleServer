@@ -16,7 +16,6 @@ import com.wxxiaomi.ebs.dao.bean.format.FootPrintGet;
 import com.wxxiaomi.ebs.dao.inter.LocatDao;
 import com.wxxiaomi.ebs.dao.inter.UserDao;
 import com.wxxiaomi.ebs.service.MapService;
-import com.wxxiaomi.ebs.service.UserService;
 import com.wxxiaomi.ebs.support.AppCode;
 import com.wxxiaomi.ebs.util.GeoHashUtil;
 import com.wxxiaomi.ebs.util.MyUtils;

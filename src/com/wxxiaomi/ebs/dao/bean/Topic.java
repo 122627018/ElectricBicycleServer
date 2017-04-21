@@ -1,6 +1,5 @@
 package com.wxxiaomi.ebs.dao.bean;
 
-import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Date;
 

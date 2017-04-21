@@ -3,7 +3,6 @@ package com.wxxiaomi.ebs.dao.inter;
 import java.util.List;
 
 import com.wxxiaomi.ebs.dao.bean.Comment;
-import com.wxxiaomi.ebs.dao.bean.Option;
 import com.wxxiaomi.ebs.dao.bean.format.OptionDetail;
 
 public interface CommentDao {

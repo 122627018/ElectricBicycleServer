@@ -38,7 +38,8 @@
 				<interceptor-ref name="defaultStack" />
 				<interceptor-ref name="decodeFilter" />
 				<interceptor-ref name="tokenInteceptor">
-					<param name="excludeMethods">login,longToken,register</param>
+				<!-- 设置不拦截的方法 -->
+					<param name="excludeMethods">login,longToken,registe,result</param>
 				</interceptor-ref>
 
 			</interceptor-stack>

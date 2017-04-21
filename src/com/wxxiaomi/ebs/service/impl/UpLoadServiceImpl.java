@@ -1,12 +1,7 @@
 package com.wxxiaomi.ebs.service.impl;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 
-import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Service;
 
 import com.wxxiaomi.ebs.service.UpLoadService;

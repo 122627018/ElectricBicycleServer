@@ -1,11 +1,14 @@
 package com.wxxiaomi.ebs.action;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.wxxiaomi.ebs.module.em.ImHelper;
 import com.wxxiaomi.ebs.module.em.api.SendMessageAPI;
+import com.wxxiaomi.ebs.module.em.api.impl.HyphenateAuthToken;
 import com.wxxiaomi.ebs.module.em.comm.ClientContext;
 import com.wxxiaomi.ebs.module.em.comm.HyphenateRestAPIFactory;
 import com.wxxiaomi.ebs.module.em.comm.body.CommandMessageBody;
@@ -16,7 +19,7 @@ import com.wxxiaomi.ebs.module.em.comm.wrapper.BodyWrapper;
 
 @Controller
 public class TestAction {
-
+	private static final Logger log = LoggerFactory.getLogger(TestAction.class);
 	private String state = "404";
 	private String error = "";
 	private Object infos;
@@ -59,8 +62,17 @@ public class TestAction {
 			
 //			CommandMessageBody cmdMsg = new CommandMessageBody(MsgTargetType.USERS, new String[]{"122627018"}, "admin", null, "I.m the command message from server");
 //			 ImHelper.getInstance().sendCommandMsg(cmdMsg);
-		state = "401";
-		error = "token过期";
+//		state = "401";
+//		error = "token过期";
+			log.warn("发现test");
+//			log.debug("dubug");
+			log.error("error");
+//			log.
+			log.info("info");
+			System.out.println("sysout");
+			infos = "ok";
+			state = "200";
+			error="";
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
